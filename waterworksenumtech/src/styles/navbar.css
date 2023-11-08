@@ -1,0 +1,162 @@
+.navbar {
+    background-color: #F1EAFF;
+    border-bottom-right-radius: 40%;
+}
+
+.top {
+    display: grid;
+    grid-template-columns: 3fr 3fr;
+    font-family: 'Wix Madefor Display', sans-serif;
+}
+
+/* Right */
+
+.right {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    font-size: 1.2rem;
+}
+
+.right .profilephoto {
+    display: grid;
+    place-items: center;
+}
+
+.right .profilephoto img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+.links a {
+    font-family: 'Wix Madefor Display', sans-serif;
+    text-decoration: none;
+    font: 20px Wix Madefor Display;
+    margin: 0px 10px;
+    padding: 10px 10px;
+    position: relative;
+    z-index: 0;
+    cursor: pointer;
+    color: black;
+}
+
+
+div.topBotomBordersOut a:before,
+div.topBotomBordersOut a:after {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    height: 2px;
+    background: black;
+    content: "";
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+div.topBotomBordersOut a:before {
+    top: 0px;
+    transform: translateY(10px);
+}
+
+div.topBotomBordersOut a:after {
+    bottom: 0px;
+    transform: translateY(-10px);
+}
+
+div.topBotomBordersOut a:hover:before,
+div.topBotomBordersOut a:hover:after {
+    opacity: 1;
+    transform: translateY(0px);
+}
+
+
+/* Left */
+
+.left {
+    display: flex;
+}
+
+.logo {
+    position: relative;
+    left: 75px;
+    font-size: 3.5rem;
+}
+
+.navigate {
+    display: inline;
+    position: relative;
+    margin-left: 10px;
+}
+
+
+/* Bottom */
+.bottom {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.bottom-right {
+    width: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+}
+
+.bottom-right img {
+    width: 125px;
+}
+
+.bottom-left {
+    display: grid;
+    place-items: flex-start;
+    font-family: 'Wix Madefor Display', sans-serif;
+}
+
+.bottom-left p {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.bottom-left p,
+button {
+    position: relative;
+    left: 117px;
+    font-family: 'Wix Madefor Display', sans-serif;
+}
+
+button {
+    border: none;
+    padding: 10px 20px;
+    background-color: #00A9FF;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {
+        opacity: .4
+    }
+
+    to {
+        opacity: 1
+    }
+}
