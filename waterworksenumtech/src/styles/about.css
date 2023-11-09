@@ -1,0 +1,30 @@
+.text{
+    /* grid-template-columns: 1fr 1fr; */
+    margin: 0 auto;
+    padding-top: 50px;
+    width: 50vw;
+    
+
+}
+
+.image img{
+    width: 300px;
+    border-radius: 50%;
+    height: 300px;
+    object-fit: cover;
+    padding-top: 20px;
+    /* display: inline-block; */
+    
+    /* align-items: flex; */
+}
+.images{
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.h1{
+    width: 185px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
