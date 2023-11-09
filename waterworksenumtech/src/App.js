@@ -5,14 +5,29 @@ import Carousal from "./components/carousel/Carousal";
 import Insert from "./pages/Insert";
 import Delete from "./pages/Delete";
 import Update from "./pages/Update";
+import ContactUs from './pages/ContactUs';
+import NavigationBar from "./components/NavigationBar";
 const App = () => {
+
+
+
   return (
     <>
       <Router>
-        <Navbar />
         <Routes>
-          <Route path="/" element={<Carousal />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={
+            <div>
+              <Navbar />
+              <Carousal />
+            </div>
+          } />
+          <Route path="/dashboard" element={
+            <div>
+              <NavigationBar />
+              <Dashboard />
+              <ContactUs />
+            </div>
+          } />
           <Route path="/insert" element={<Insert />} />
           <Route path="/delete" element={<Delete />} />
           <Route path='/update' element={<Update />} />

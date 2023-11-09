@@ -61,7 +61,7 @@ const Navbar = () => {
                                 <p>
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam eius, deleniti illo possimus nulla, amet iure eos aliquid, laboriosam inventore consequuntur rerum laborum quasi.
                                 </p>
-                                <button>Login In</button>
+                                <button className='btn btn-primary'>Login In</button>
                             </div>
                             <div className="bottom-right">
                                 <img src={logo} alt="Account" />
