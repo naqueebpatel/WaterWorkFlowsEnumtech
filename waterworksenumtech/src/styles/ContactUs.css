@@ -1,7 +1,32 @@
-.contact-heading {
-    font-size: 30px;
-    color: #007bff;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-}
+#contact {
+    text-align: center;
+    padding: 60px 0;
+  }
+
+  #contact h6 {
+    font-size: 24px; /* Increase the font size to make it bigger */
+  color: #007bff; /* Text color for the "CONTACT" heading */
+  font-weight: bold; /* Make the text bold */
+  text-transform: uppercase; /* Convert text to uppercase */
+  margin-bottom: 10px; 
+  }
+  
+  #contact h1 {
+    font-size: 36px; /* Adjust the font size as desired */
+  color: #000; /* Set the text color to black */
+  font-family: 'Sora', sans-serif; /* Use the Sora sans-serif font */
+  margin-bottom: 20px; /* Add some space below the heading */
+  font-weight: bold;
+  }
+  
+  .contact-button 
+button {
+    left: 117px;
+    font-family: 'Wix Madefor Display', sans-serif;
+    width:80%;
+    border: none;
+    padding: 10px 20px;
+    background-color: #00A9FF;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
