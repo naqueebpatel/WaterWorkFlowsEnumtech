@@ -6,6 +6,7 @@ import Insert from "./pages/Insert";
 import Delete from "./pages/Delete";
 import Update from "./pages/Update";
 import Form from "./pages/Insert"; 
+import ContactUs from "./pages/ContactUs";
 const App = () => {
   return (
     <>
@@ -13,18 +14,17 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Carousal />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={
+            <div>
+              <ContactUs/>
+              <Dashboard />
+            </div>
+          } />
           <Route path="/insert" element={<Insert />} />
           <Route path="/delete" element={<Delete />} />
           <Route path='/update' element={<Update />} />
         </Routes>
       </Router>
-      <div style={{backgroundColor:"#E6F7FF"}}>
-      <h1 style={{textAlign:"center",color:"blue"}}>Subscriber Form</h1>
-     <div>
-        <Form />
-     </div>
-     </div>
     </>
   );
 };
