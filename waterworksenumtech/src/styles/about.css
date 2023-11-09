@@ -1,0 +1,44 @@
+.text {
+    /* grid-template-columns: 1fr 1fr; */
+    margin: 0 auto;
+    padding-top: 50px;
+    width: 50vw;
+    display: grid;
+    place-items: center;
+    text-align: center;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.content img {
+    width: 300px;
+    border-radius: 50%;
+    height: 300px;
+    object-fit: cover;
+    padding-top: 20px;
+    /* display: inline-block; */
+
+    /* align-items: flex; */
+}
+
+.images {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.h1 {
+    font-size: 30px;
+    color: #007bff;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.email ul li a {
+    text-align: end;
+    text-decoration: none;
+}

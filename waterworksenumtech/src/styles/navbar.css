@@ -13,7 +13,7 @@
 
 .right {
     display: grid;
-    grid-template-columns: 5fr 1fr;
+    grid-template-columns: 3fr 1fr;
 }
 
 .links {
@@ -90,10 +90,10 @@ div.topBotomBordersOut a:hover:after {
     display: flex;
 }
 
-.logo {
+.logo h3 {
+    font-size: 3.75rem;
     position: relative;
-    left: 75px;
-    font-size: 3.5rem;
+    left: 45px;
 }
 
 .navigate {
@@ -106,7 +106,7 @@ div.topBotomBordersOut a:hover:after {
 /* Bottom */
 .bottom {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 9fr 1fr;
 }
 
 .bottom-right {
@@ -130,41 +130,17 @@ div.topBotomBordersOut a:hover:after {
     width: 35vw
 }
 
-.bottom-left p,
-button {
+.bottom-left p {
     position: relative;
     left: 117px;
     font-family: 'Wix Madefor Display', sans-serif;
 }
 
-button {
-    border: none;
-    padding: 10px 20px;
-    background-color: #00A9FF;
-    color: white;
-    border-radius: 20px;
-    cursor: pointer;
+.bottom-left button {
+    position: relative;
+    left: 117px;
 }
 
-button:hover {
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-}
-
-
-.fade {
-    animation-name: fade;
-    animation-duration: 1.5s;
-}
-
-@keyframes fade {
-    from {
-        opacity: .4
-    }
-
-    to {
-        opacity: 1
-    }
-}
 
 
 .navigation {
