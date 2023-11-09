@@ -1,4 +1,5 @@
 import Navbar from "./components/Navbar";
+import ContactUs from "./pages/ContactUs";
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 // import AboutUs from "./pages/AboutUs";
@@ -7,7 +8,8 @@ const App = () => {
   return (
     <>
       <Navbar />
-      <Home />
+      <Home/>
+      <ContactUs/>
     </>
   );
 };
