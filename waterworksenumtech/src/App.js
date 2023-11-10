@@ -5,8 +5,8 @@ import Carousal from "./components/carousel/Carousal";
 import Insert from "./pages/Insert";
 import Delete from "./pages/Delete";
 import Update from "./pages/Update";
-import ContactUs from './pages/ContactUs';
 import NavigationBar from "./components/NavigationBar";
+import Zone from './components/Zone/Zone';
 const App = () => {
 
 
@@ -25,7 +25,12 @@ const App = () => {
             <div>
               <NavigationBar />
               <Dashboard />
-              <ContactUs />
+            </div>
+          } />
+          <Route path="/zone" element={
+            <div>
+              <NavigationBar />
+              <Zone />
             </div>
           } />
           <Route path="/insert" element={<Insert />} />

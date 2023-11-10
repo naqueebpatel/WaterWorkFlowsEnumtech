@@ -34,3 +34,23 @@ export const SidebarData = [
         cName: 'nav-text'
     },
 ];
+
+
+
+export const Data = [
+    {
+        zonename: "Faizan",
+    },
+    {
+        zonename: "Farhan",
+    },
+    {
+        zonename: "Zaid",
+    },
+    {
+        zonename: "Farhan",
+    },
+    {
+        zonename: "Shahid",
+    }
+];

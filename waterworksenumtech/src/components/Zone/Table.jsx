@@ -1,14 +1,15 @@
 import axios from "axios";
-import "./App.css"
 import { useEffect, useState } from "react";
+import { LuRefreshCcw } from 'react-icons/lu';
+import '../../styles/zone.css';
 
 const Table = () => {
-  const [data, setData] = useState([]);
+  const [ data, setData ] = useState([]);
 
   const getData = async () => {
     try {
       let res = await axios.get("http://localhost:8090/waterwork/get/getZone");
-      setData([...res.data]);
+      setData([ ...res.data ]);
       console.log(res);
     } catch (error) {
       alert("Error");
@@ -24,41 +25,28 @@ const Table = () => {
   };
 
 
-  const tableStyle = {
-    border: "1px solid #000",
-    borderCollapse: "collapse",
-    width: "30%",
-  };
-
-
-  const cellStyle = {
-    border: "1px solid #000",
-    padding: "8px",
-    textAlign: "left",
-  };
 
   return (
-    <div className="App">
-      
-      <table style={tableStyle}>
-      <button className="App" onClick={handleRefresh}>Refresh</button>
+    <>
+      <table className="zone-table">
         <thead>
           <tr>
-            <th style={cellStyle} scope="col">Zone No</th>
-            <th style={cellStyle} scope="col">Zone Name</th>
+            <th scope="col">Zone No</th>
+            <th scope="col">Zone Name</th>
+            <span><LuRefreshCcw /></span>
           </tr>
         </thead>
         <tbody>
           {data &&
             data.map((item) => (
-              <tr key={item.zoneid}>
-                <td style={cellStyle}>{item.zoneno}</td>
-                <td style={cellStyle}>{item.zonename}</td>
+              <tr key={item}>
+                <td >1</td>
+                <td >Faizan</td>
               </tr>
             ))}
         </tbody>
       </table>
-    </div>
+    </>
   );
 };
 

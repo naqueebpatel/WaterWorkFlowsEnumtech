@@ -1,17 +1,20 @@
 import React from 'react';
 import '../styles/submenu.css';
+import { Link } from 'react-router-dom';
 const SubMenu = () => {
     return (
         <>
-            <ul className='sub-toggle'>
-                <li>Zone</li>
-                <div className='sub-menu'>
-                    <ul>
-                        <li>Insert</li>
-                        <li>Update</li>
-                    </ul>
-                </div>
-            </ul>
+            <nav>
+                <ul className='sub-toggle'>
+                    <li><Link to='/zone'>Zone</Link></li>
+                    <li>Subscriber
+                        <ul className='drop-down sub-toggle'>
+                            <li>Insert</li>
+                            <li>View</li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
         </>
     );
 };

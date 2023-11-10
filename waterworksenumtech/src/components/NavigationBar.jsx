@@ -14,7 +14,7 @@ const NavigationBar = () => {
                 <Link to='#' className='menu-bars'>
                     <RxHamburgerMenu onClick={showSidebar} size={35} color='black' />
                 </Link>
-                {/* <SubMenu /> */}
+                <SubMenu />
             </div>
             <div className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                 <ul className='nav-menu-items' onClick={showSidebar}>
