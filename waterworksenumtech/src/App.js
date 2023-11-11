@@ -8,9 +8,6 @@ import Update from "./pages/Update";
 import NavigationBar from "./components/NavigationBar";
 import Zone from './components/Zone/Zone';
 const App = () => {
-
-
-
   return (
     <>
       <Router>
