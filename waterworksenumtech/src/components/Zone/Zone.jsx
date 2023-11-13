@@ -1,69 +1,65 @@
-// import axios from "axios";
-// import { useState } from "react";
-// import Table from "./Table";
-
-// export default function Zone() {
-//   const [ zone, setZone ] = useState({
-//     zonename: "",
-//   });
-
-//   const handleChange = (e) => {
-//     setZone({ ...zone, [ e.target.name ]: e.target.value });
-//   };
-
-//   const postZone = (event) => {
-//     event.preventDefault();
-//     console.log(zone);
-//     axios
-//       .post("http://localhost:8090/waterwork/add/addZone", null, {
-//         params: zone,
-//       })
-//       .then((response) => {
-//         setZone({ zonename: "" });
-//         console.log("Response data:", response.data);
-
-//       })
-//       .catch((error) => {
-//         console.error("Error:", error.message);
-//       });
-//   };
-
-//   return (
-//     <div className="App">
-//       ADD ZONE
-//       <form onSubmit={postZone}>
-//         <input
-//           type="text"
-//           name="zonename"
-//           value={zone.zonename}
-//           onChange={handleChange}
-//         />
-//         <br />
-//         <button>Submit</button>
-//       </form>
-//       <Table />
-//     </div>
-//   );
-// }
-
-
-
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Table from './Table';
+import React, { useState } from "react";
+import axios from "axios";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Table from "./Table";
+import Swal from 'sweetalert2';
 
 function Zone() {
+  const [zone, setZone] = useState({
+    zonename: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setZone({ ...zone, [e.target.name]: e.target.value });
+  };
+
+  const postZone = async (event) => {
+    event.preventDefault();
+
+    try {
+      setLoading(true);
+      console.log(zone);
+
+      const response = await axios.post("http://localhost:8090/waterwork/add/addZone", null, {
+        params: zone,
+      });
+
+      setZone({ zonename: "" });
+      console.log("Response data:", response.data);
+
+      // Optionally, show success message using SweetAlert
+      Swal.fire('Success', 'Zone added successfully', 'success');
+    } catch (error) {
+      console.error("Error:", error.message);
+      
+      // Show an error message using SweetAlert
+      Swal.fire('Error', 'Failed to add zone', 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="container w-25">
-        <Form>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label><h2>Zone Name</h2></Form.Label>
-            <Form.Control type="email" placeholder="Enter Zone Name" />
+        <Form onSubmit={postZone}>
+          <Form.Group className="mb-3">
+            <Form.Label>
+              <h2>Zone Name</h2>
+            </Form.Label>
+            <Form.Control
+              type="name"
+              placeholder="Enter Zone Name"
+              name="zonename"
+              value={zone.zonename}
+              onChange={handleChange}
+            />
           </Form.Group>
 
-          <Button variant="primary" type="submit">
-            Submit
+          <Button variant="primary" type="submit" disabled={loading}>
+            {loading ? 'Submitting...' : 'Submit'}
           </Button>
         </Form>
       </div>

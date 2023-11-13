@@ -9,8 +9,8 @@ const SubMenu = () => {
                     <li><Link to='/zone'>Zone</Link></li>
                     <li>Subscriber
                         <ul className='drop-down sub-toggle'>
-                            <li>Insert</li>
-                            <li>View</li>
+                            <li><Link to='/subscriberadd'>Insert</Link></li>
+                            <li><Link to='/subscriberView'>View</Link></li>
                         </ul>
                     </li>
                 </ul>
