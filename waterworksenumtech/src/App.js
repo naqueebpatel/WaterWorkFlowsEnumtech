@@ -7,6 +7,7 @@ import Delete from "./pages/Delete";
 import Update from "./pages/Update";
 import NavigationBar from "./components/NavigationBar";
 import Zone from './components/Zone/Zone';
+import Footer from "./components/Footer";
 const App = () => {
 
 
@@ -25,12 +26,14 @@ const App = () => {
             <div>
               <NavigationBar />
               <Dashboard />
+              <Footer />
             </div>
           } />
           <Route path="/zone" element={
             <div>
               <NavigationBar />
               <Zone />
+              <Footer />
             </div>
           } />
           <Route path="/insert" element={<Insert />} />

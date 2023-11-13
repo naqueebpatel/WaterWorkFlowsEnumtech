@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { SidebarData } from './SlidebarData';
 import { useState } from 'react';
 import SubMenu from './SubMenu';
-
 const NavigationBar = () => {
     const [ sidebar, setSidebar ] = useState(false);
 
