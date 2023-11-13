@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
 import {
   MDBCard,
   MDBCardBody,
@@ -15,8 +15,8 @@ import {
 } from "mdb-react-ui-kit";
 
 const SubscriberAdd = () => {
-  const [zoneData, setZoneData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [ zoneData, setZoneData ] = useState([]);
+  const [ loading, setLoading ] = useState(false);
 
   useEffect(() => {
     fetchZoneData();
@@ -80,10 +80,10 @@ const SubscriberAdd = () => {
       };
       // Perform any API request or other actions here
       console.log("Form Data:", payload);
-      
-      Swal.showLoading()
+
+      Swal.showLoading();
       const response = await axios.post('http://localhost:8090/waterwork/add/addSubscriber', payload);
-      Swal.hideLoading()
+      Swal.hideLoading();
 
       if (response.status === 200) {
         Swal.fire('Success', 'Record updated successfully', 'success');
@@ -107,263 +107,202 @@ const SubscriberAdd = () => {
     return <div>LOADING...</div>;
   }
   return (
-    <MDBContainer className="py-5" style={{ maxWidth: "1100px" }}>
+    <MDBContainer className="py-5" style={{ maxWidth: "900px" }}>
       <MDBRow className="justify-content-center align-items-center">
         <MDBCol>
-          <MDBCard className="my-4 shadow-3">
-            <MDBRow className="g-0">
-              <MDBCol md="6" className="d-xl-block bg-image">
-                <MDBCardImage src="" alt="Sample photo" fluid />
-                <div
-                  className="mask"
-                  style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
+          <MDBCard className="my-4 shadow-5 justify-content-center align-items-center">
+            <MDBCol md="12">
+              <MDBCardBody className="p-md-5 text-black">
+                <MDBTypography tag="h3" className="mb-3 text-uppercase text-center">
+                  Subscriber Registration
+                </MDBTypography>
+
+                <Formik
+                  initialValues={initialValues}
+                  validationSchema={validationSchema}
+                  onSubmit={handleSubmit}
                 >
-                  <div className="justify-content-center align-items-center h-100">
-                    <div className="text-center" style={{ marginTop: "220px" }}>
-                      <MDBIcon fas icon="truck text-white" size="3x" />
-                      <p className="text-white title-style">
-                        Welcome ON-Board!
-                      </p>
-                      <p className="text-white mb-0"></p>
+                  <Form>
+                    <MDBRow>
+                      <MDBCol md="12">
+                        <Field
+                          type="number"
+                          name="subscriberAdharNo"
+                          className="form-control mb-2"
+                          placeholder="AADHAR NUMBER"
+                        />
+                        <ErrorMessage name="subscriberAdharNo">
+                          {(msg) => (
+                            <div className="error-text">
+                              <MDBIcon
+                                fas
+                                icon="exclamation-circle"
+                                size="sm"
+                                className="me-1 text-danger"
+                              />
+                              {msg}
+                            </div>
+                          )}
+                        </ErrorMessage>
+                      </MDBCol>
+                    </MDBRow>
 
-                      <figure className="text-center mb-0">
-                        <blockquote className="blockquote text-white">
-                          <p className="pb-3">
-                            <MDBIcon
-                              fas
-                              icon="quote-left text-primary"
-                              size="xs"
-                              style={{ color: "hsl(210, 100%, 50%)" }}
-                            />
-                            <span className="lead font-italic">
-                              Serving your Water needs
-                            </span>
-                            <MDBIcon
-                              fas
-                              icon="quote-right text-primary"
-                              size="xs"
-                              style={{ color: "hsl(210, 100%, 50%)" }}
-                            />
-                          </p>
-                        </blockquote>
-                      </figure>
-                    </div>
-                  </div>
-                </div>
-              </MDBCol>
-              <MDBCol md="6">
-                <MDBCardBody className="p-md-5 text-black">
-                  <MDBTypography tag="h3" className="mb-4 text-uppercase">
-                    Subscriber Registration
-                  </MDBTypography>
+                    <MDBRow>
+                      <MDBCol md="6" className="mb-2">
+                        <Field
+                          type="text"
+                          name="firstName"
+                          placeholder="First name"
+                          className="form-control"
+                        />
+                        <ErrorMessage name="firstName">
+                          {(msg) => (
+                            <div className="error-text">
+                              <MDBIcon
+                                fas
+                                icon="exclamation-circle"
+                                size="sm"
+                                className="me-1 text-danger"
+                              />
+                              {msg}
+                            </div>
+                          )}
+                        </ErrorMessage>
+                      </MDBCol>
+                      <MDBCol md="6" className="mb-2">
+                        <Field
+                          type="text"
+                          name="lastName"
+                          placeholder="Last name"
+                          className="form-control"
+                        />
+                        <ErrorMessage name="lastName">
+                          {(msg) => (
+                            <div className="error-text">
+                              <MDBIcon
+                                fas
+                                icon="exclamation-circle"
+                                size="sm"
+                                className="me-1 text-danger"
+                              />
+                              {msg}
+                            </div>
+                          )}
+                        </ErrorMessage>
+                      </MDBCol>
+                    </MDBRow>
 
-                  <Formik
-                    initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={handleSubmit}
-                  >
-                    <Form>
-                      <MDBRow>
-                        <MDBCol md="12">
-                          <Field
-                            type="number"
-                            name="subscriberAdharNo"
-                            className="form-control mb-2"
-                            placeholder="AADHAR NUMBER"
+                    <Field
+                      type="text"
+                      name="subscriberAddress"
+                      placeholder="Address"
+                      className="form-control mb-2"
+                    />
+                    <ErrorMessage name="subscriberAddress">
+                      {(msg) => (
+                        <div className="error-text">
+                          <MDBIcon
+                            fas
+                            icon="exclamation-circle"
+                            size="sm"
+                            className="me-1 text-danger"
                           />
-                          <ErrorMessage name="subscriberAdharNo">
-                            {(msg) => (
-                              <div className="error-text">
-                                <MDBIcon
-                                  fas
-                                  icon="exclamation-circle"
-                                  size="sm"
-                                  className="me-1 text-danger"
-                                />
-                                {msg}
-                              </div>
-                            )}
-                          </ErrorMessage>
-                        </MDBCol>
-                      </MDBRow>
+                          {msg}
+                        </div>
+                      )}
+                    </ErrorMessage>
 
-                      <MDBRow>
-                        <MDBCol md="6" className="mb-2">
-                          <Field
-                            type="text"
-                            name="firstName"
-                            placeholder="First name"
-                            className="form-control"
-                          />
-                          <ErrorMessage name="firstName">
-                            {(msg) => (
-                              <div className="error-text">
-                                <MDBIcon
-                                  fas
-                                  icon="exclamation-circle"
-                                  size="sm"
-                                  className="me-1 text-danger"
-                                />
-                                {msg}
-                              </div>
-                            )}
-                          </ErrorMessage>
-                        </MDBCol>
-                        <MDBCol md="6" className="mb-2">
-                          <Field
-                            type="text"
-                            name="lastName"
-                            placeholder="Last name"
-                            className="form-control"
-                          />
-                          <ErrorMessage name="lastName">
-                            {(msg) => (
-                              <div className="error-text">
-                                <MDBIcon
-                                  fas
-                                  icon="exclamation-circle"
-                                  size="sm"
-                                  className="me-1 text-danger"
-                                />
-                                {msg}
-                              </div>
-                            )}
-                          </ErrorMessage>
-                        </MDBCol>
-                      </MDBRow>
-
-                      <MDBRow>
-                        <MDBCol md="6" className="mb-2">
-                          <Field
-                            type="number"
-                            name="subscriberMobileNo"
-                            placeholder="Mobile No."
-                            className="form-control"
-                          />
-                          <ErrorMessage name="subscriberMobileNo">
-                            {(msg) => (
-                              <div className="error-text">
-                                <MDBIcon
-                                  fas
-                                  icon="exclamation-circle"
-                                  size="sm"
-                                  className="me-1 text-danger"
-                                />
-                                {msg}
-                              </div>
-                            )}
-                          </ErrorMessage>
-                        </MDBCol>
-                        <MDBCol md="6" className="mb-2">
-                          <Field
-                            as="select"
-                            name="zoneno"
-                            className="form-select mb-2"
-                          >
-                            <option value="" disabled>
-                              Select Zone Name
+                    <MDBRow>
+                      <MDBCol md="4" className="mb-2">
+                        <Field
+                          as="select"
+                          name="zoneno"
+                          className="form-select mb-2"
+                        >
+                          <option value="" disabled>
+                            Select Zone Name
+                          </option>
+                          {zoneData.map((zone) => (
+                            <option key={zone.zoneno} value={zone.zoneno}>
+                              {zone.zonename}
                             </option>
-                            {zoneData.map((zone) => (
-                              <option key={zone.zoneno} value={zone.zoneno}>
-                                {zone.zonename}
-                              </option>
-                            ))}
-                          </Field>
+                          ))}
+                        </Field>
 
-                          <ErrorMessage name="zoneno">
-                            {(msg) => (
-                              <div className="error-text">
-                                <MDBIcon
-                                  fas
-                                  icon="exclamation-circle"
-                                  size="sm"
-                                  className="me-1 text-danger"
-                                />
-                                {msg}
-                              </div>
-                            )}
-                          </ErrorMessage>
-                        </MDBCol>
-                      </MDBRow>
+                        <ErrorMessage name="zoneno">
+                          {(msg) => (
+                            <div className="error-text">
+                              <MDBIcon
+                                fas
+                                icon="exclamation-circle"
+                                size="sm"
+                                className="me-1 text-danger"
+                              />
+                              {msg}
+                            </div>
+                          )}
+                        </ErrorMessage>
+                      </MDBCol>
 
-                      <Field
-                        type="text"
-                        name="subscriberAddress"
-                        placeholder="Address"
-                        className="form-control mb-2"
-                      />
-                      <ErrorMessage name="subscriberAddress">
-                        {(msg) => (
-                          <div className="error-text">
-                            <MDBIcon
-                              fas
-                              icon="exclamation-circle"
-                              size="sm"
-                              className="me-1 text-danger"
-                            />
-                            {msg}
-                          </div>
-                        )}
-                      </ErrorMessage>
+                      <MDBCol md="4" className="mb-2">
+                        <Field
+                          as="select"
+                          name="subsciberFinancialStatus"
+                          className="form-select mb-2"
+                        >
+                          <option value="" disabled>
+                            Financial Status
+                          </option>
+                          <option value="0">0</option>
+                          <option value="1">1</option>
+                        </Field>
+                        <ErrorMessage name="subsciberFinancialStatus">
+                          {(msg) => (
+                            <div className="error-text">
+                              <MDBIcon
+                                fas
+                                icon="exclamation-circle"
+                                size="sm"
+                                className="me-1 text-danger"
+                              />
+                              {msg}
+                            </div>
+                          )}
+                        </ErrorMessage>
+                      </MDBCol>
 
-                      <MDBRow>
-                        <MDBCol md="6" className="mb-2">
-                          <Field
-                            as="select"
-                            name="subsciberFinancialStatus"
-                            className="form-select mb-2"
-                          >
-                            <option value="" disabled>
-                              Financial Status
-                            </option>
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                          </Field>
-                          <ErrorMessage name="subsciberFinancialStatus">
-                            {(msg) => (
-                              <div className="error-text">
-                                <MDBIcon
-                                  fas
-                                  icon="exclamation-circle"
-                                  size="sm"
-                                  className="me-1 text-danger"
-                                />
-                                {msg}
-                              </div>
-                            )}
-                          </ErrorMessage>
-                        </MDBCol>
+                      <MDBCol md="4" className="mb-2">
+                        <Field
+                          as="select"
+                          name="connectionStatus"
+                          className="form-select mb-2"
+                        >
+                          <option value="" disabled>
+                            Connection
+                          </option>
+                          <option value="active">Active</option>
+                          <option value="pause">Pause</option>
+                          <option value="blocked">Blocked</option>
+                        </Field>
+                        <ErrorMessage name="connectionStatus">
+                          {(msg) => (
+                            <div className="error-text">
+                              <MDBIcon
+                                fas
+                                icon="exclamation-circle"
+                                size="sm"
+                                className="me-1 text-danger"
+                              />
+                              {msg}
+                            </div>
+                          )}
+                        </ErrorMessage>
+                      </MDBCol>
+                    </MDBRow>
 
-                        <MDBCol md="6" className="mb-2">
-                          <Field
-                            as="select"
-                            name="connectionStatus"
-                            className="form-select mb-2"
-                          >
-                            <option value="" disabled>
-                              Connection
-                            </option>
-                            <option value="active">Active</option>
-                            <option value="pause">Pause</option>
-                            <option value="blocked">Blocked</option>
-                          </Field>
-                          <ErrorMessage name="connectionStatus">
-                            {(msg) => (
-                              <div className="error-text">
-                                <MDBIcon
-                                  fas
-                                  icon="exclamation-circle"
-                                  size="sm"
-                                  className="me-1 text-danger"
-                                />
-                                {msg}
-                              </div>
-                            )}
-                          </ErrorMessage>
-                        </MDBCol>
-                      </MDBRow>
+                    <MDBRow>
 
-                      <MDBCol md="12" className="mb-2">
+                      <MDBCol md="6" className="mb-2">
                         <label htmlFor="currentBalance" className="form-label">
                           Current Balance
                         </label>
@@ -387,24 +326,50 @@ const SubscriberAdd = () => {
                         </ErrorMessage>
                       </MDBCol>
 
-                      <div className="d-flex justify-content-end pt-3">
-                        <button
-                          type="submit"
-                          className="btn btn-lg ms-2"
-                          style={{ backgroundColor: "hsl(210, 100%, 50%)" }}
-                        >
-                          Add Subscriber!
-                        </button>
-                      </div>
-                    </Form>
-                  </Formik>
-                </MDBCardBody>
-              </MDBCol>
-            </MDBRow>
+                      <MDBCol md="6" className="mb-2align-items-center">
+                        <label htmlFor="subscriberMobileNo" className="form-label">
+                          Mobile No.
+                        </label>
+                        <Field
+                          type="number"
+                          name="subscriberMobileNo"
+                          placeholder="Phone/Mobile"
+                          className="form-control"
+                        />
+                        <ErrorMessage name="subscriberMobileNo">
+                          {(msg) => (
+                            <div className="error-text">
+                              <MDBIcon
+                                fas
+                                icon="exclamation-circle"
+                                size="sm"
+                                className="me-1 text-danger"
+                              />
+                              {msg}
+                            </div>
+                          )}
+                        </ErrorMessage>
+                      </MDBCol>
+                    </MDBRow>
+
+                    <div className="d-flex justify-content-end pt-3">
+                      <button
+                        type="submit"
+                        className="btn btn-lg ms-2"
+                        style={{ backgroundColor: "#00ffff9e" }}
+                      >
+                        Add Subscriber!
+                      </button>
+                    </div>
+                  </Form>
+                </Formik>
+              </MDBCardBody>
+            </MDBCol>
+            {/* </MDBRow> */}
           </MDBCard>
         </MDBCol>
       </MDBRow>
-    </MDBContainer>
+    </MDBContainer >
   );
 };
 
