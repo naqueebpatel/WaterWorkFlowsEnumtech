@@ -7,6 +7,8 @@ import Delete from "./pages/Delete";
 import Update from "./pages/Update";
 import NavigationBar from "./components/NavigationBar";
 import Zone from './components/Zone/Zone';
+import SubscriberAdd from "./components/Subscriber/SubscriberAdd.jsx"
+import SubscriberView from "./components/Subscriber/SubscriberView.jsx";
 const App = () => {
 
 
@@ -31,6 +33,18 @@ const App = () => {
             <div>
               <NavigationBar />
               <Zone />
+            </div>
+          } />
+          <Route path="/subscriberadd" element={
+            <div>
+              <NavigationBar />
+              <SubscriberAdd/>
+            </div>
+          } />
+          <Route path="/subscriberView" element={
+            <div>
+              <NavigationBar />
+              <SubscriberView/>
             </div>
           } />
           <Route path="/insert" element={<Insert />} />

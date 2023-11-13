@@ -33,15 +33,15 @@ const Table = () => {
           <tr>
             <th scope="col">Zone No</th>
             <th scope="col">Zone Name</th>
-            <span><LuRefreshCcw /></span>
+            <span onClick={handleRefresh}><LuRefreshCcw /></span>
           </tr>
         </thead>
         <tbody>
           {data &&
             data.map((item) => (
-              <tr key={item}>
-                <td >1</td>
-                <td >Faizan</td>
+              <tr key={item.zoneno}>
+                <td >{item.zoneno}</td>
+                <td >{item.zonename}</td>
               </tr>
             ))}
         </tbody>
