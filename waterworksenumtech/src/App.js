@@ -10,8 +10,8 @@ import Zone from './components/Zone/Zone';
 import SubscriberAdd from "./components/Subscriber/SubscriberAdd.jsx";
 import SubscriberView from "./components/Subscriber/SubscriberView.jsx";
 import ThirdPartyDetails from "./components/3rdPartyDetails/ThirdPartyDetails.jsx";
-import EmployeeAdd from "./Employee/EmployeeAdd.jsx"
-import EmployeeView from "./Employee/EmployeeView.jsx";
+import EmployeeAdd from "./components/Employee/EmployeeAdd.jsx"
+import EmployeeView from "./components/Employee/EmployeeView.jsx";
 const App = () => {
   return (
     <>
