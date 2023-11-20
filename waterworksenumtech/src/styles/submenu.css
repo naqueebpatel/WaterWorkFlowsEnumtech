@@ -7,13 +7,23 @@
     cursor: pointer;
 }
 
-.sub-toggle li>a {
+.zone a {
     text-decoration: none;
     color: black;
 }
 
+.zone a ::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    height: 2px;
+    background: #000;
+}
+
 .sub-toggle li {
-    height: 0rem;
+    height: 10px;
 }
 
 .sub-toggle .drop-down {
@@ -33,6 +43,31 @@
 }
 
 .sub-toggle li:hover>.drop-down {
+    visibility: visible;
+    opacity: 1;
+}
+
+.sub-toggle li a:hover {
+    background-color: aliceblue;
+}
+
+.sub-toggle .employee_drop-down {
+    background-color: #F1EAFF;
+    position: absolute;
+    left: 28%;
+    /* top: 22%; */
+    transform: translate(-50%);
+    display: flex;
+    flex-direction: column;
+    height: 90px;
+    width: 120px;
+    min-width: 2rem;
+    transition: all .3s linear;
+    visibility: none;
+    opacity: 0;
+}
+
+.sub-toggle li:hover>.employee_drop-down {
     visibility: visible;
     opacity: 1;
 }

@@ -7,12 +7,10 @@ import Delete from "./pages/Delete";
 import Update from "./pages/Update";
 import NavigationBar from "./components/NavigationBar";
 import Zone from './components/Zone/Zone';
-import SubscriberAdd from "./components/Subscriber/SubscriberAdd.jsx"
+import SubscriberAdd from "./components/Subscriber/SubscriberAdd.jsx";
 import SubscriberView from "./components/Subscriber/SubscriberView.jsx";
+import ThirdPartyDetails from "./components/3rdPartyDetails/ThirdPartyDetails.jsx";
 const App = () => {
-
-
-
   return (
     <>
       <Router>
@@ -35,16 +33,57 @@ const App = () => {
               <Zone />
             </div>
           } />
+
+          <Route path="/3rdpartydetails"
+            element={
+              <div>
+                <NavigationBar />
+                <ThirdPartyDetails />
+              </div>
+            }
+          />
+
+
           <Route path="/subscriberadd" element={
             <div>
               <NavigationBar />
-              <SubscriberAdd/>
+              <SubscriberAdd heading={"Subscriber"} mokData={{
+                zone_Status_Connection: true,
+              }} inputFieldName={{
+                name: "firstName",
+                address: "subscriberAddress",
+                currentBalance: true,
+                mobileNo: "subscriberMobileNo",
+                addhar: "subscriberAdharNo",
+                showAdhar: true,
+              }} />
             </div>
           } />
           <Route path="/subscriberView" element={
             <div>
               <NavigationBar />
-              <SubscriberView/>
+              <SubscriberView />
+            </div>
+          } />
+          <Route path="/employeeadd" element={
+            <div>
+              <NavigationBar />
+              <SubscriberAdd heading={"Employee"} mokData={{
+                zone_Status_Connection: false,
+              }} inputFieldName={{
+                name: "empName",
+                address: "empAddress",
+                currentBalance: false,
+                mobileNo: "empMobileNo",
+                addhar: "empAdharNo",
+                showAdhar: false,
+              }} />
+            </div>
+          } />
+          <Route path="/employeeView" element={
+            <div>
+              <NavigationBar />
+              <SubscriberView />
             </div>
           } />
           <Route path="/insert" element={<Insert />} />
