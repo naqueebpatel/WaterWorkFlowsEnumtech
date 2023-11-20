@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./SubscriberView.css"
+import "./SubscriberView.css";
 import {
   MDBBadge,
   MDBBtn,
@@ -18,13 +18,14 @@ import SubscriberEditModal from "./SubscriberEditModal";
 import Swal from "sweetalert2";
 
 export default function SubscriberView() {
-  const [subscriber, setSubscriber] = useState([]);
-  const [filteredSubscribers, setFilteredSubscribers] = useState([]);
-  const[selectedFilter,setSelectedFilter]=useState();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editSubscriber, setEditSubscriber] = useState([]);
+  const [ subscriber, setSubscriber ] = useState([]);
+  const [ filteredSubscribers, setFilteredSubscribers ] = useState([]);
+  const [ selectedFilter, setSelectedFilter ] = useState();
+  const [ searchTerm, setSearchTerm ] = useState('');
+  const [ loading, setLoading ] = useState(false);
+  const [ isEditModalOpen, setIsEditModalOpen ] = useState(false);
+  const [ editSubscriber, setEditSubscriber ] = useState([]);
+  const [ state, setState ] = useState(false);
 
   useEffect(() => {
     fetchSubscriberData();
@@ -33,13 +34,13 @@ export default function SubscriberView() {
   const fetchSubscriberData = async () => {
     try {
       setLoading(true);
-      Swal.isLoading()
+      Swal.isLoading();
       const response = await axios.get(
         'http://localhost:8090/waterwork/get/getAllSubscriber'
       );
       setSubscriber(response.data);
       setFilteredSubscribers(response.data); // Set filteredSubscribers initially with all data
-      Swal.hideLoading()
+      Swal.hideLoading();
     } catch (error) {
       console.error('Error fetching subscriber data:', error);
     } finally {
@@ -49,26 +50,26 @@ export default function SubscriberView() {
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
-    const {value}=event.target
+    const { value } = event.target;
 
-    switch(selectedFilter){   //diffrent value for filtering and diffrent value for searchterm
+    switch (selectedFilter) {   //diffrent value for filtering and diffrent value for searchterm
       case "By Name":
-        handleFilterName(value)
+        handleFilterName(value);
         break;
       case "By Aadhar":
-        handleFilterAadhar(value)
+        handleFilterAadhar(value);
         break;
       case "By Mobile No.":
-        handleFilterMobile(value)
+        handleFilterMobile(value);
         break;
       default:
         break;
     }
-  }
-  
+  };
+
 
   const handleFilterChange = (filter) => {
-    console.log(filter)
+    console.log(filter);
     setSelectedFilter(filter);
   };
 
@@ -80,10 +81,10 @@ export default function SubscriberView() {
   const closeEditModal = () => {
     setIsEditModalOpen(false);
     setEditSubscriber(null);
-    fetchSubscriberData()
+    fetchSubscriberData();
   };
 
-  const handleDelete = async(subscriberNo) => {
+  const handleDelete = async (subscriberNo) => {
     console.log(`Delete action for subscriber with ID ${subscriberNo}`);
     try {
       const result = await Swal.fire({
@@ -95,12 +96,12 @@ export default function SubscriberView() {
         cancelButtonColor: '#3085d6',
         confirmButtonText: 'Yes, delete it!',
       });
-  
+
       if (result.isConfirmed) {
         // User confirmed, proceed with the delete request
         await axios.post(`http://localhost:8090/waterwork/delete/deleteSubscriberById?subscriberNo=${subscriberNo}`);
         fetchSubscriberData();
-        
+
         // Show success message
         Swal.fire('Deleted!', 'The subscriber has been deleted.', 'success');
       }
@@ -111,39 +112,39 @@ export default function SubscriberView() {
     }
   };
 
-  const filterOptions = ["By Aadhar", "By Name", "By Mobile No."];
+  const filterOptions = [ "By Aadhar", "By Name", "By Mobile No." ];
 
-  const handleFilterName=(value)=>{
-    const filteredData=subscriber.filter((subscriber)=>{
+  const handleFilterName = (value) => {
+    const filteredData = subscriber.filter((subscriber) => {
       const firstName = subscriber.firstName.toLowerCase();
-        return firstName.includes(value.toLowerCase());
-    })
-    console.log(filteredData)
-    setFilteredSubscribers(filteredData)
-  }
+      return firstName.includes(value.toLowerCase());
+    });
+    console.log(filteredData);
+    setFilteredSubscribers(filteredData);
+  };
 
-  const handleFilterAadhar=(value)=>{
-    const filteredData=subscriber.filter((subscriber)=>{
+  const handleFilterAadhar = (value) => {
+    const filteredData = subscriber.filter((subscriber) => {
       const aadharNo = String(subscriber.subscriberAdharNo);
       return aadharNo.includes(value);
-    })
-    setFilteredSubscribers(filteredData)
-  }
+    });
+    setFilteredSubscribers(filteredData);
+  };
 
-  const handleFilterMobile=(value)=>{
-    const filteredData=subscriber.filter((subscriber)=>{
+  const handleFilterMobile = (value) => {
+    const filteredData = subscriber.filter((subscriber) => {
       const mobileNo = String(subscriber.subscriberMobileNo);
-        return mobileNo.includes(value);
-    })
-    setFilteredSubscribers(filteredData)
-  }
+      return mobileNo.includes(value);
+    });
+    setFilteredSubscribers(filteredData);
+  };
 
-  if(loading){
-    return(
+  if (loading) {
+    return (
       <div>
         Loading...
       </div>
-    )
+    );
   }
 
   return (
@@ -167,32 +168,34 @@ export default function SubscriberView() {
 
         {/* Filter Dropdown */}
         <MDBDropdown className="custom-dropdown">
-  <MDBDropdownToggle className="custom-dropdown-toggle">
-    {selectedFilter || "Select Filter"}
-  </MDBDropdownToggle>
-  <MDBDropdownMenu className="custom-dropdown-menu">
-    {/* Map through filter options to create dropdown items */}
-    {filterOptions.map((option) => (
-      <MDBDropdownItem key={option} onClick={() => handleFilterChange(option)}>
-        {option}
-      </MDBDropdownItem>
-    ))}
-  </MDBDropdownMenu>
-</MDBDropdown>
+          <MDBDropdownToggle className="custom-dropdown-toggle">
+            {selectedFilter || "Select Filter"}
+          </MDBDropdownToggle>
+          <MDBDropdownMenu className="custom-dropdown-menu">
+            {/* Map through filter options to create dropdown items */}
+            {filterOptions.map((option) => (
+              <MDBDropdownItem key={option} onClick={() => handleFilterChange(option)}>
+                {option}
+              </MDBDropdownItem>
+            ))}
+          </MDBDropdownMenu>
+        </MDBDropdown>
       </div>
 
       {/* Subscriber Table */}
       <MDBTable align="middle" className="table-bordered">
         <MDBTableHead>
           <tr className="table-success">
+            {!state && <th scope="col">Emp No.</th>}
             <th scope="col">Profile</th>
             <th scope="col">Name</th>
             <th scope="col">Aadhar Number</th>
             <th scope="col">Mobile Number</th>
-            <th scope="col">Status</th>
-            <th scope="col">Current Balance</th>
-            <th scope="col">Financial Status</th>
+            <th scope="col">{state ? "Status" : "Salary"}</th>
+            <th scope="col">{state ? "Current Balance" : "Date of Joining"}</th>
+            {state && <th scope="col">Financial Status</th>}
             <th scope="col">Actions</th>
+            {!state && <th scope="col">Attendance</th>}
           </tr>
         </MDBTableHead>
         <MDBTableBody>
@@ -219,10 +222,10 @@ export default function SubscriberView() {
                     subscriber.connectionStatus === "active"
                       ? "success"
                       : subscriber.connectionStatus === "paused"
-                      ? "primary"
-                      : subscriber.connectionStatus === "blocked"
-                      ? "danger"
-                      : "warning"
+                        ? "primary"
+                        : subscriber.connectionStatus === "blocked"
+                          ? "danger"
+                          : "warning"
                   }
                   pill
                 >
@@ -230,15 +233,15 @@ export default function SubscriberView() {
                     subscriber.connectionStatus === "active"
                       ? "Active"
                       : subscriber.connectionStatus === "paused"
-                      ? "Paused"
-                      : subscriber.connectionStatus === "blocked"
-                      ? "Blocked"
-                      : "warning"
+                        ? "Paused"
+                        : subscriber.connectionStatus === "blocked"
+                          ? "Blocked"
+                          : "warning"
                   }
                 </MDBBadge>
               </td>
               <td>{subscriber.currentBalance}</td>
-              <td>{subscriber.subsciberFinancialStatus==="0"?'POOR':'RICH'}</td>
+              <td>{subscriber.subsciberFinancialStatus === "0" ? 'POOR' : 'RICH'}</td>
               <td>
                 {/* Edit and Delete buttons with different icons */}
                 <MDBBtn
@@ -263,8 +266,8 @@ export default function SubscriberView() {
         </MDBTableBody>
       </MDBTable>
       {isEditModalOpen && (
-      <SubscriberEditModal subscriber={editSubscriber} closeEditModal={closeEditModal} />
-    )}
+        <SubscriberEditModal subscriber={editSubscriber} closeEditModal={closeEditModal} />
+      )}
     </MDBContainer>
   );
 }
