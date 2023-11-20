@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
-import 'react-date-picker/dist/DatePicker.css';
+// import 'react-date-picker/dist/DatePicker.css';
 import {
   MDBCard,
   MDBCardBody,
