@@ -18,7 +18,7 @@ const SubMenu = () => {
                     </li>
                     <li>Employee
                         <ul className='employee_drop-down sub-toggle'>
-                            <li><Link to='/employeeadd' style={colors} >Insert</Link></li>
+                            <li><Link to='/employeeAdd' style={colors} >Insert</Link></li>
                             <li><Link to='/employeeView' style={colors} >View</Link></li>
                         </ul>
                     </li>

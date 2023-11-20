@@ -10,6 +10,8 @@ import Zone from './components/Zone/Zone';
 import SubscriberAdd from "./components/Subscriber/SubscriberAdd.jsx";
 import SubscriberView from "./components/Subscriber/SubscriberView.jsx";
 import ThirdPartyDetails from "./components/3rdPartyDetails/ThirdPartyDetails.jsx";
+import EmployeeAdd from "./Employee/EmployeeAdd.jsx"
+import EmployeeView from "./Employee/EmployeeView.jsx";
 const App = () => {
   return (
     <>
@@ -42,21 +44,10 @@ const App = () => {
               </div>
             }
           />
-
-
           <Route path="/subscriberadd" element={
             <div>
               <NavigationBar />
-              <SubscriberAdd heading={"Subscriber"} mokData={{
-                zone_Status_Connection: true,
-              }} inputFieldName={{
-                name: "firstName",
-                address: "subscriberAddress",
-                currentBalance: true,
-                mobileNo: "subscriberMobileNo",
-                addhar: "subscriberAdharNo",
-                showAdhar: true,
-              }} />
+              <SubscriberAdd/>
             </div>
           } />
           <Route path="/subscriberView" element={
@@ -65,25 +56,16 @@ const App = () => {
               <SubscriberView />
             </div>
           } />
-          <Route path="/employeeadd" element={
+          <Route path="/employeeAdd" element={
             <div>
               <NavigationBar />
-              <SubscriberAdd heading={"Employee"} mokData={{
-                zone_Status_Connection: false,
-              }} inputFieldName={{
-                name: "empName",
-                address: "empAddress",
-                currentBalance: false,
-                mobileNo: "empMobileNo",
-                addhar: "empAdharNo",
-                showAdhar: false,
-              }} />
+              <EmployeeAdd/>
             </div>
           } />
           <Route path="/employeeView" element={
             <div>
               <NavigationBar />
-              <SubscriberView />
+              <EmployeeView/>
             </div>
           } />
           <Route path="/insert" element={<Insert />} />
