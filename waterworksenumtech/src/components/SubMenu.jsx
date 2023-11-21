@@ -23,6 +23,13 @@ const SubMenu = () => {
                         </ul>
                     </li>
                     <li><Link to='/3rdpartydetails'>3rd Party Details</Link></li>
+                    <li>Utility
+                        <ul>
+                            <li><Link to="/inward">Inward</Link></li>
+                            <li><Link to="/outward">OutWard</Link></li>
+                            <li><Link to="/product">Product</Link></li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
         </>

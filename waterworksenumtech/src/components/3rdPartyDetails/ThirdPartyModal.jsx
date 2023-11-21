@@ -12,6 +12,7 @@ function ThirdPartyModal(props) {
     const [ data, setData ] = useState({
         firstName: "",
         lastName: "",
+        number: "",
         profession: "",
     });
     const handleChange = (event) => {
@@ -64,6 +65,17 @@ function ThirdPartyModal(props) {
                                 placeholder="Last name"
                                 value={data.lastName}
                                 name="lastName"
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+                        <Form.Group as={Col} md="4" controlId="validationCustom02">
+                            <Form.Label>Mobile Number</Form.Label>
+                            <Form.Control
+                                required
+                                type="number"
+                                placeholder="Number"
+                                value={data.number}
+                                name="number"
                                 onChange={handleChange}
                             />
                         </Form.Group>

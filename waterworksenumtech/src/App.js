@@ -12,6 +12,10 @@ import SubscriberView from "./components/Subscriber/SubscriberView.jsx";
 import ThirdPartyDetails from "./components/3rdPartyDetails/ThirdPartyDetails.jsx";
 import EmployeeAdd from "./components/Employee/EmployeeAdd.jsx"
 import EmployeeView from "./components/Employee/EmployeeView.jsx";
+import Inward from "./components/Utility/Inward/Inward.jsx";
+import Outward from "./components/Utility/OutWard/Outward.jsx";
+import Product from "./components/Utility/product/Product.jsx";
+
 const App = () => {
   return (
     <>
@@ -44,6 +48,37 @@ const App = () => {
               </div>
             }
           />
+
+            <Route path="/inward"
+            element={
+              <div>
+                <NavigationBar/>
+                <Inward/>
+              </div>
+            }
+            />
+
+            <Route
+            path="/outward"
+            element={
+              <div>
+                <NavigationBar/>
+                <Outward/>
+              </div>
+            }
+            />
+
+            <Route
+            path="/product"
+            element={
+              <div>
+                <NavigationBar/>
+                <Product/>
+              </div>
+            }
+            />
+
+
           <Route path="/subscriberadd" element={
             <div>
               <NavigationBar />
