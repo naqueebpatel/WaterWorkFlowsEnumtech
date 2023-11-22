@@ -15,9 +15,11 @@
 .slide {
     display: inline-block;
     width: 100%;
-    border-radius: 40px;
+    /* height: 100%; */
+    object-fit: cover;
+    object-position: center;
+    /* border-radius: 40px; */
 }
-
 
 .slideshowDots {
     text-align: center;

@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Table from "./Table";
 import Swal from 'sweetalert2';
 
-function Zone() {
-  const [zone, setZone] = useState({
+function Zone({ setCollapsed }) {
+  const [ zone, setZone ] = useState({
     zonename: "",
   });
-  const [loading, setLoading] = useState(false);
+  const [ loading, setLoading ] = useState(false);
 
   const handleChange = (e) => {
-    setZone({ ...zone, [e.target.name]: e.target.value });
+    setZone({ ...zone, [ e.target.name ]: e.target.value });
   };
+
+  useEffect(() => {
+    setCollapsed(true);
+  }, []);
 
   const postZone = async (event) => {
     event.preventDefault();
@@ -33,7 +37,7 @@ function Zone() {
       Swal.fire('Success', 'Zone added successfully', 'success');
     } catch (error) {
       console.error("Error:", error.message);
-      
+
       // Show an error message using SweetAlert
       Swal.fire('Error', 'Failed to add zone', 'error');
     } finally {

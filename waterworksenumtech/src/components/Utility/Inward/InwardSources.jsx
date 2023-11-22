@@ -55,7 +55,8 @@ function InwardSources(props) {
                     </Modal.Footer>
                 </Modal>
             </Form>
-            <MDBContainer className="my-5 mt-4">
+            <MDBContainer style={{ width: "75%", position: "relative", top: "40px", left: "40px" }}>
+                <h1>Inward</h1>
                 <MDBTable align="middle" className="table-bordered">
                     <MDBTableHead>
                         <tr className="table-success">

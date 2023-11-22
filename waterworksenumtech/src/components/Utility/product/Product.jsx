@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     MDBBadge,
     MDBContainer,
@@ -17,10 +17,14 @@ const data = [
 ];
 
 
-const Product = () => {
+const Product = ({ setCollapsed }) => {
+    useEffect(() => {
+        setCollapsed(true);
+    }, []);
     return (
         <>
-            <MDBContainer className="my-5 mt-4">
+            <MDBContainer style={{ width: "75%", position: "relative", top: "40px", left: "40px" }}>
+                <h1>View :-</h1>
                 <MDBTable align="middle" className="table-bordered">
                     <MDBTableHead>
                         <tr className="table-success">

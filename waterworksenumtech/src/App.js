@@ -5,7 +5,6 @@ import Carousal from "./components/carousel/Carousal";
 import Insert from "./pages/Insert";
 import Delete from "./pages/Delete";
 import Update from "./pages/Update";
-import NavigationBar from "./components/NavigationBar";
 import Zone from './components/Zone/Zone';
 import SubscriberAdd from "./components/Subscriber/SubscriberAdd.jsx";
 import SubscriberView from "./components/Subscriber/SubscriberView.jsx";
@@ -15,36 +14,43 @@ import EmployeeView from "./components/Employee/EmployeeView.jsx";
 import Inward from "./components/Utility/Inward/Inward.jsx";
 import Outward from "./components/Utility/OutWard/Outward.jsx";
 import Product from "./components/Utility/product/Product.jsx";
+import SideBar from "./components/SideBar.jsx";
+import { useState } from "react";
 
 const App = () => {
+  const [collapsed,setCollapsed] = useState(true);
+  const toggle = ()=>{
+    setCollapsed(!collapsed);
+  }
   return (
     <>
       <Router>
         <Routes>
           <Route path="/" element={
             <div>
+              <SideBar collapsed={collapsed} toggle={toggle}/>
               <Navbar />
               <Carousal />
             </div>
           } />
           <Route path="/dashboard" element={
-            <div>
-              <NavigationBar />
-              <Dashboard />
+            <div >
+              <SideBar/>
+              <Dashboard setCollapsed={setCollapsed}/>
             </div>
           } />
           <Route path="/zone" element={
             <div>
-              <NavigationBar />
-              <Zone />
+              <SideBar/>
+              <Zone setCollapsed={setCollapsed}/>
             </div>
           } />
 
           <Route path="/3rdpartydetails"
             element={
               <div>
-                <NavigationBar />
-                <ThirdPartyDetails />
+                <SideBar/>
+                <ThirdPartyDetails setCollapsed={setCollapsed} />
               </div>
             }
           />
@@ -52,8 +58,8 @@ const App = () => {
             <Route path="/inward"
             element={
               <div>
-                <NavigationBar/>
-                <Inward/>
+                <SideBar/>
+                <Inward setCollapsed={setCollapsed}/>
               </div>
             }
             />
@@ -62,8 +68,8 @@ const App = () => {
             path="/outward"
             element={
               <div>
-                <NavigationBar/>
-                <Outward/>
+                <SideBar/>
+                <Outward setCollapsed={setCollapsed} />
               </div>
             }
             />
@@ -72,8 +78,8 @@ const App = () => {
             path="/product"
             element={
               <div>
-                <NavigationBar/>
-                <Product/>
+                <SideBar/>
+                <Product setCollapsed={setCollapsed}/>
               </div>
             }
             />
@@ -81,26 +87,26 @@ const App = () => {
 
           <Route path="/subscriberadd" element={
             <div>
-              <NavigationBar />
-              <SubscriberAdd/>
+              <SideBar/>
+              <SubscriberAdd  setCollapsed={setCollapsed}/>
             </div>
           } />
           <Route path="/subscriberView" element={
             <div>
-              <NavigationBar />
-              <SubscriberView />
+              <SideBar/>
+              <SubscriberView  setCollapsed={setCollapsed}/>
             </div>
           } />
           <Route path="/employeeAdd" element={
             <div>
-              <NavigationBar />
-              <EmployeeAdd/>
+              <SideBar/>
+              <EmployeeAdd  setCollapsed={setCollapsed}/>
             </div>
           } />
           <Route path="/employeeView" element={
             <div>
-              <NavigationBar />
-              <EmployeeView/>
+              <SideBar/>
+              <EmployeeView  setCollapsed={setCollapsed}/>
             </div>
           } />
           <Route path="/insert" element={<Insert />} />

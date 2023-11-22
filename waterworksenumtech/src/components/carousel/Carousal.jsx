@@ -2,20 +2,15 @@ import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import '../../styles/carousel.css';
-import image1 from '../../carousalImages/aventador_sv_coupe_s_03.jpg';
-import image2 from '../../carousalImages/aventador_svj_s2.webp';
-import image3 from '../../carousalImages/Lamborgini3.jpeg';
-import image4 from '../../carousalImages/Lamborgini4.jpeg';
+import image1 from '../../carousalImages/waterworks1.jpg';
+import image3 from '../../carousalImages/waterworks3.jpg';
+import image4 from '../../carousalImages/waterworks4.jpg';
 import Home from './../../pages/Home';
 
 const images = [
     {
         url: `${image1}`,
         caption: "First Image",
-    },
-    {
-        url: `${image2}`,
-        caption: "Second Image",
     },
     {
         url: `${image3}`,

@@ -1,7 +1,7 @@
 import { FcSalesPerformance } from 'react-icons/fc';
 import { FaPeopleArrows } from 'react-icons/fa';
 import { IoIosPeople } from 'react-icons/io';
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Data, PieData } from '../components/SlidebarData';
 import { PieChart, Pie, Sector, Cell } from 'recharts';
@@ -19,7 +19,10 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
         </text>
     );
 };
-const Dashboard = () => {
+const Dashboard = ({ setCollapsed }) => {
+    useEffect(() => {
+        setCollapsed(true);
+    }, []);
     return (
         <>
             <main className="main-container">
