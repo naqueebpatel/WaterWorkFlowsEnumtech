@@ -1,5 +1,5 @@
-import image1 from '../carousalImages/aventador_sv_coupe_s_03.jpg';
-import image2 from '../carousalImages/aventador_svj_s2.webp';
+import image1 from '../carousalImages/waterworks2.jpg';
+import image2 from '../carousalImages/waterworks5.jpg';
 import '../styles/about.css';
 
 const AboutUs = () => {

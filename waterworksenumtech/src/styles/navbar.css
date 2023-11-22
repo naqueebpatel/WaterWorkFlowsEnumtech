@@ -1,218 +1,47 @@
-.navbar {
-    background-color: #F1EAFF;
-    border-bottom-right-radius: 40%;
+header img {
+    width: 255px;
+    height: 69px;
 }
 
-.top {
-    display: grid;
-    grid-template-columns: 3fr 3fr;
-    font-family: 'Wix Madefor Display', sans-serif;
+header {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(3.5px);
+    -webkit-backdrop-filter: blur(3.5px);
 }
 
-/* Right */
-
-.right {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-}
-
-.links {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 80px;
-    font-size: 1.2rem;
-}
-
-.right .profilephoto {
-    display: grid;
-    place-items: center;
-}
-
-.right .profilephoto img {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border: 1.2px solid gray;
-    cursor: pointer;
-}
-
-.right .profilephoto img:hover {
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-}
-
-.links a {
-    font-family: 'Wix Madefor Display', sans-serif;
+li,
+a {
+    font-weight: 500;
+    font-size: 20px;
+    color: #edf0f1;
     text-decoration: none;
-    font: 20px Wix Madefor Display;
-    margin: 0px 10px;
-    padding: 10px 10px;
-    position: relative;
-    z-index: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10%;
+}
+
+.logo {
     cursor: pointer;
-    color: black;
 }
 
-
-div.topBotomBordersOut a:before,
-div.topBotomBordersOut a:after {
-    position: absolute;
-    left: 0px;
-    width: 100%;
-    height: 2px;
-    background: black;
-    content: "";
-    opacity: 0;
-    transition: all 0.3s;
-}
-
-div.topBotomBordersOut a:before {
-    top: 0px;
-    transform: translateY(10px);
-}
-
-div.topBotomBordersOut a:after {
-    bottom: 0px;
-    transform: translateY(-10px);
-}
-
-div.topBotomBordersOut a:hover:before,
-div.topBotomBordersOut a:hover:after {
-    opacity: 1;
-    transform: translateY(0px);
-}
-
-
-/* Left */
-
-.left {
-    display: flex;
-}
-
-.logo h3 {
-    font-size: 3.75rem;
-    position: relative;
-    left: 45px;
-}
-
-.navigate {
-    display: inline;
-    position: relative;
-    margin-left: 10px;
-}
-
-
-/* Bottom */
-.bottom {
-    display: grid;
-    grid-template-columns: 9fr 1fr;
-}
-
-.bottom-right {
-    width: 100%;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-}
-
-.bottom-right img {
-    width: 125px;
-}
-
-.bottom-left {
-    display: grid;
-    place-items: flex-start;
-    font-family: 'Wix Madefor Display', sans-serif;
-}
-
-.bottom-left p {
-    width: 35vw
-}
-
-.bottom-left p {
-    position: relative;
-    left: 117px;
-    font-family: 'Wix Madefor Display', sans-serif;
-}
-
-.bottom-left button {
-    position: relative;
-    left: 117px;
-}
-
-
-
-.navigation {
-    background-color: #F1EAFF;
-    height: 80px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.menu-bars {
-    margin-left: 2rem;
-    font-size: 2rem;
-    background: none;
-}
-
-.nav-menu {
-    background-color: #F1EAFF;
-    width: 250px;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: -100%;
-    transition: 850ms;
-}
-
-.nav-menu.active {
-    z-index: 3;
-    left: 0;
-    transition: 350ms;
-}
-
-.nav-text {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 8px 0px 8px 16px;
+.nav_links {
+    display: inline-block;
     list-style: none;
-    height: 60px;
-}
-
-.nav-text a {
-    text-decoration: none;
-    color: #000000;
-    font-size: 18px;
-    width: 95%;
-    height: 100%;
+    padding: 0 20px;
     display: flex;
     align-items: center;
-    padding: 0 16px;
-    border-radius: 4px;
 }
 
-.nav-text a:hover {
-    background-color: #1a83ff;
+.nav_links li a {
+    transition: all .3s ease 0s;
+    color: white;
+    margin-left: 20px;
 }
 
-.nav-menu-items {
-    width: 100%;
-}
-
-.navbar-toggle {
-    background-color: #F1EAFF;
-    width: 100%;
-    height: 80px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-span {
-    margin-left: 16px;
+.nav_links li a:hover {
+    color: #0088a9;
 }

@@ -1,0 +1,40 @@
+* {
+    border: none;
+    outline: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+.sidebar {
+    color: #fff;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    padding: 10px;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    border: 50%;
+    background-color: rgba(28, 17, 41, .88);
+
+}
+
+.menu-bar {
+    height: 90vh;
+    margin-top: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-size: 1rem;
+    position: relative;
+}

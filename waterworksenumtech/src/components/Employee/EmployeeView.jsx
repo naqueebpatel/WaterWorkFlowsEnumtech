@@ -18,21 +18,23 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import EmployeeEditModal from "./EmployeeEditModal";
 import EmployeeAttendanceModal from "./EmployeeAttendanceModal";
+import LoaderComp from "../LoaderComp";
 
-export default function EmployeeView() {
-  const [employee, setEmployee] = useState([]);
-  const [filteredEmployee, setfilteredEmployee] = useState([]);
-  const [selectedFilter, setSelectedFilter] = useState();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editEmployee, seteditEmployee] = useState([]);
-  const [isAttendanceModalOpen, setIsAttendanceModalOpen] = useState(false);
-  const [selectedEmployee, setSelectedEmployee] = useState(
+export default function EmployeeView({ setCollapsed }) {
+  const [ employee, setEmployee ] = useState([]);
+  const [ filteredEmployee, setfilteredEmployee ] = useState([]);
+  const [ selectedFilter, setSelectedFilter ] = useState();
+  const [ searchTerm, setSearchTerm ] = useState("");
+  const [ loading, setLoading ] = useState(false);
+  const [ isEditModalOpen, setIsEditModalOpen ] = useState(false);
+  const [ editEmployee, seteditEmployee ] = useState([]);
+  const [ isAttendanceModalOpen, setIsAttendanceModalOpen ] = useState(false);
+  const [ selectedEmployee, setSelectedEmployee ] = useState(
     {}
   );
 
   useEffect(() => {
+    setCollapsed(true);
     fetchSubscriberData();
   }, []);
 
@@ -57,7 +59,7 @@ export default function EmployeeView() {
     const { value } = event.target;
 
     switch (
-      selectedFilter //diffrent value for filtering and diffrent value for searchterm
+    selectedFilter //diffrent value for filtering and diffrent value for searchterm
     ) {
       case "By Name":
         handleFilterName(value);
@@ -168,16 +170,20 @@ export default function EmployeeView() {
 
   const handleAttendanceCheck = (employee) => {
     setSelectedEmployee(employee);
-  
+
     setIsAttendanceModalOpen(true);
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>
+      <div style={{ display: "grid", placeItems: "center", height: "100vh", width: "100vw" }}>
+        <LoaderComp />
+      </div>;
+    </div>;
   }
 
   return (
-    <MDBContainer className="my-5 mt-4">
+    <MDBContainer style={{ width: "fit-content", position: "relative", top: "40px", left: "40px" }}>
       {/* Search Bar and Filter Options with Margins */}
 
       <div className="mb-3 d-flex align-items-center">
@@ -287,12 +293,12 @@ export default function EmployeeView() {
         />
       )}
       {isAttendanceModalOpen && (
-      <EmployeeAttendanceModal
-        isOpen={isAttendanceModalOpen}
-        closeModal={() => setIsAttendanceModalOpen(false)}
-        attendanceData={selectedEmployee}
-      />
-    )}
+        <EmployeeAttendanceModal
+          isOpen={isAttendanceModalOpen}
+          closeModal={() => setIsAttendanceModalOpen(false)}
+          attendanceData={selectedEmployee}
+        />
+      )}
     </MDBContainer>
   );
 }

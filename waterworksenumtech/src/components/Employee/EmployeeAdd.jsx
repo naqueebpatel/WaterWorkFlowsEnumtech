@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -13,9 +13,13 @@ import {
   MDBTypography,
   MDBIcon,
 } from "mdb-react-ui-kit";
+import LoaderComp from "../LoaderComp";
 
-const EmployeeAdd = () => {
-  const [loading, setLoading] = useState(false);
+const EmployeeAdd = ({ setCollapsed }) => {
+  const [ loading, setLoading ] = useState(false);
+  useEffect(() => {
+    setCollapsed(true);
+  }, []);
 
   const validationSchema = Yup.object().shape({
     empAdharNo: Yup.string()
@@ -50,10 +54,10 @@ const EmployeeAdd = () => {
   const handleSubmit = async (values, { resetForm }) => {
     try {
 
-      const {empDOJ} = values; // Replace this with your actual date string
+      const { empDOJ } = values; // Replace this with your actual date string
       const dateObject = new Date(empDOJ);
-      const formattedDate = dateObject.toISOString().split('T')[0];
-      console.log(formattedDate); 
+      const formattedDate = dateObject.toISOString().split('T')[ 0 ];
+      console.log(formattedDate);
 
 
       const empName = `${values.firstName} ${values.lastName}`;
@@ -62,7 +66,7 @@ const EmployeeAdd = () => {
       const payload = {
         ...values,
         empName: empName,
-        empDOJ:formattedDate
+        empDOJ: formattedDate
       };
 
       delete payload.firstName;
@@ -126,7 +130,11 @@ const EmployeeAdd = () => {
   };
 
   if (loading) {
-    return <div>LOADING...</div>;
+    return <div>
+      <div style={{ display: "grid", placeItems: "center", height: "100vh", width: "100vw" }}>
+        <LoaderComp />
+      </div>;
+    </div>;
   }
   return (
     <MDBContainer className="py-5" style={{ maxWidth: "900px" }}>
@@ -289,15 +297,15 @@ const EmployeeAdd = () => {
                     </MDBRow>
 
                     <MDBCol md="6">
-                          <label htmlFor="empDOJ" className="form-label">
-                            Date Of Joining
-                          </label>
-                          <Field
-                            type="date"
-                            name="empDOJ"
-                            className="form-control mb-2"
-                          />
-                        </MDBCol>
+                      <label htmlFor="empDOJ" className="form-label">
+                        Date Of Joining
+                      </label>
+                      <Field
+                        type="date"
+                        name="empDOJ"
+                        className="form-control mb-2"
+                      />
+                    </MDBCol>
 
                     <div className="d-flex justify-content-end pt-3">
                       <button

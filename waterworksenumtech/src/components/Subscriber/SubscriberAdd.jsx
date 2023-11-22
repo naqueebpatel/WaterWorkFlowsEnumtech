@@ -13,12 +13,15 @@ import {
   MDBTypography,
   MDBIcon,
 } from "mdb-react-ui-kit";
+import LoaderComp from "../LoaderComp";
 
-const SubscriberAdd = () => {
+const SubscriberAdd = ({ setCollapsed }) => {
   const [ zoneData, setZoneData ] = useState([]);
   const [ loading, setLoading ] = useState(false);
 
+
   useEffect(() => {
+    setCollapsed(true);
     fetchZoneData();
   }, []);
 
@@ -104,7 +107,9 @@ const SubscriberAdd = () => {
   };
 
   if (loading) {
-    return <div>LOADING...</div>;
+    return <div style={{ display: "grid", placeItems: "center", height: "100vh", width: "100vw" }}>
+      <LoaderComp />
+    </div>;
   }
   return (
     <MDBContainer className="py-5" style={{ maxWidth: "900px" }}>
