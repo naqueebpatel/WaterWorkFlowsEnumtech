@@ -36,21 +36,29 @@ const MenuList = () => {
                 <Menu.Item key="employee-insert"><Link to="/employeeadd">Insert</Link></Menu.Item>
                 <Menu.Item key="employee-view"><Link to="/employeeView">View</Link></Menu.Item>
             </Menu.SubMenu>
+            <Menu.SubMenu
+                key="utility"
+                icon={<FaUserAlt />}
+                title="Utility"
+            >
+                <Menu.Item key="outward"><Link to="/outwardSource">OutWard</Link></Menu.Item>
+                <Menu.Item key="inward"><Link to="/inwardSource">Inward</Link></Menu.Item>
+                <Menu.Item key="product"><Link to="/productSource">Product</Link></Menu.Item>
+            </Menu.SubMenu>
+            <Menu.SubMenu
+                key="transaction"
+                icon={<FaUserAlt />}
+                title="Transaction"
+            >
+                <Menu.Item key="inwardTrans"><Link to="/inwardTrans">Inward </Link></Menu.Item>
+                <Menu.Item key="outwardTrans"><Link to="/outwardTrans">Outward </Link></Menu.Item>
+            </Menu.SubMenu>
             <Menu.Item
                 key="third-party"
                 icon={<TbPhysotherapist />}
             >
                 <Link to="/3rdpartydetails">Third Party</Link>
             </Menu.Item>
-            <Menu.SubMenu
-                key="utility"
-                icon={<FaUserAlt />}
-                title="Utility"
-            >
-                <Menu.Item key="outward"><Link to="/outward">OutWard</Link></Menu.Item>
-                <Menu.Item key="inward"><Link to="/inward">Inward</Link></Menu.Item>
-                <Menu.Item key="product"><Link to="/product">Product</Link></Menu.Item>
-            </Menu.SubMenu>
         </Menu>
     );
 };

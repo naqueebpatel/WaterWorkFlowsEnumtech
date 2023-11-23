@@ -9,21 +9,73 @@ import {
     MDBTable,
     MDBTableHead,
     MDBTableBody,
+    MDBBtn,
 } from "mdb-react-ui-kit";
-import outward from '../Images/OutWard.avif';
+import Outward from "../Images/OutWard.avif"
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
-const data = [
-    { id: 1, name: "Filter Water" },
-    { id: 2, name: "Bottle Cap" },
-    { id: 3, name: "Water Bottle" },
-    { id: 4, name: "Charity" },
-];
 
-function OutWardSources(props) {
+function OutwardSource(props) {
+
+    const[outwardData,setOutwardData]=useState([]);
+    const[loading,setLoading]=useState(false)
+
+    useEffect(() => {
+        fetchOutwardData();
+      }, []);
+    
+      const fetchOutwardData = async () => {
+        try {
+          setLoading(true);
+          const response = await axios.get(
+            "http://localhost:8090/waterwork/get/getAllOutwardSource"
+          );
+          setOutwardData(response.data); // Assuming data is an array of objects with zonename and zoneno attributes
+        } catch (error) {
+          console.error("Error fetching zone data:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+    const [outward,setOutward]=useState({
+        outwardSname:""
+    })
+
+    const handleChange=(event)=>{
+        const {name,value}=event.target
+        console.log(outward)
+        setOutward({
+            ...outward,
+            [name]:value
+        })
+    }
+
+    const handleSubmit=(event)=>{
+        event.preventDefault();
+
+    axios
+    .post(`http://localhost:8090/waterwork/add/addOutwardSource`, outward)
+    .then((response) => {
+      console.log("Response data:", response.data);
+      props.onHide()
+      if (response.status === 200) {
+        Swal.fire('Success', 'Record updated successfully', 'success');
+        fetchOutwardData()
+      } else {
+        Swal.fire('Error', 'Failed to update record', 'error');
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error.message);
+      Swal.fire('Error','Failed to update record','error')
+    });
+    }
 
     return (
         <>
-            <Form>
                 <Modal
                     {...props}
                     size="lg"
@@ -32,17 +84,20 @@ function OutWardSources(props) {
                 >
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">
-                            Add Details
+                            Add Outward Source
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Row className="mb-3">
                             <Form.Group as={Col} md="12" controlId="validationCustom01">
-                                <Form.Label>OutWard Name</Form.Label>
+                                <Form.Label>Outward name</Form.Label>
                                 <Form.Control
                                     required
                                     type="text"
-                                    placeholder="OutWard Name"
+                                    placeholder="Outward Name"
+                                    name="outwardSname"
+                                    outward={outward.outwardSname}
+                                    onChange={handleChange}
                                 />
                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             </Form.Group>
@@ -51,12 +106,10 @@ function OutWardSources(props) {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={props.onHide}>Close</Button>
-                        <Button type="submit">Submit form</Button>
+                        <MDBBtn onClick={handleSubmit}>PAY</MDBBtn>
                     </Modal.Footer>
                 </Modal>
-            </Form>
-            <MDBContainer style={{ width: "75%", position: "relative", top: "40px", left: "40px" }}>
-                <h1>Outward</h1>
+            <MDBContainer className="my-5 mt-4">
                 <MDBTable align="middle" className="table-bordered">
                     <MDBTableHead>
                         <tr className="table-success">
@@ -67,31 +120,31 @@ function OutWardSources(props) {
                     </MDBTableHead>
                     <MDBTableBody>
                         {
-                            data.map((value, index) => {
+                            outwardData.map((outward, index) => {
                                 return (
                                     <tr className="table-info">
                                         <td className='text-center'>
                                             <img
-                                                src={outward}
+                                                src={Outward}
                                                 alt={`Avatar`}
                                                 style={{ width: "55px", height: "55px" }}
                                                 className="rounded-circle "
                                             />
                                         </td>
                                         <td>
-                                            <p className="fw-bold mb-1 text-center fs-4">{value.id}</p>
+                                            <p className="fw-bold mb-1 text-center fs-4">{outward.outwardSid}</p>
                                         </td>
                                         <td>
                                             <p className="mb-0 fw-bold fs-5 text-center">
                                                 <MDBBadge
                                                     color={
-                                                        value.id % 2 === 0 ? "success" : "primary"
+                                                        outward.id % 2 === 0 ? "success" : "primary"
                                                     }
                                                     pill
 
                                                 >
                                                     {
-                                                        value.name % 2 === 0 ? value.name : value.name
+                                                        outward.name % 2 === 0 ? outward.outwardSname : outward.outwardSname
                                                     }
                                                 </MDBBadge>
                                             </p>
@@ -107,4 +160,4 @@ function OutWardSources(props) {
     );
 }
 
-export default OutWardSources;
+export default OutwardSource;
