@@ -16,6 +16,7 @@ import Outward from "./components/Utility/OutWard/Outward.jsx";
 import Product from "./components/Utility/product/Product.jsx";
 import SideBar from "./components/SideBar.jsx";
 import { useState } from "react";
+import InwardTransaction from "./components/Transaction/InwardTransaction.jsx";
 
 const App = () => {
   const [collapsed,setCollapsed] = useState(true);
@@ -55,7 +56,7 @@ const App = () => {
             }
           />
 
-            <Route path="/inward"
+            <Route path="/inwardSource"
             element={
               <div>
                 <SideBar/>
@@ -65,7 +66,7 @@ const App = () => {
             />
 
             <Route
-            path="/outward"
+            path="/outwardSource"
             element={
               <div>
                 <SideBar/>
@@ -75,7 +76,7 @@ const App = () => {
             />
 
             <Route
-            path="/product"
+            path="/productSource"
             element={
               <div>
                 <SideBar/>
@@ -109,6 +110,13 @@ const App = () => {
               <EmployeeView  setCollapsed={setCollapsed}/>
             </div>
           } />
+          <Route path="/inwardTrans" element={
+            <div>
+              <SideBar/>
+              <InwardTransaction setCollapsed={setCollapsed}/>
+            </div>
+          } />
+          
           <Route path="/insert" element={<Insert />} />
           <Route path="/delete" element={<Delete />} />
           <Route path='/update' element={<Update />} />

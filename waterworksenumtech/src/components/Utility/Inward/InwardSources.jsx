@@ -9,21 +9,74 @@ import {
     MDBTable,
     MDBTableHead,
     MDBTableBody,
+    MDBBtn,
 } from "mdb-react-ui-kit";
-import inward from '../Images/Inward.jpg';
+import Inward from '../Images/Inward.jpg';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
-const data = [
-    { id: 1, name: "Filter Water" },
-    { id: 2, name: "Bottle Cap" },
-    { id: 3, name: "Water Bottle" },
-    { id: 4, name: "Charity" },
-];
 
 function InwardSources(props) {
 
+    const[inwardData,setInwardData]=useState([]);
+    const[loading,setLoading]=useState(false)
+
+    useEffect(() => {
+        fetchInwardData();
+      }, []);
+    
+      const fetchInwardData = async () => {
+        try {
+          setLoading(true);
+          const response = await axios.get(
+            "http://localhost:8090/waterwork/get/getAllInwardSource"
+          );
+          setInwardData(response.data); // Assuming data is an array of objects with zonename and zoneno attributes
+        } catch (error) {
+          console.error("Error fetching zone data:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+    const [inward,setInward]=useState({
+        inwardSname:""
+    })
+
+    const handleChange=(event)=>{
+        const {name,value}=event.target
+        console.log(inward)
+        setInward({
+            ...inward,
+            [name]:value
+        })
+    }
+
+    const handleSubmit=(event)=>{
+        event.preventDefault()
+        console.log(inward)
+
+    axios
+    .post(`http://localhost:8090/waterwork/add/addInwardSource`, inward)
+    .then((response) => {
+      console.log("Response data:", response.data);
+      props.onHide()
+      if (response.status === 200) {
+        Swal.fire('Success', 'Record updated successfully', 'success');
+        fetchInwardData()
+      } else {
+        Swal.fire('Error', 'Failed to update record', 'error');
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error.message);
+      Swal.fire('Error','Failed to update record','error')
+    });
+    }
+
     return (
         <>
-            <Form>
                 <Modal
                     {...props}
                     size="lg"
@@ -32,7 +85,7 @@ function InwardSources(props) {
                 >
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">
-                            Add Details
+                            Add Inward Source
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -43,6 +96,9 @@ function InwardSources(props) {
                                     required
                                     type="text"
                                     placeholder="Inward Name"
+                                    name="inwardSname"
+                                    inward={inward.inwardSname}
+                                    onChange={handleChange}
                                 />
                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             </Form.Group>
@@ -51,12 +107,10 @@ function InwardSources(props) {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={props.onHide}>Close</Button>
-                        <Button type="submit">Submit form</Button>
+                        <MDBBtn onClick={handleSubmit}>PAY</MDBBtn>
                     </Modal.Footer>
                 </Modal>
-            </Form>
-            <MDBContainer style={{ width: "75%", position: "relative", top: "40px", left: "40px" }}>
-                <h1>Inward</h1>
+            <MDBContainer className="my-5 mt-4">
                 <MDBTable align="middle" className="table-bordered">
                     <MDBTableHead>
                         <tr className="table-success">
@@ -67,31 +121,31 @@ function InwardSources(props) {
                     </MDBTableHead>
                     <MDBTableBody>
                         {
-                            data.map((value, index) => {
+                            inwardData.map((inward, index) => {
                                 return (
                                     <tr className="table-info">
                                         <td className='text-center'>
                                             <img
-                                                src={inward}
+                                                src={Inward}
                                                 alt={`Avatar`}
                                                 style={{ width: "55px", height: "55px" }}
                                                 className="rounded-circle "
                                             />
                                         </td>
                                         <td>
-                                            <p className="fw-bold mb-1 text-center fs-4">{value.id}</p>
+                                            <p className="fw-bold mb-1 text-center fs-4">{inward.inwardSid}</p>
                                         </td>
                                         <td>
                                             <p className="mb-0 fw-bold fs-5 text-center">
                                                 <MDBBadge
                                                     color={
-                                                        value.id % 2 === 0 ? "success" : "primary"
+                                                        inward.id % 2 === 0 ? "success" : "primary"
                                                     }
                                                     pill
 
                                                 >
                                                     {
-                                                        value.name % 2 === 0 ? value.name : value.name
+                                                        inward.name % 2 === 0 ? inward.inwardSname : inward.inwardSname
                                                     }
                                                 </MDBBadge>
                                             </p>
