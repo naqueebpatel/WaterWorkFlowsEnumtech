@@ -112,7 +112,12 @@ const SubscriberAdd = ({ setCollapsed }) => {
     </div>;
   }
   return (
-    <MDBContainer className="py-5" style={{ maxWidth: "900px" }}>
+    <MDBContainer style={{
+      maxWidth: "1100px", position: "relative",
+      left: "75px",
+      padding: "105px",
+      overflow: "hidden"
+    }}>
       <MDBRow className="justify-content-center align-items-center">
         <MDBCol>
           <MDBCard className="my-4 shadow-5 justify-content-center align-items-center">

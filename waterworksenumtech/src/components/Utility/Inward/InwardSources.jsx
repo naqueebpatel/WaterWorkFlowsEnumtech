@@ -19,98 +19,102 @@ import Swal from 'sweetalert2';
 
 function InwardSources(props) {
 
-    const[inwardData,setInwardData]=useState([]);
-    const[loading,setLoading]=useState(false)
+    const [ inwardData, setInwardData ] = useState([]);
+    const [ loading, setLoading ] = useState(false);
 
     useEffect(() => {
         fetchInwardData();
-      }, []);
-    
-      const fetchInwardData = async () => {
+    }, []);
+
+    const fetchInwardData = async () => {
         try {
-          setLoading(true);
-          const response = await axios.get(
-            "http://localhost:8090/waterwork/get/getAllInwardSource"
-          );
-          setInwardData(response.data); // Assuming data is an array of objects with zonename and zoneno attributes
+            setLoading(true);
+            const response = await axios.get(
+                "http://localhost:8090/waterwork/get/getAllInwardSource"
+            );
+            setInwardData(response.data); // Assuming data is an array of objects with zonename and zoneno attributes
         } catch (error) {
-          console.error("Error fetching zone data:", error);
+            console.error("Error fetching zone data:", error);
         } finally {
-          setLoading(false);
+            setLoading(false);
         }
-      };
+    };
 
-    const [inward,setInward]=useState({
-        inwardSname:""
-    })
+    const [ inward, setInward ] = useState({
+        inwardSname: ""
+    });
 
-    const handleChange=(event)=>{
-        const {name,value}=event.target
-        console.log(inward)
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        console.log(inward);
         setInward({
             ...inward,
-            [name]:value
-        })
-    }
+            [ name ]: value
+        });
+    };
 
-    const handleSubmit=(event)=>{
-        event.preventDefault()
-        console.log(inward)
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(inward);
 
-    axios
-    .post(`http://localhost:8090/waterwork/add/addInwardSource`, inward)
-    .then((response) => {
-      console.log("Response data:", response.data);
-      props.onHide()
-      if (response.status === 200) {
-        Swal.fire('Success', 'Record updated successfully', 'success');
-        fetchInwardData()
-      } else {
-        Swal.fire('Error', 'Failed to update record', 'error');
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error.message);
-      Swal.fire('Error','Failed to update record','error')
-    });
-    }
+        axios
+            .post(`http://localhost:8090/waterwork/add/addInwardSource`, inward)
+            .then((response) => {
+                console.log("Response data:", response.data);
+                props.onHide();
+                if (response.status === 200) {
+                    Swal.fire('Success', 'Record updated successfully', 'success');
+                    fetchInwardData();
+                } else {
+                    Swal.fire('Error', 'Failed to update record', 'error');
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error.message);
+                Swal.fire('Error', 'Failed to update record', 'error');
+            });
+    };
 
     return (
         <>
-                <Modal
-                    {...props}
-                    size="lg"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title-vcenter">
-                            Add Inward Source
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Row className="mb-3">
-                            <Form.Group as={Col} md="12" controlId="validationCustom01">
-                                <Form.Label>Inward name</Form.Label>
-                                <Form.Control
-                                    required
-                                    type="text"
-                                    placeholder="Inward Name"
-                                    name="inwardSname"
-                                    inward={inward.inwardSname}
-                                    onChange={handleChange}
-                                />
-                                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                            </Form.Group>
-                        </Row>
+            <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        Add Inward Source
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Row className="mb-3">
+                        <Form.Group as={Col} md="12" controlId="validationCustom01">
+                            <Form.Label>Inward name</Form.Label>
+                            <Form.Control
+                                required
+                                type="text"
+                                placeholder="Inward Name"
+                                name="inwardSname"
+                                inward={inward.inwardSname}
+                                onChange={handleChange}
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                    </Row>
 
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button onClick={props.onHide}>Close</Button>
-                        <MDBBtn onClick={handleSubmit}>PAY</MDBBtn>
-                    </Modal.Footer>
-                </Modal>
-            <MDBContainer className="my-5 mt-4">
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={props.onHide}>Close</Button>
+                    <MDBBtn onClick={handleSubmit}>PAY</MDBBtn>
+                </Modal.Footer>
+            </Modal>
+            <MDBContainer className="my-5 mt-4" style={{
+                position: "relative",
+                left: "6vw",
+                width: "60dvw"
+            }}>
                 <MDBTable align="middle" className="table-bordered">
                     <MDBTableHead>
                         <tr className="table-success">

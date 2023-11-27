@@ -183,7 +183,13 @@ export default function EmployeeView({ setCollapsed }) {
   }
 
   return (
-    <MDBContainer style={{ width: "fit-content", position: "relative", top: "40px", left: "40px" }}>
+    // TO make the Container in Middle.
+    <MDBContainer style={{
+      width: "fit-content",
+      position: "relative",
+      top: "8vh",
+      left: "8vw"
+    }}>
       {/* Search Bar and Filter Options with Margins */}
 
       <div className="mb-3 d-flex align-items-center">
@@ -192,7 +198,7 @@ export default function EmployeeView({ setCollapsed }) {
           label="Search"
           value={searchTerm}
           onChange={handleSearch}
-          className="mb-2 me-2 square-search"
+          className="mb-2 me-2 square-search text-white"
           style={{ marginRight: "8px" }}
         />
 
@@ -208,6 +214,9 @@ export default function EmployeeView({ setCollapsed }) {
             {/* Map through filter options to create dropdown items */}
             {filterOptions.map((option) => (
               <MDBDropdownItem
+                className="text-dark"
+                // Adding Style of Cursor Pointer.
+                style={{ cursor: "pointer" }}
                 key={option}
                 onClick={() => handleFilterChange(option)}
               >
