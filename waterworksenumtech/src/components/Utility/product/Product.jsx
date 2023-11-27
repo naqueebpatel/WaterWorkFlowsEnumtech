@@ -9,18 +9,14 @@ import {
 import product from '../Images/Product.jpg';
 
 
-const data = [
-    { id: 1, name: "Filter Water", quantity: 1 },
-    { id: 2, name: "Bottle Cap", quantity: 3 },
-    { id: 3, name: "Water Bottle", quantity: 2 },
-    { id: 4, name: "Charity", quantity: 5 },
-];
-
-
 const Product = ({ setCollapsed }) => {
     useEffect(() => {
         setCollapsed(true);
     }, []);
+
+    
+
+
     return (
         <>
             <MDBContainer style={{ width: "75%", position: "relative", top: "40px", left: "40px" }}>
