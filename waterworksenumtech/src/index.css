@@ -6,3 +6,31 @@
   box-sizing: border-box;
   font-family: 'Wix Madefor Display', sans-serif;
 }
+
+html::-webkit-scrollbar {
+  width: .5rem;
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: rgb(0, 136, 255);
+  border-radius: 15px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background-color: blue;
+}
+
+html::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+
+body {
+  background: #00264D;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #02386E, #00264D);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #00172D, #00264D);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}

@@ -18,8 +18,7 @@ const ThirdPartyDetails = ({ setCollapsed }) => {
                 show={isModalOpen}
                 onHide={() => setIsModalOpen(false)}
             />
-            <Row className='space mt-5'>             {/* Add Custom Class */}
-                <h1 className='text-center h1'>Details</h1>
+            <div className='space mt-5'>             {/* Space is Custom CSS Class */}
                 {
                     [ 0, 1, 2, 3, 4, 5, 6, 7 ].map((value, index) => {
                         return (
@@ -27,7 +26,7 @@ const ThirdPartyDetails = ({ setCollapsed }) => {
                         );
                     })
                 }
-            </Row>
+            </div>
 
 
         </>

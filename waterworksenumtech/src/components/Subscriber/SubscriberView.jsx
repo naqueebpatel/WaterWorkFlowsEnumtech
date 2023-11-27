@@ -151,7 +151,13 @@ export default function SubscriberView({ setCollapsed }) {
   }
 
   return (
-    <MDBContainer style={{ width: "fit-content", position: "relative", top: "40px" }}>
+    // Style To make the container in Middle.
+    <MDBContainer style={{
+      width: "fit-content",
+      position: "relative",
+      top: "8vh",
+      left: "8vw"
+    }}>
       {/* Search Bar and Filter Options with Margins */}
 
       <div className="mb-3 d-flex align-items-center">
@@ -177,7 +183,10 @@ export default function SubscriberView({ setCollapsed }) {
           <MDBDropdownMenu className="custom-dropdown-menu">
             {/* Map through filter options to create dropdown items */}
             {filterOptions.map((option) => (
-              <MDBDropdownItem key={option} onClick={() => handleFilterChange(option)}>
+              <MDBDropdownItem key={option} onClick={() => handleFilterChange(option)}
+                className="text-dark"
+                // Adding Style of Cursor Pointer.
+                style={{ cursor: "pointer" }}>
                 {option}
               </MDBDropdownItem>
             ))}

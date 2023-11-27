@@ -23,8 +23,12 @@ const Product = ({ setCollapsed }) => {
     }, []);
     return (
         <>
-            <MDBContainer style={{ width: "75%", position: "relative", top: "40px", left: "40px" }}>
-                <h1>View :-</h1>
+            <MDBContainer style={{
+                position: "relative",
+                left: "6vw",
+                width: "60dvw"
+            }}>
+                <h1 className='text-white'>View :-</h1>
                 <MDBTable align="middle" className="table-bordered">
                     <MDBTableHead>
                         <tr className="table-success">
