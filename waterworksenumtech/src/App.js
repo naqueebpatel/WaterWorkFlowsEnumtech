@@ -17,6 +17,9 @@ import Product from "./components/Utility/product/Product.jsx";
 import SideBar from "./components/SideBar.jsx";
 import { useState } from "react";
 import InwardTransaction from "./components/Transaction/InwardTransaction.jsx";
+import InardwardTransactionView from "./components/Transaction/InardwardTransactionView.jsx";
+import OutwardTransaction from "./components/Transaction/OutwardTransaction.jsx";
+import OutwardView from "./components/Transaction/OutwardView.jsx";
 
 const App = () => {
   const [collapsed,setCollapsed] = useState(true);
@@ -116,8 +119,33 @@ const App = () => {
               <InwardTransaction setCollapsed={setCollapsed}/>
             </div>
           } />
+
+
+          <Route path="/inwardwardTransview" element={
+            <div>
+              <SideBar/>
+              <InardwardTransactionView setCollapsed={setCollapsed}/>
+            </div>
+          } />
+
+          <Route path="/outwardTrans" element={
+            <div>
+              <SideBar/>
+              <OutwardTransaction setCollapsed={setCollapsed}/>
+            </div>
+          } />
           
-          <Route path="/insert" element={<Insert />} />
+
+          <Route path="/outwardwardTransview" element={
+            <div>
+              <SideBar/>
+              <OutwardView setCollapsed={setCollapsed}/>
+            </div>
+          } />
+
+
+
+          <Route path="/insert  " element={<Insert />} />
           <Route path="/delete" element={<Delete />} />
           <Route path='/update' element={<Update />} />
         </Routes>

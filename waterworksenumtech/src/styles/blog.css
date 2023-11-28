@@ -1,0 +1,138 @@
+.testimonials {
+    width: 50rem;
+    margin-inline: auto;
+}
+
+.testimonials__head {
+    justify-content: center;
+}
+
+.card_s.testimonial {
+    position: relative;
+    text-align: center;
+    margin-top: 5rem;
+    color: #8aa89e;
+}
+
+.testimonial__avatar {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1.5rem;
+    border: 2px solid transparent;
+    overflow: hidden;
+    position: absolute;
+    top: -2rem;
+    left: calc(50% - 2rem);
+    box-shadow: 0 1.5rem 2rem rgba(26, 26, 54, .4);
+    transition: var(--transition);
+}
+
+.testimonial:hover .testimonial__avatar {
+    border-radius: 50%;
+    border-color: var(--color-gray-400);
+}
+
+.testimoni__quote {
+    font-style: italic;
+    margin: 1rem 0rem 2rem;
+}
+
+.card_s small.testimonial__title {
+    margin-top: .3rem;
+}
+
+.testimonial__btn-container {
+    width: fit-content;
+    margin: 2.5rem auto 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.testimonials__btn {
+    background: transparent;
+    cursor: pointer;
+}
+
+.testimonials__btn svg {
+    fill: var(--color-primary);
+    font-size: 1.8rem;
+    width: 3rem;
+    height: 3rem;
+}
+
+section {
+    margin-top: 10rem;
+}
+
+.section__head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+
+.section__head span {
+    background: var(--color-gray-500);
+    padding: .8rem;
+    border-radius: 1rem;
+    color: var(--color-secondary);
+    font-size: 1.5rem;
+}
+
+
+
+
+
+
+.card_s {
+    background: var(--color-gray-500);
+    border: 2px solid transparent;
+    text-align: center;
+    padding: 3rem 2rem;
+    border-radius: 0 3rem 0 3rem;
+    transition: var(--transition);
+}
+
+.card_s:hover {
+    background: transparent;
+    border-color: var(--color-gray-100);
+    cursor: default;
+    color: white;
+}
+
+
+.card_s span {
+    width: 3rem;
+    height: 3rem;
+    background: var(--color-primary);
+    color: var(--color-gray-100);
+    font-size: 1.5rem;
+    padding: .8rem;
+    display: grid;
+    place-items: center;
+    margin-bottom: 1.5rem;
+    margin-inline: auto;
+    border-radius: 1rem;
+    transition: var(--transition);
+}
+
+.card_s:hover span {
+    background: var(--color-secondary);
+    color: var(--color-gray-600);
+}
+
+.card_s small {
+    margin-top: 1rem;
+    display: block;
+    font-weight: 300;
+}
+
+
+img {
+    display: block;
+    object-fit: cover;
+    width: 100%;
+}

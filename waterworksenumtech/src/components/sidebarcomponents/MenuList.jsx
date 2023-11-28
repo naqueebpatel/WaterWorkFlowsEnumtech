@@ -50,8 +50,14 @@ const MenuList = () => {
                 icon={<FaUserAlt />}
                 title="Transaction"
             >
-                <Menu.Item key="inwardTrans"><Link to="/inwardTrans">Inward </Link></Menu.Item>
-                <Menu.Item key="outwardTrans"><Link to="/outwardTrans">Outward </Link></Menu.Item>
+                <Menu.SubMenu key="transaction_inward" title="Inward">
+                    <Menu.Item key="transaction_inward_insert"><Link to="/inwardTrans">Insert</Link></Menu.Item>
+                    <Menu.Item key="transaction_inward_view"><Link to="/inwardwardTransview">View</Link></Menu.Item>
+                </Menu.SubMenu>
+                <Menu.SubMenu key="transaction_outward" title="Outward">
+                    <Menu.Item key="transaction_outward_insert"><Link to="/outwardTrans">Insert</Link></Menu.Item>
+                    <Menu.Item key="transaction_outward_view"><Link to="/outwardwardTransview">View</Link></Menu.Item>
+                </Menu.SubMenu>
             </Menu.SubMenu>
             <Menu.Item
                 key="third-party"
