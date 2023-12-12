@@ -55,10 +55,8 @@ const Table = () => {
                     className="rounded-circle"
                   />
                 </td>
-                <td>
                   <td >{item.zoneno}</td>
                   <td >{item.zonename}</td>
-                </td>
               </tr>
             ))}
 
