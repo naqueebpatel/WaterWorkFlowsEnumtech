@@ -1,11 +1,4 @@
 import React, { useEffect } from 'react';
-import {
-    MDBBadge,
-    MDBContainer,
-    MDBTable,
-    MDBTableHead,
-    MDBTableBody,
-} from "mdb-react-ui-kit";
 import product from '../Images/Product.jpg';
 
 
@@ -23,7 +16,7 @@ const Product = ({ setCollapsed }) => {
     }, []);
     return (
         <>
-            <MDBContainer style={{
+            {/* <MDBContainer style={{
                 position: "relative",
                 left: "6vw",
                 width: "60dvw"
@@ -80,7 +73,45 @@ const Product = ({ setCollapsed }) => {
                         }
                     </MDBTableBody>
                 </MDBTable>
-            </MDBContainer >
+            </MDBContainer > */}
+            <div>
+                <form>
+
+                    <div className="datatable-container">
+
+                        <table className="datatable">
+                            <thead>
+                                <tr>
+                                    <th>Profile</th>
+                                    <th>Id Number</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {data.map((value, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td>
+                                                <img
+                                                    src={product}
+                                                    alt={`Avatar`}
+                                                    style={{ width: "55px", height: "55px" }}
+                                                    className="rounded-circle "
+                                                />
+                                            </td>
+                                            <td className="fw-bold fs-4">{value.id}</td>
+                                            <td className="fw-bold fs-4">{value.name}</td>
+                                            <td className="fw-bold fs-4"> {value.quantity}</td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
         </>
     );
 };

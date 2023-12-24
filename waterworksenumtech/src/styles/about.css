@@ -32,7 +32,7 @@
 
 .h1 {
     font-size: 30px;
-    color: #007bff;
+    color: #000000;
     font-weight: bold;
     text-transform: uppercase;
     margin-bottom: 10px;
@@ -41,4 +41,17 @@
 .email ul li a {
     text-align: end;
     text-decoration: none;
+}
+
+@media screen and (max-width:995px) {
+    .content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width:400px) {
+    .content img {
+        height: 240px;
+        width: 240px;
+    }
 }

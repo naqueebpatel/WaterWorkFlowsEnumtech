@@ -1,21 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-    MDBBadge,
-    MDBContainer,
-    MDBTable,
-    MDBTableHead,
-    MDBTableBody,
-    MDBInput,
-    MDBDropdown,
-    MDBDropdownToggle,
-    MDBDropdownMenu,
-    MDBDropdownItem,
-} from "mdb-react-ui-kit";
-import { IoIosArrowUp } from "react-icons/io";
 import Swal from "sweetalert2";
 import axios from "axios";
 import LoaderComp from "../../LoaderComp";
-// import "./OutwardTransaction.css"
+import './inwardTransactionView.css';
+import { MDBBadge } from 'mdb-react-ui-kit';
 
 function formatDateWithoutTime(dateString) {
     const dateObject = new Date(dateString);
@@ -28,18 +16,18 @@ function formatDateWithoutTime(dateString) {
 }
 
 const InwardTransactionView = ({ setCollapsed }) => {
-    const [inwardTrans, setInwardTrans] = useState([]);
-    const [filterInward, setFilterInward] = useState([]);
-    const [selectedFilter, setSelectedFilter] = useState();
-    const [searchTerm, setSearchTerm] = useState("");
-    const [date, setDate] = useState({
+    const [ inwardTrans, setInwardTrans ] = useState([]);
+    const [ filterInward, setFilterInward ] = useState([]);
+    const [ selectedFilter, setSelectedFilter ] = useState();
+    const [ searchTerm, setSearchTerm ] = useState("");
+    const [ date, setDate ] = useState({
         startDate: "",
         endDate: "",
     });
-    const [loading, setLoading] = useState(false);
+    const [ loading, setLoading ] = useState(false);
 
     useEffect(() => {
-          setCollapsed(true);
+        setCollapsed(true);
         fetchInwardTrans();
     }, []);
 
@@ -101,13 +89,13 @@ const InwardTransactionView = ({ setCollapsed }) => {
         }
     };
 
-    const filterOptions = ["By Tid", "By Sid", "By Receipt No."];
+    const filterOptions = [ "By Tid", "By Sid", "By Receipt No." ];
 
 
     const handleDateEvent = (event) => {
         setDate({
             ...date,
-            [event.target.name]: event.target.value,
+            [ event.target.name ]: event.target.value,
         });
     };
 
@@ -132,9 +120,9 @@ const InwardTransactionView = ({ setCollapsed }) => {
         const filteredData = inwardTrans.filter((inward) => {
             const receiptNo = String(inward.receiptno);
             return receiptNo.includes(value);
-        })
+        });
         setFilterInward(filteredData);
-    }
+    };
 
     const handleFilterDate = () => {
         const startDate = new Date(date.startDate);
@@ -149,14 +137,14 @@ const InwardTransactionView = ({ setCollapsed }) => {
     };
 
     const handleSortHighToLow = () => {
-        const sortedData = [...filterInward].sort(
+        const sortedData = [ ...filterInward ].sort(
             (a, b) => b.tamount - a.tamount
         );
         setFilterInward(sortedData);
     };
 
     const handleSortLowToHigh = () => {
-        const sortedData = [...filterInward].sort(
+        const sortedData = [ ...filterInward ].sort(
             (a, b) => a.tamount - b.tamount
         );
         setFilterInward(sortedData);
@@ -165,120 +153,96 @@ const InwardTransactionView = ({ setCollapsed }) => {
 
 
     if (loading) {
-      return (
-        <div>
-          <div style={{ display: "grid", placeItems: "center", height: "100vh", width: "100vw" }}>
-            <LoaderComp />
-          </div>;
-        </div>
-      );
+        return (
+            <div>
+                <div style={{ display: "grid", placeItems: "center", height: "100vh", width: "100vw" }}>
+                    <LoaderComp />
+                </div>;
+            </div>
+        );
     }
 
     return (
-        // TO make the Container in Middle.
-        <MDBContainer
-            style={{
-                width: "fit-content",
-                position: "relative",
-                top: "8vh",
-                left: "8vw",
-            }}
-        >
-            {/* Search Bar and Filter Options with Margins */}
+        <>
+            <div>
+                <form>
+                    <div className="datatable-container">
+                        <div className="header-tools">
+                            <div className="search">
+                                <input type="search" className="search-input" placeholder="Search..."
+                                    value={searchTerm}
+                                    onChange={handleSearch} />
+                            </div>
+                            <button className="btn btn-black" onClick={handleFilterDate}>Submit</button>
 
-            <div className="mb-3 d-flex align-items-center">
-                <MDBInput
-                    type="text"
-                    label="Search"
-                    value={searchTerm}
-                    onChange={handleSearch}
-                    className="mb-2 me-2 square-search text-white"
-                    style={{ marginRight: "8px" }}
-                />
-
-                {/* Add a gap between Search Button and Search Input */}
-                <div style={{ marginRight: "8px" }}> </div>
-
-                {/* Filter Dropdown */}
-                <MDBDropdown className="custom-dropdown">
-                    <MDBDropdownToggle className="custom-dropdown-toggle">
-                        {selectedFilter || "Select Filter"}
-                    </MDBDropdownToggle>
-                    <MDBDropdownMenu className="custom-dropdown-menu">
-                        {/* Map through filter options to create dropdown items */}
-                        {filterOptions.map((option) => (
-                            <MDBDropdownItem
-                                key={option}
-                                onClick={() => handleFilterChange(option)}
-                            >
-                                {option}
-                            </MDBDropdownItem>
-                        ))}
-                        <MDBDropdownItem onClick={() => handleFilterChange("HIGH to LOW")}>
-                            HIGH to LOW
-                        </MDBDropdownItem>
-                        <MDBDropdownItem onClick={() => handleFilterChange("LOW to HIGH")}>
-                            LOW to HIGH
-                        </MDBDropdownItem>
-                    </MDBDropdownMenu>
-                </MDBDropdown>
-                <div className="date px-3 py-2 rounded">
-                    Date
-                    <div className="icon">
-                        <IoIosArrowUp />
+                            <label className="label">
+                                <select>
+                                    <option value="" selected disabled>Select Filter</option>
+                                    {filterOptions.map((option) => (
+                                        <option
+                                            key={option}
+                                            onClick={() => handleFilterChange(option)}
+                                        >
+                                            {option}
+                                        </option>
+                                    ))}
+                                    <option onClick={() => handleFilterChange("LOW to HIGH")}>LOW to HIGH</option>
+                                    <option onClick={() => handleFilterChange("HIGH to LOW")}>HIGH to LOW</option>
+                                </select>
+                            </label>
+                            <div className="date">
+                                <label htmlFor="from">From</label>
+                                <input type="date" name="startDate" id="from" onChange={handleDateEvent} />
+                                <label htmlFor="to">To</label>
+                                <input type="date" name="endDate" id="to" onChange={handleDateEvent} />
+                            </div>
+                        </div>
+                        <table className="datatable">
+                            <thead>
+                                <tr>
+                                    <th>Inward Tid</th>
+                                    <th>Inward Sid</th>
+                                    <th>Receipt No.</th>
+                                    <th>Amount</th>
+                                    <th>Transaction Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filterInward.map((inward) => (
+                                    <tr key={inward.inwardTid}>
+                                        <td>{inward.inwardTid}</td>
+                                        <td><img
+                                            src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                                            alt={`Avatar`}
+                                            style={{ width: "45px", height: "45px" }}
+                                            className="rounded-circle"
+                                        /></td>
+                                        <td>{inward.receiptno}</td>
+                                        <td>
+                                            <MDBBadge
+                                                color={
+                                                    inward.tamount >= 1000
+                                                        ? "success"
+                                                        : inward.outamount > 2000
+                                                            ? "primary"
+                                                            : inward.outamount < 500
+                                                                ? "danger"
+                                                                : "warning"
+                                                }
+                                                pill
+                                            >
+                                                ₹ {inward.tamount}
+                                            </MDBBadge>
+                                        </td>
+                                        <td>{formatDateWithoutTime(inward.tdate)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
-                    <div className="date-input px-3 py-2 rounded text-white">
-                        <h5>From</h5>
-                        <input type="date" name="startDate" onChange={handleDateEvent} />
-                        <h5>To</h5>
-                        <input type="date" name="endDate" onChange={handleDateEvent} />
-                        <button onClick={handleFilterDate}>Search</button>
-                    </div>
-                </div>
+                </form>
             </div>
-
-            {/* inwardTrans Table */}
-            <MDBTable align="middle" className="table-bordered">
-                <MDBTableHead>
-                    <tr className="table-success">
-                        <th scope="col">Inward Tid</th>
-                        <th scope="col">Inward Sid</th>
-                        <th scope="col">Receipt No.</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Transaction Date</th>
-                    </tr>
-                </MDBTableHead>
-                <MDBTableBody>
-                    {/* Example inward data with added image property */}
-                    {filterInward.map((inward) => (
-                        <tr key={inward.inwardTid} className="table-info">
-                            <td>{inward.inwardTid}</td>
-                            <td>
-                                <p className="fw-bold mb-1">{inward.inwardSid}</p>
-                            </td>
-                            <td>{inward.receiptno}</td>
-                            <td>
-                                <MDBBadge
-                                    color={
-                                        inward.tamount >= 1000
-                                            ? "success"
-                                            : inward.outamount > 2000
-                                                ? "primary"
-                                                : inward.outamount < 500
-                                                    ? "danger"
-                                                    : "warning"
-                                    }
-                                    pill
-                                >
-                                    ₹ {inward.tamount}
-                                </MDBBadge>
-                            </td>
-                            <td>{formatDateWithoutTime(inward.tdate)}</td>
-                        </tr>
-                    ))}
-                </MDBTableBody>
-            </MDBTable>
-        </MDBContainer>
+        </>
     );
 };
 

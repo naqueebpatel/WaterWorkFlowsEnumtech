@@ -1,46 +1,51 @@
-
 .custom-dropdown-toggle {
-    background-color: #ffffff;
-    color: #333333;
-    border: 1px solid #cccccc;
-    padding: 10px 15px;
-  }
-  
-  .custom-dropdown-menu {
-    max-height: 200px; 
-    overflow-y: auto;
-  }
-  
-  /* Hover effect for the dropdown toggle */
-  .custom-dropdown-toggle:hover {
-    background-color: #f0f0f0;
-    /* Add any other styles you want for the hover effect on the toggle */
-  }
-  
-  /* Hover effect for the dropdown items in the menu */
-  
+  background-color: #ffffff;
+  color: #333333;
+  border: 1px solid #cccccc;
+  padding: 10px 15px;
+}
+
+.custom-dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Hover effect for the dropdown toggle */
+.custom-dropdown-toggle:hover {
+  background-color: #f0f0f0;
+  /* Add any other styles you want for the hover effect on the toggle */
+}
+
+/* Hover effect for the dropdown items in the menu */
+
 /* Style the dropdown items */
 .custom-dropdown-menu .dropdown-item {
-    font-size: 14px; /* Add your desired font size */
-    font-family: 'Arial', sans-serif; /* Add your desired font family */
-    /* Add any other styles you want for the dropdown items */
-    transition: background-color 0.3s ease; /* Add a smooth transition effect */
-  }
-  
-  /* Add hover effect to dropdown items */
-  .custom-dropdown-menu .dropdown-item:hover {
-    background-color: #f8f9fa; /* Add your desired background color on hover */
-    color: #007bff; /* Add your desired text color on hover */
-  }
-  
-  /* Set the maximum height for the dropdown menu */
-  .custom-dropdown-menu .dropdown-menu {
-    max-height: 200px; /* Adjust the maximum height as needed */
-    overflow-y: auto; /* Add a scrollbar if the content overflows */
-  }
-  
-  /* Display the dropdown menu on hover */
-  .custom-dropdown-menu:hover .dropdown-menu {
-    display: block;
-  }
-  
+  font-size: 14px;
+  /* Add your desired font size */
+  font-family: 'Arial', sans-serif;
+  /* Add your desired font family */
+  /* Add any other styles you want for the dropdown items */
+  transition: background-color 0.3s ease;
+  /* Add a smooth transition effect */
+}
+
+/* Add hover effect to dropdown items */
+.custom-dropdown-menu .dropdown-item:hover {
+  background-color: #f8f9fa;
+  /* Add your desired background color on hover */
+  color: #007bff;
+  /* Add your desired text color on hover */
+}
+
+/* Set the maximum height for the dropdown menu */
+.custom-dropdown-menu .dropdown-menu {
+  max-height: 200px;
+  /* Adjust the maximum height as needed */
+  overflow-y: auto;
+  /* Add a scrollbar if the content overflows */
+}
+
+/* Display the dropdown menu on hover */
+.custom-dropdown-menu:hover .dropdown-menu {
+  display: block;
+}

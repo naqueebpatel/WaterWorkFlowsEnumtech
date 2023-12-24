@@ -1,7 +1,7 @@
 import { FcSalesPerformance } from 'react-icons/fc';
 import { FaPeopleArrows } from 'react-icons/fa';
 import { IoIosPeople } from 'react-icons/io';
-import React, { PureComponent, useEffect } from 'react';
+import React, { PureComponent, useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Data, PieData } from '../components/SlidebarData';
 import { PieChart, Pie, Sector, Cell } from 'recharts';
@@ -19,10 +19,26 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
         </text>
     );
 };
+
 const Dashboard = ({ setCollapsed }) => {
+    function getCurrentDimension() {
+        return {
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
+    }
+    const [ screenSize, setScreenSize ] = useState(getCurrentDimension());
     useEffect(() => {
         setCollapsed(true);
-    }, []);
+        const updateDimension = () => {
+            setScreenSize(getCurrentDimension());
+        };
+        window.addEventListener('resize', updateDimension);
+
+        return (() => {
+            window.removeEventListener('resize', updateDimension);
+        });
+    }, [ screenSize ]);
     return (
         <>
             <main className="main-container">
@@ -83,7 +99,7 @@ const Dashboard = ({ setCollapsed }) => {
                                 cy="50%"
                                 labelLine={false}
                                 label={renderCustomizedLabel}
-                                outerRadius={130}
+                                outerRadius={100}
                                 fill="#8884d8"
                                 dataKey="value"
                             >

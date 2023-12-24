@@ -37,3 +37,12 @@
     font-size: 1rem;
     position: relative;
 }
+
+@media screen and (max-width:540px) {
+    .sidebar {
+        flex: 0 0 50px !important;
+        max-width: 50px !important;
+        min-width: 50px !important;
+        width: 50px !important;
+    }
+}

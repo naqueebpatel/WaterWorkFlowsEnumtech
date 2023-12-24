@@ -1,22 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./SubscriberView.css";
-import {
-  MDBBadge,
-  MDBBtn,
-  MDBContainer,
-  MDBTable,
-  MDBTableHead,
-  MDBTableBody,
-  MDBInput,
-  MDBDropdown,
-  MDBDropdownToggle,
-  MDBDropdownMenu,
-  MDBDropdownItem,
-} from "mdb-react-ui-kit";
 import axios from "axios";
 import SubscriberEditModal from "./SubscriberEditModal";
 import Swal from "sweetalert2";
 import LoaderComp from "../LoaderComp";
+import { MDBBadge } from 'mdb-react-ui-kit';
 
 export default function SubscriberView({ setCollapsed }) {
   const [ subscriber, setSubscriber ] = useState([]);
@@ -151,133 +139,98 @@ export default function SubscriberView({ setCollapsed }) {
   }
 
   return (
-    // Style To make the container in Middle.
-    <MDBContainer style={{
-      width: "fit-content",
-      position: "relative",
-      top: "8vh",
-      left: "8vw"
-    }}>
-      {/* Search Bar and Filter Options with Margins */}
+    <>
+      <div>
+        <form>
 
-      <div className="mb-3 d-flex align-items-center">
-        <MDBInput
-          type="text"
-          label="Search"
-          value={searchTerm}
-          onChange={handleSearch}
-          className="mb-2 me-2 square-search"
-          style={{ marginRight: "8px" }}
-        />
+          <div className="datatable-container">
+            <div className="header-tools">
+              <div className="search">
+                <input type="search" className="search-input" placeholder="Search..."
+                  value={searchTerm}
+                  onChange={handleSearch} />
+              </div>
+              <label className="label">
+                <select>
+                  <option value="" selected disabled>Select Filter</option>
+                  {filterOptions.map((option) => (
+                    <option key={option} onClick={() => handleFilterChange(option)}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
 
-        {/* Add a gap between Search Button and Search Input */}
-        <div style={{ marginRight: "8px" }}>   </div>
-
-
-
-        {/* Filter Dropdown */}
-        <MDBDropdown className="custom-dropdown">
-          <MDBDropdownToggle className="custom-dropdown-toggle">
-            {selectedFilter || "Select Filter"}
-          </MDBDropdownToggle>
-          <MDBDropdownMenu className="custom-dropdown-menu">
-            {/* Map through filter options to create dropdown items */}
-            {filterOptions.map((option) => (
-              <MDBDropdownItem key={option} onClick={() => handleFilterChange(option)}
-                className="text-dark"
-                // Adding Style of Cursor Pointer.
-                style={{ cursor: "pointer" }}>
-                {option}
-              </MDBDropdownItem>
-            ))}
-          </MDBDropdownMenu>
-        </MDBDropdown>
+            <table className="datatable">
+              <thead>
+                <tr>
+                  <th>Profile</th>
+                  <th>Name</th>
+                  <th>Aadhar Number</th>
+                  <th>Mobile Number</th>
+                  <th>Status</th>
+                  <th>Current Balance</th>
+                  <th>Financial Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              {filteredSubscribers.map((subscriber) => (
+                <tr key={subscriber.subscriberNo} className="table-info">
+                  <td>
+                    <img
+                      src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                      alt={`Avatar`}
+                      style={{ width: "45px", height: "45px" }}
+                      className="rounded-circle"
+                    />
+                  </td>
+                  <td>
+                    <p className="fw-bold mb-1">{`${subscriber.firstName} ${subscriber.lastName}`}</p>
+                    <p className="text-muted mb-0">{subscriber.subscriberAddress}</p>
+                  </td>
+                  <td>{subscriber.subscriberAdharNo}</td>
+                  <td>{subscriber.subscriberMobileNo}</td>
+                  <td>
+                    <MDBBadge
+                      color={
+                        subscriber.connectionStatus === "active"
+                          ? "success"
+                          : subscriber.connectionStatus === "paused"
+                            ? "primary"
+                            : subscriber.connectionStatus === "blocked"
+                              ? "danger"
+                              : "warning"
+                      }
+                      pill
+                    >
+                      {
+                        subscriber.connectionStatus === "active"
+                          ? "Active"
+                          : subscriber.connectionStatus === "paused"
+                            ? "Paused"
+                            : subscriber.connectionStatus === "blocked"
+                              ? "Blocked"
+                              : "warning"
+                      }
+                    </MDBBadge>
+                  </td>
+                  <td>{subscriber.currentBalance}</td>
+                  <td>{subscriber.subsciberFinancialStatus === "0" ? 'POOR' : 'RICH'}</td>
+                  <td>
+                    {/* Edit and Delete buttons with different icons */}
+                    <button className="btn btn-secondary" onClick={() => handleEdit(subscriber)}>Edit</button>
+                    <button style={{ marginLeft: "1vw" }} className="btn btn-danger" onClick={() => handleDelete(subscriber.subscriberNo)}>Delete</button>
+                  </td>
+                </tr>
+              ))}
+              {isEditModalOpen && (
+                <SubscriberEditModal subscriber={editSubscriber} closeEditModal={closeEditModal} />
+              )}
+            </table>
+          </div>
+        </form>
       </div>
-
-      {/* Subscriber Table */}
-      <MDBTable align="middle" className="table-bordered">
-        <MDBTableHead>
-          <tr className="table-success">
-            <th scope="col">Profile</th>
-            <th scope="col">Name</th>
-            <th scope="col">Aadhar Number</th>
-            <th scope="col">Mobile Number</th>
-            <th scope="col">Status</th>
-            <th scope="col">Current Balance</th>
-            <th scope="col">Financial Status</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </MDBTableHead>
-        <MDBTableBody>
-          {/* Example subscriber data with added image property */}
-          {filteredSubscribers.map((subscriber) => (
-            <tr key={subscriber.subscriberNo} className="table-info">
-              <td>
-                <img
-                  src="https://mdbootstrap.com/img/new/avatars/8.jpg"
-                  alt={`Avatar`}
-                  style={{ width: "45px", height: "45px" }}
-                  className="rounded-circle"
-                />
-              </td>
-              <td>
-                <p className="fw-bold mb-1">{`${subscriber.firstName} ${subscriber.lastName}`}</p>
-                <p className="text-muted mb-0">{subscriber.subscriberAddress}</p>
-              </td>
-              <td>{subscriber.subscriberAdharNo}</td>
-              <td>{subscriber.subscriberMobileNo}</td>
-              <td>
-                <MDBBadge
-                  color={
-                    subscriber.connectionStatus === "active"
-                      ? "success"
-                      : subscriber.connectionStatus === "paused"
-                        ? "primary"
-                        : subscriber.connectionStatus === "blocked"
-                          ? "danger"
-                          : "warning"
-                  }
-                  pill
-                >
-                  {
-                    subscriber.connectionStatus === "active"
-                      ? "Active"
-                      : subscriber.connectionStatus === "paused"
-                        ? "Paused"
-                        : subscriber.connectionStatus === "blocked"
-                          ? "Blocked"
-                          : "warning"
-                  }
-                </MDBBadge>
-              </td>
-              <td>{subscriber.currentBalance}</td>
-              <td>{subscriber.subsciberFinancialStatus === "0" ? 'POOR' : 'RICH'}</td>
-              <td>
-                {/* Edit and Delete buttons with different icons */}
-                <MDBBtn
-                  color="link"
-                  rounded
-                  size="sm"
-                  onClick={() => handleEdit(subscriber)}
-                >
-                  <i className="fas fa-pencil-alt"></i> Edit
-                </MDBBtn>
-                <MDBBtn
-                  color="link"
-                  rounded
-                  size="sm"
-                  onClick={() => handleDelete(subscriber.subscriberNo)}
-                >
-                  <i className="fas fa-trash"></i> Delete
-                </MDBBtn>
-              </td>
-            </tr>
-          ))}
-        </MDBTableBody>
-      </MDBTable>
-      {isEditModalOpen && (
-        <SubscriberEditModal subscriber={editSubscriber} closeEditModal={closeEditModal} />
-      )}
-    </MDBContainer>
+    </>
   );
 }

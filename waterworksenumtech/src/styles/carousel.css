@@ -12,6 +12,11 @@
     transition: ease 1000ms;
 }
 
+.slideshowSlider img {
+    object-fit: cover;
+}
+
+
 .slide {
     display: inline-block;
     width: 100%;
@@ -37,4 +42,17 @@
 
 .slideshowDot.active {
     background-color: #6a0dad;
+}
+
+@media screen and (max-width:995px) {
+    .slideshowDots {
+        display: none;
+    }
+}
+
+
+@media screen and (max-width:851px) {
+    .slideshowSlider img {
+        height: 100dvh !important;
+    }
 }
