@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+
 import {
     MDBBadge,
     MDBContainer,
@@ -6,74 +6,79 @@ import {
     MDBTableHead,
     MDBTableBody,
 } from "mdb-react-ui-kit";
-import product from '../Images/Product.jpg';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 
-const data = [
-    { id: 1, name: "Filter Water", quantity: 1 },
-    { id: 2, name: "Bottle Cap", quantity: 3 },
-    { id: 3, name: "Water Bottle", quantity: 2 },
-    { id: 4, name: "Charity", quantity: 5 },
-];
 
+function Product(props) {
 
-const Product = ({ setCollapsed }) => {
+    const[productData,setProductData]=useState([]);
+    const[loading,setLoading]=useState(false)
+
     useEffect(() => {
-        setCollapsed(true);
-    }, []);
+        fetchProductId();
+      }, []);
+    
+      const fetchProductId = async () => {
+        try {
+          setLoading(true);
+          const response = await axios.get(
+            "http://localhost:8090/waterwork/get/getAllProduct"
+          );
+          setProductData(response.data); // Assuming data is an array of objects with zonename and zoneno attributes
+          console.log(response)
+        } catch (error) {
+          console.error("Error fetching product data:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
     return (
         <>
-            <MDBContainer style={{
-                position: "relative",
-                left: "6vw",
-                width: "60dvw"
-            }}>
-                <h1 className='text-white'>View :-</h1>
+            <MDBContainer className="my-5 mt-4">
                 <MDBTable align="middle" className="table-bordered">
                     <MDBTableHead>
                         <tr className="table-success">
                             <th scope="col" className='text-center'>Profile</th>
                             <th scope="col" className='text-center' >ID Number</th>
                             <th scope="col" className='text-center' >Product Name</th>
-                            <th scope='col' className='text-center'>Quantity</th>
+                            <th scope="col" className='text-center' >Quantity</th>
                         </tr>
                     </MDBTableHead>
                     <MDBTableBody>
                         {
-                            data.map((value, index) => {
+                            productData.map((prod, index) => {
                                 return (
-                                    <tr className="table-info">
+                                    <tr key={prod.productId} className="table-info">
                                         <td className='text-center'>
                                             <img
-                                                src={product}
+                                                src=""
                                                 alt={`Avatar`}
                                                 style={{ width: "55px", height: "55px" }}
                                                 className="rounded-circle "
                                             />
                                         </td>
                                         <td>
-                                            <p className="fw-bold mb-1 text-center fs-4">{value.id}</p>
+                                            <p className="fw-bold mb-1 text-center fs-3">{prod.productId}</p>
                                         </td>
                                         <td>
                                             <p className="mb-0 fw-bold fs-5 text-center">
                                                 <MDBBadge
                                                     color={
-                                                        value.id % 2 === 0 ? "success" : "primary"
+                                                        prod.productId % 2 === 0 ? "success" : "primary"
                                                     }
                                                     pill
 
                                                 >
                                                     {
-                                                        value.name % 2 === 0 ? value.name : value.name
+                                                        prod.productId % 2 === 0 ? prod.productName : prod.productName
                                                     }
                                                 </MDBBadge>
                                             </p>
                                         </td>
-                                        <td>
-                                            <p className="fw-bold text-center fs-4">
-                                                {value.quantity}
-                                            </p>
-                                        </td>
+                                        <td className="fw-bold mb-1 text-center fs-4">{prod.productQty}</td>
                                     </tr>
                                 );
                             })
@@ -83,6 +88,6 @@ const Product = ({ setCollapsed }) => {
             </MDBContainer >
         </>
     );
-};
+}
 
 export default Product;

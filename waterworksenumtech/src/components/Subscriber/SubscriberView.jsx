@@ -224,9 +224,9 @@ export default function SubscriberView({ setCollapsed }) {
                 <p className="fw-bold mb-1">{`${subscriber.firstName} ${subscriber.lastName}`}</p>
                 <p className="text-muted mb-0">{subscriber.subscriberAddress}</p>
               </td>
-              <td>{subscriber.subscriberAdharNo}</td>
-              <td>{subscriber.subscriberMobileNo}</td>
-              <td>
+              <td className="fw-bold mb-1">{subscriber.subscriberAdharNo}</td>
+              <td className="fw-bold mb-1">{subscriber.subscriberMobileNo}</td>
+              <td className="fw-bold mb-1">
                 <MDBBadge
                   color={
                     subscriber.connectionStatus === "active"
@@ -241,17 +241,17 @@ export default function SubscriberView({ setCollapsed }) {
                 >
                   {
                     subscriber.connectionStatus === "active"
-                      ? "Active"
+                      ? "ACTIVE"
                       : subscriber.connectionStatus === "paused"
-                        ? "Paused"
+                        ? "PAUSED"
                         : subscriber.connectionStatus === "blocked"
-                          ? "Blocked"
-                          : "warning"
+                          ? "BLOCKED"
+                          : "ERROR!"
                   }
                 </MDBBadge>
               </td>
-              <td>{subscriber.currentBalance}</td>
-              <td>{subscriber.subsciberFinancialStatus === "0" ? 'POOR' : 'RICH'}</td>
+              <td className="fw-bold mb-1">{subscriber.currentBalance}</td>
+              <td className="fw-bold mb-1">{subscriber.subsciberFinancialStatus === "0" ? 'POOR' : 'RICH'}</td>
               <td>
                 {/* Edit and Delete buttons with different icons */}
                 <MDBBtn
