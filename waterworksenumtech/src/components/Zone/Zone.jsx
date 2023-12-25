@@ -2,20 +2,33 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Table from "./Table";
 import Swal from 'sweetalert2';
-
+import { MdDelete } from "react-icons/md";
+import '../../styles/zone.css';
 function Zone({ setCollapsed }) {
+  const [ data, setData ] = useState([]);
   const [ zone, setZone ] = useState({
     zonename: "",
   });
   const [ loading, setLoading ] = useState(false);
+
+
+  const getData = async () => {
+    try {
+      let res = await axios.get("http://localhost:8090/waterwork/get/getZone");
+      setData([ ...res.data ]);
+      console.log(res);
+    } catch (error) {
+      alert("Error");
+    }
+  };
 
   const handleChange = (e) => {
     setZone({ ...zone, [ e.target.name ]: e.target.value });
   };
 
   useEffect(() => {
+    getData();
     setCollapsed(true);
   }, []);
 
@@ -45,29 +58,68 @@ function Zone({ setCollapsed }) {
     }
   };
 
+
+
+
+
+
+  const handleRefresh = () => {
+    getData();
+  };
+
   return (
     <>
-      <div className="container w-25">
+      <div>
         <Form onSubmit={postZone}>
-          <Form.Group className="mb-3">
-            <Form.Label>
-              <h2>Zone Name</h2>
-            </Form.Label>
-            <Form.Control
-              type="name"
-              placeholder="Enter Zone Name"
-              name="zonename"
-              value={zone.zonename}
-              onChange={handleChange}
-            />
-          </Form.Group>
 
-          <Button variant="primary" type="submit" disabled={loading}>
-            {loading ? 'Submitting...' : 'Submit'}
-          </Button>
+          <div className="datatable-container" style={{
+            boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", position: "relative", left: "16vw",
+            top: "8vh",
+            margin: 0,
+          }}>
+            <div className="header-tools">
+              <div className="search">
+                <input type="search" className="search-input" placeholder="Search..."
+                  name="zonename"
+                  value={zone.zonename}
+                  onChange={handleChange} />
+              </div>
+              <Button variant="primary" type="submit" disabled={loading} onClick={handleRefresh}>
+                {loading ? 'Submitting...' : 'Submit'}
+              </Button>
+            </div>
+
+            <table className="datatable">
+              <thead>
+                <tr>
+                  <th>Profile</th>
+                  <th>Zone No.</th>
+                  <th>Zone Name</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {data && data.map((item) => (
+                  <tr key={item.zoneno} className="table-info">
+                    <td>
+                      <img
+                        src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                        alt={`Avatar`}
+                        style={{ width: "45px", height: "45px" }}
+                        className="rounded-circle"
+                      />
+                    </td>
+                    <td >{item.zoneno}</td>
+                    <td >{item.zonename}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+          </div>
         </Form>
       </div>
-      <Table />
+      {/* <Table /> */}
     </>
   );
 }

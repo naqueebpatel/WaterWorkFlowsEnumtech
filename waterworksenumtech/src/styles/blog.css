@@ -11,7 +11,7 @@
     position: relative;
     text-align: center;
     margin-top: 5rem;
-    color: #8aa89e;
+    color: #0055ff;
 }
 
 .testimonial__avatar {
@@ -88,7 +88,7 @@ section {
 
 
 .card_s {
-    background: var(--color-gray-500);
+    background: rgb(197, 195, 195);
     border: 2px solid transparent;
     text-align: center;
     padding: 3rem 2rem;
@@ -97,7 +97,7 @@ section {
 }
 
 .card_s:hover {
-    background: transparent;
+    background: var(--color-gray-500);
     border-color: var(--color-gray-100);
     cursor: default;
     color: white;
@@ -135,4 +135,25 @@ img {
     display: block;
     object-fit: cover;
     width: 100%;
+}
+
+@media screen and (max-width:800px) {
+    .testimonials {
+        width: 30rem;
+        margin-inline: auto;
+    }
+}
+
+@media screen and (max-width:490px) {
+    .testimonials {
+        width: 20rem;
+        margin-inline: auto;
+    }
+}
+
+@media screen and (max-width:320px) {
+    .testimonials {
+        width: 14rem;
+        margin-inline: auto;
+    }
 }

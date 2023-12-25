@@ -102,64 +102,45 @@ function OutwardSource(props) {
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         </Form.Group>
                     </Row>
-
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={props.onHide}>Close</Button>
                     <MDBBtn onClick={handleSubmit}>PAY</MDBBtn>
                 </Modal.Footer>
             </Modal>
-            <MDBContainer className="my-5 mt-4" style={{
-                position: "relative",
-                left: "6vw",
-                width: "60dvw"
-            }}>
-                <MDBTable align="middle" className="table-bordered">
-                    <MDBTableHead>
-                        <tr className="table-success">
-                            <th scope="col" className='text-center'>Profile</th>
-                            <th scope="col" className='text-center' >ID Number</th>
-                            <th scope="col" className='text-center' >Product Name</th>
-                        </tr>
-                    </MDBTableHead>
-                    <MDBTableBody>
-                        {
-                            outwardData.map((outward, index) => {
-                                return (
-                                    <tr className="table-info">
-                                        <td className='text-center'>
-                                            <img
-                                                src={Outward}
-                                                alt={`Avatar`}
-                                                style={{ width: "55px", height: "55px" }}
-                                                className="rounded-circle "
-                                            />
-                                        </td>
-                                        <td>
-                                            <p className="fw-bold mb-1 text-center fs-4">{outward.outwardSid}</p>
-                                        </td>
-                                        <td>
-                                            <p className="mb-0 fw-bold fs-5 text-center">
-                                                <MDBBadge
-                                                    color={
-                                                        outward.id % 2 === 0 ? "success" : "primary"
-                                                    }
-                                                    pill
-
-                                                >
-                                                    {
-                                                        outward.name % 2 === 0 ? outward.outwardSname : outward.outwardSname
-                                                    }
-                                                </MDBBadge>
-                                            </p>
-                                        </td>
-                                    </tr>
-                                );
-                            })
-                        }
-                    </MDBTableBody>
-                </MDBTable>
-            </MDBContainer >
+            <div>
+                <div className="datatable-container">
+                    <table className="datatable">
+                        <thead>
+                            <tr>
+                                <th>Profile</th>
+                                <th>Id Number</th>
+                                <th>Product Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                outwardData.map((outward, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td>
+                                                <img
+                                                    src={Outward}
+                                                    alt={`Avatar`}
+                                                    style={{ width: "55px", height: "55px" }}
+                                                    className="rounded-circle "
+                                                />
+                                            </td>
+                                            <td className="fw-bold fs-4">{outward.outwardSid}</td>
+                                            <td className="fw-bold fs-4">{outward.outwardSname}</td>
+                                        </tr>
+                                    );
+                                })
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </>
     );
 }

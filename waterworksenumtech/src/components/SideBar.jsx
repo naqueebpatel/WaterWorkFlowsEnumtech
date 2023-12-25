@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Button, theme } from 'antd';
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import { MenuUnfoldOutlined } from '@ant-design/icons';
 import '../styles/siderbar.css';
 import Logo from './sidebarcomponents/Logo';
 import MenuList from './sidebarcomponents/MenuList';
@@ -10,7 +10,7 @@ const SideBar = ({ collapsed, toggle }) => {
         token: { colorBgContainer },
     } = theme.useToken();
     return (
-        <Layout style={{ position: "absolute", zIndex: "1" }}>
+        <Layout style={{ position: "fixed", zIndex: "1" }}>
             <Sider collapsed={collapsed}
                 collapsible
                 trigger={null}
@@ -19,9 +19,7 @@ const SideBar = ({ collapsed, toggle }) => {
                 <MenuList />
             </Sider>
             <Layout>
-                {collapsed && <Header style={{ padding: 0, background: colorBgContainer }}>
-                    <Button className='toggle' onClick={toggle} type='text' icon={collapsed ? <MenuUnfoldOutlined style={{ fontSize: "2rem", color: "white" }} /> : <MenuFoldOutlined style={{ fontSize: "2rem", color: "white" }} />} />
-                </Header>}
+                {<Button className='toggle' onClick={toggle} type='text' icon={collapsed && <MenuUnfoldOutlined style={{ fontSize: "2rem", color: "white" }} />} />}
             </Layout>
         </Layout>
     );

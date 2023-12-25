@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import SectionHead from './SectionHead.jsx';
 import { ImQuotesLeft } from 'react-icons/im';
 import Card from '../UI/Card.jsx';
-import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from 'react-icons/io';
 import { testimonials } from '../components/SlidebarData';
 import '../styles/blog.css';
 const Blog = () => {
@@ -18,7 +17,7 @@ const Blog = () => {
     return (
         <>
             <section className="testimonials" id='blog'>
-                <div className="container testimonials__container">
+                <div className="testimonials__container">
                     <SectionHead icon={<ImQuotesLeft />} title="Blog" className="testimonials__head" />
                     <Card className="testimonial">
                         <div className="testimonial__avatar">

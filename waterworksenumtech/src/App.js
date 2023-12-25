@@ -20,6 +20,8 @@ import InwardTransaction from "./components/Transaction/Inward/InwardTransaction
 import InardwardTransactionView from "./components/Transaction/Inward/InwardTransactionView.jsx";
 import OutwardTransaction from "./components/Transaction/Outward/OutwardTransaction.jsx";
 import OutwardTransView from "./components/Transaction/Outward/OutwardTransView.jsx";
+import Bill from "./components/Bill.jsx";
+import Topup from "./components/TopUp/Topup.jsx";
 
 const App = () => {
   const [collapsed,setCollapsed] = useState(true);
@@ -49,12 +51,26 @@ const App = () => {
               <Zone setCollapsed={setCollapsed}/>
             </div>
           } />
+          <Route path="/bill" element={
+            <div>
+              <SideBar/>
+              <Bill setCollapsed={setCollapsed}/>
+            </div>
+          } />
 
           <Route path="/3rdpartydetails"
             element={
               <div>
                 <SideBar/>
                 <ThirdPartyDetails setCollapsed={setCollapsed} />
+              </div>
+            }
+          />
+          <Route path="/topup"
+            element={
+              <div>
+                <SideBar/>
+                <Topup setCollapsed={setCollapsed} />
               </div>
             }
           />

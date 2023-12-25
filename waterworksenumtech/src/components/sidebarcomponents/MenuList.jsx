@@ -5,6 +5,7 @@ import { IoIosPeople } from "react-icons/io";
 import { BiSolidDashboard } from "react-icons/bi";
 import { SiVectorlogozone } from "react-icons/si";
 import { TbPhysotherapist } from "react-icons/tb";
+import { GiCash } from "react-icons/gi";
 import { FaUserAlt } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 const MenuList = () => {
@@ -64,6 +65,9 @@ const MenuList = () => {
                 icon={<TbPhysotherapist />}
             >
                 <Link to="/3rdpartydetails">Third Party</Link>
+            </Menu.Item>
+            <Menu.Item key="topup" icon={<GiCash />} >
+                <Link to="/topup">Topup</Link>
             </Menu.Item>
         </Menu>
     );

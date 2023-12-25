@@ -1,24 +1,12 @@
 import React, { useEffect, useState } from "react";
 // import "./Subscriber/SubscriberView.css"
-import {
-  MDBBadge,
-  MDBBtn,
-  MDBContainer,
-  MDBTable,
-  MDBTableHead,
-  MDBTableBody,
-  MDBInput,
-  MDBDropdown,
-  MDBDropdownToggle,
-  MDBDropdownMenu,
-  MDBDropdownItem,
-} from "mdb-react-ui-kit";
 import axios from "axios";
-
 import Swal from "sweetalert2";
 import EmployeeEditModal from "./EmployeeEditModal";
 import EmployeeAttendanceModal from "./EmployeeAttendanceModal";
 import LoaderComp from "../LoaderComp";
+import { MDBBtn } from 'mdb-react-ui-kit';
+import Form from 'react-bootstrap/Form';
 
 export default function EmployeeView({ setCollapsed }) {
   const [ employee, setEmployee ] = useState([]);
@@ -183,131 +171,113 @@ export default function EmployeeView({ setCollapsed }) {
   }
 
   return (
-    // TO make the Container in Middle.
-    <MDBContainer style={{
-      width: "fit-content",
-      position: "relative",
-      top: "8vh",
-      left: "8vw"
-    }}>
-      {/* Search Bar and Filter Options with Margins */}
+    <>
+      <div>
+        <form>
 
-      <div className="mb-3 d-flex align-items-center">
-        <MDBInput
-          type="text"
-          label="Search"
-          value={searchTerm}
-          onChange={handleSearch}
-          className="mb-2 me-2 square-search text-white"
-          style={{ marginRight: "8px" }}
-        />
+          <div className="datatable-container">
+            <div className="header-tools">
+              <div className="search">
+                <input type="search" className="search-input" placeholder="Search..."
+                  value={searchTerm}
+                  onChange={handleSearch} />
+              </div>
+              <label className="label">
+                <select>
+                  <option value="" selected disabled>Select Filter</option>
+                  {filterOptions.map((option) => (
+                    <option
+                      key={option}
+                      onClick={() => handleFilterChange(option)}
+                    >
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
 
-        {/* Add a gap between Search Button and Search Input */}
-        <div style={{ marginRight: "8px" }}> </div>
+            <table className="datatable">
+              <thead>
+                <tr>
+                  <th>Employee No.</th>
+                  <th>Profile</th>
+                  <th>Name</th>
+                  <th>Aadhar Number</th>
+                  <th>Mobile Number</th>
+                  <th>Joining Date</th>
+                  <th>Salary</th>
+                  <th>Actions</th>
+                  <th>Attendance</th>
+                </tr>
+              </thead>
 
-        {/* Filter Dropdown */}
-        <MDBDropdown className="custom-dropdown">
-          <MDBDropdownToggle className="custom-dropdown-toggle">
-            {selectedFilter || "Select Filter"}
-          </MDBDropdownToggle>
-          <MDBDropdownMenu className="custom-dropdown-menu">
-            {/* Map through filter options to create dropdown items */}
-            {filterOptions.map((option) => (
-              <MDBDropdownItem
-                className="text-dark"
-                // Adding Style of Cursor Pointer.
-                style={{ cursor: "pointer" }}
-                key={option}
-                onClick={() => handleFilterChange(option)}
-              >
-                {option}
-              </MDBDropdownItem>
-            ))}
-          </MDBDropdownMenu>
-        </MDBDropdown>
-      </div>
-
-      {/* Subscriber Table */}
-      <MDBTable align="middle" className="table-bordered">
-        <MDBTableHead>
-          <tr className="table-success">
-            <th scope="col">Employee No.</th>
-            <th scope="col">Profile</th>
-            <th scope="col">Name</th>
-            <th scope="col">Aadhar Number</th>
-            <th scope="col">Mobile Number</th>
-            <th scope="col">Joining Date</th>
-            <th scope="col">Salary</th>
-            <th scope="col">Actions</th>
-            <th scope="col">Attendance</th>
-          </tr>
-        </MDBTableHead>
-        <MDBTableBody>
-          {/* Example employee data with added image property */}
-          {filteredEmployee.map((employee) => (
-            <tr key={employee.empNo} className="table-info">
-              <td>{employee.empNo}</td>
-              <td>
-                <img
-                  src="https://mdbootstrap.com/img/new/avatars/8.jpg"
-                  alt={`Avatar`}
-                  style={{ width: "45px", height: "45px" }}
-                  className="rounded-circle"
-                />
-              </td>
-              <td>
-                <p className="fw-bold mb-1">{employee.empName}</p>
-                <p className="text-muted mb-0">{employee.empAddress}</p>
-              </td>
-              <td>{employee.empAdharNo}</td>
-              <td>{employee.empMobileNo}</td>
-              <td>{employee.empDOJ}</td>
-              <td>{employee.empSalary}</td>
-              <td>
-                {/* Edit and Delete buttons with different icons */}
-                <MDBBtn
-                  color="link"
-                  rounded
-                  size="sm"
-                  onClick={() => handleEdit(employee)}
-                >
-                  <i className="fas fa-pencil-alt"></i> Edit
-                </MDBBtn>
-                <MDBBtn
-                  color="link"
-                  rounded
-                  size="sm"
-                  onClick={() => handleDelete(employee.empNo)}
-                >
-                  <i className="fas fa-trash"></i> Delete
-                </MDBBtn>
-              </td>
-              <td>
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  role="switch"
-                  id={`flexSwitchCheck${employee.empNo}`}
-                  onChange={() => handleAttendanceCheck(employee)}
-                />
-              </td>
-            </tr>
-          ))}
-        </MDBTableBody>
-      </MDBTable>
-      {isEditModalOpen && (
-        <EmployeeEditModal
-          employee={editEmployee}
-          closeEditModal={closeEditModal}
-        />
-      )}
-      {isAttendanceModalOpen && (
-        <EmployeeAttendanceModal
-          isOpen={isAttendanceModalOpen}
-          closeModal={() => setIsAttendanceModalOpen(false)}
-          attendanceData={selectedEmployee}
-        />
-      )}
-    </MDBContainer>
+              <tbody>
+                {filteredEmployee.map((employee) => (
+                  <tr key={employee.empNo} className="table-info">
+                    <td>{employee.empNo}</td>
+                    <td>
+                      <img
+                        src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                        alt={`Avatar`}
+                        style={{ width: "45px", height: "45px" }}
+                        className="rounded-circle"
+                      />
+                    </td>
+                    <td>
+                      <p className="fw-bold mb-1">{employee.empName}</p>
+                      <p className="text-muted mb-0">{employee.empAddress}</p>
+                    </td>
+                    <td>{employee.empAdharNo}</td>
+                    <td>{employee.empMobileNo}</td>
+                    <td>{employee.empDOJ}</td>
+                    <td>{employee.empSalary}</td>
+                    <td>
+                      {/* Edit and Delete buttons with different icons */}
+                      <MDBBtn
+                        color="link"
+                        rounded
+                        size="sm"
+                        onClick={() => handleEdit(employee)}
+                      >
+                        <i className="fas fa-pencil-alt"></i> Edit
+                      </MDBBtn>
+                      <MDBBtn
+                        color="link"
+                        rounded
+                        size="sm"
+                        onClick={() => handleDelete(employee.empNo)}
+                      >
+                        <i className="fas fa-trash"></i> Delete
+                      </MDBBtn>
+                    </td>
+                    <td>
+                      <Form.Check // prettier-ignore
+                        type="switch"
+                        id="custom-switch"
+                        onChange={() => handleAttendanceCheck(employee)}
+                      />
+                    </td>
+                  </tr>
+                ))}
+                {isEditModalOpen && (
+                  <EmployeeEditModal
+                    employee={editEmployee}
+                    closeEditModal={closeEditModal}
+                  />
+                )}
+                {isAttendanceModalOpen && (
+                  <EmployeeAttendanceModal
+                    isOpen={isAttendanceModalOpen}
+                    closeModal={() => setIsAttendanceModalOpen(false)}
+                    attendanceData={selectedEmployee}
+                  />
+                )}
+              </tbody>
+            </table>
+          </div>
+        </form >
+      </div >
+    </>
   );
 }
