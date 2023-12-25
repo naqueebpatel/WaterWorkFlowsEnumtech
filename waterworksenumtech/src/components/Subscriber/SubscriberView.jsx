@@ -38,6 +38,7 @@ export default function SubscriberView({ setCollapsed }) {
   };
 
   const handleSearch = (event) => {
+
     setSearchTerm(event.target.value);
     const { value } = event.target;
 

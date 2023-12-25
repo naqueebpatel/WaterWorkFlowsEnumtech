@@ -249,7 +249,7 @@ export default function InwardTransaction() {
                           name="total"
                           onChange={onChange}
                           required
-                          label="₹ XX-XX"
+                          label="Total Amount"
                           disabled
                         />
                       </MDBValidationItem>
