@@ -173,7 +173,7 @@ export default function EmployeeView({ setCollapsed }) {
   return (
     <>
       <div>
-        <form>
+        {/* <form onSubmit={(event)=>event.preventDefault()}> */}
 
           <div className="datatable-container">
             <div className="header-tools">
@@ -183,17 +183,14 @@ export default function EmployeeView({ setCollapsed }) {
                   onChange={handleSearch} />
               </div>
               <label className="label">
-                <select>
-                  <option value="" selected disabled>Select Filter</option>
-                  {filterOptions.map((option) => (
-                    <option
-                      key={option}
-                      onClick={() => handleFilterChange(option)}
-                    >
-                      {option}
-                    </option>
-                  ))}
-                </select>
+              <select value={selectedFilter || ""} onChange={(e) => handleFilterChange(e.target.value)}>
+                <option value="" disabled>Select Filter</option>
+                {filterOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
               </label>
             </div>
 
@@ -276,7 +273,7 @@ export default function EmployeeView({ setCollapsed }) {
               </tbody>
             </table>
           </div>
-        </form >
+        {/* </form > */}
       </div >
     </>
   );

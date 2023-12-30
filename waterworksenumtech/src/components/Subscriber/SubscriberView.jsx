@@ -4,16 +4,16 @@ import axios from "axios";
 import SubscriberEditModal from "./SubscriberEditModal";
 import Swal from "sweetalert2";
 import LoaderComp from "../LoaderComp";
-import { MDBBadge } from 'mdb-react-ui-kit';
+import { MDBBadge, MDBBtn } from 'mdb-react-ui-kit';
 
 export default function SubscriberView({ setCollapsed }) {
-  const [ subscriber, setSubscriber ] = useState([]);
-  const [ filteredSubscribers, setFilteredSubscribers ] = useState([]);
-  const [ selectedFilter, setSelectedFilter ] = useState();
-  const [ searchTerm, setSearchTerm ] = useState('');
-  const [ loading, setLoading ] = useState(false);
-  const [ isEditModalOpen, setIsEditModalOpen ] = useState(false);
-  const [ editSubscriber, setEditSubscriber ] = useState([]);
+  const [subscriber, setSubscriber] = useState([]);
+  const [filteredSubscribers, setFilteredSubscribers] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editSubscriber, setEditSubscriber] = useState([]);
 
   useEffect(() => {
     setCollapsed(true);
@@ -89,7 +89,7 @@ export default function SubscriberView({ setCollapsed }) {
 
       if (result.isConfirmed) {
         // User confirmed, proceed with the delete request
-        await axios.post(`http://localhost:8090/waterwork/delete/deleteSubscriberById?subscriberNo=${subscriberNo}`);
+        await axios.delete(`http://localhost:8090/waterwork/delete/deleteSubscriberById?subscriberNo=${subscriberNo}`);
         fetchSubscriberData();
 
         // Show success message
@@ -102,7 +102,7 @@ export default function SubscriberView({ setCollapsed }) {
     }
   };
 
-  const filterOptions = [ "By Aadhar", "By Name", "By Mobile No." ];
+  const filterOptions = ["By Aadhar", "By Name", "By Mobile No."];
 
   const handleFilterName = (value) => {
     const filteredData = subscriber.filter((subscriber) => {
@@ -142,95 +142,111 @@ export default function SubscriberView({ setCollapsed }) {
   return (
     <>
       <div>
-        <form>
+        {/* <form> */}
 
-          <div className="datatable-container">
-            <div className="header-tools">
-              <div className="search">
-                <input type="search" className="search-input" placeholder="Search..."
-                  value={searchTerm}
-                  onChange={handleSearch} />
-              </div>
-              <label className="label">
-                <select>
-                  <option value="" selected disabled>Select Filter</option>
-                  {filterOptions.map((option) => (
-                    <option key={option} onClick={() => handleFilterChange(option)}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </label>
+        <div className="datatable-container">
+          <div className="header-tools">
+            <div className="search">
+              <input type="text" className="search-input" placeholder="Search..."
+                value={searchTerm}
+                onChange={handleSearch} />
             </div>
-
-            <table className="datatable">
-              <thead>
-                <tr>
-                  <th>Profile</th>
-                  <th>Name</th>
-                  <th>Aadhar Number</th>
-                  <th>Mobile Number</th>
-                  <th>Status</th>
-                  <th>Current Balance</th>
-                  <th>Financial Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              {filteredSubscribers.map((subscriber) => (
-                <tr key={subscriber.subscriberNo} className="table-info">
-                  <td>
-                    <img
-                      src="https://mdbootstrap.com/img/new/avatars/8.jpg"
-                      alt={`Avatar`}
-                      style={{ width: "45px", height: "45px" }}
-                      className="rounded-circle"
-                    />
-                  </td>
-                  <td>
-                    <p className="fw-bold mb-1">{`${subscriber.firstName} ${subscriber.lastName}`}</p>
-                    <p className="text-muted mb-0">{subscriber.subscriberAddress}</p>
-                  </td>
-                  <td>{subscriber.subscriberAdharNo}</td>
-                  <td>{subscriber.subscriberMobileNo}</td>
-                  <td>
-                    <MDBBadge
-                      color={
-                        subscriber.connectionStatus === "active"
-                          ? "success"
-                          : subscriber.connectionStatus === "paused"
-                            ? "primary"
-                            : subscriber.connectionStatus === "blocked"
-                              ? "danger"
-                              : "warning"
-                      }
-                      pill
-                    >
-                      {
-                        subscriber.connectionStatus === "active"
-                          ? "Active"
-                          : subscriber.connectionStatus === "paused"
-                            ? "Paused"
-                            : subscriber.connectionStatus === "blocked"
-                              ? "Blocked"
-                              : "warning"
-                      }
-                    </MDBBadge>
-                  </td>
-                  <td>{subscriber.currentBalance}</td>
-                  <td>{subscriber.subsciberFinancialStatus === "0" ? 'POOR' : 'RICH'}</td>
-                  <td>
-                    {/* Edit and Delete buttons with different icons */}
-                    <button className="btn btn-secondary" onClick={() => handleEdit(subscriber)}>Edit</button>
-                    <button style={{ marginLeft: "1vw" }} className="btn btn-danger" onClick={() => handleDelete(subscriber.subscriberNo)}>Delete</button>
-                  </td>
-                </tr>
-              ))}
-              {isEditModalOpen && (
-                <SubscriberEditModal subscriber={editSubscriber} closeEditModal={closeEditModal} />
-              )}
-            </table>
+            <label className="label">
+              <select value={selectedFilter || ""} onChange={(e) => handleFilterChange(e.target.value)}>
+                <option value="" disabled>Select Filter</option>
+                {filterOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </label>
           </div>
-        </form>
+
+          <table className="datatable">
+            <thead>
+              <tr>
+                <th>Profile</th>
+                <th>Name</th>
+                <th>Aadhar Number</th>
+                <th>Mobile Number</th>
+                <th>Status</th>
+                <th>Current Balance</th>
+                <th>Financial Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            {filteredSubscribers.map((subscriber) => (
+              <tr key={subscriber.subscriberNo} className="table-info">
+                <td>
+                  <img
+                    src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                    alt={`Avatar`}
+                    style={{ width: "45px", height: "45px" }}
+                    className="rounded-circle"
+                  />
+                </td>
+                <td>
+                  <p className="fw-bold mb-1">{`${subscriber.firstName} ${subscriber.lastName}`}</p>
+                  <p className="text-muted mb-0">{subscriber.subscriberAddress}</p>
+                </td>
+                <td>{subscriber.subscriberAdharNo}</td>
+                <td>{subscriber.subscriberMobileNo}</td>
+                <td>
+                  <MDBBadge
+                    color={
+                      subscriber.connectionStatus === "active"
+                        ? "success"
+                        : subscriber.connectionStatus === "paused"
+                          ? "primary"
+                          : subscriber.connectionStatus === "blocked"
+                            ? "danger"
+                            : "warning"
+                    }
+                    pill
+                  >
+                    {
+                      subscriber.connectionStatus === "active"
+                        ? "Active"
+                        : subscriber.connectionStatus === "paused"
+                          ? "Paused"
+                          : subscriber.connectionStatus === "blocked"
+                            ? "Blocked"
+                            : "warning"
+                    }
+                  </MDBBadge>
+                </td>
+                <td>{subscriber.currentBalance}</td>
+                <td>{subscriber.subsciberFinancialStatus === "0" ? 'POOR' : 'RICH'}</td>
+                <td>
+                  {/* Edit and Delete buttons with different icons */}
+                  {/* <input type="button" className="btn btn-secondary" onClick={() => handleEdit(subscriber)} value="Edit"/> */}
+                  <MDBBtn
+                    color="link"
+                    rounded
+                    size="sm"
+                    onClick={() => handleEdit(subscriber)}
+                  >
+                    <i className="fas fa-pencil-alt"></i> Edit
+                  </MDBBtn>
+                  <MDBBtn
+                    color="link"
+                    rounded
+                    size="sm"
+                    onClick={() => handleDelete(subscriber.subscriberNo)}
+                  >
+                    <i className="fas fa-trash"></i> Delete
+                  </MDBBtn>
+                </td>
+                {/* <input type="button" style={{ marginLeft: "1vw" }} className="btn btn-danger" onClick={() => handleDelete(subscriber.subscriberNo)} value="Delete" /> */}
+              </tr>
+            ))}
+            {isEditModalOpen && (
+              <SubscriberEditModal subscriber={editSubscriber} closeEditModal={closeEditModal} />
+            )}
+          </table>
+        </div>
+        {/* </form> */}
       </div>
     </>
   );
