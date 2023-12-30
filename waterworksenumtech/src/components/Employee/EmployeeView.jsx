@@ -174,7 +174,6 @@ export default function EmployeeView({ setCollapsed }) {
     <>
       <div>
         <form>
-
           <div className="datatable-container">
             <div className="header-tools">
               <div className="search">
@@ -196,7 +195,6 @@ export default function EmployeeView({ setCollapsed }) {
                 </select>
               </label>
             </div>
-
             <table className="datatable">
               <thead>
                 <tr>
@@ -211,7 +209,6 @@ export default function EmployeeView({ setCollapsed }) {
                   <th>Attendance</th>
                 </tr>
               </thead>
-
               <tbody>
                 {filteredEmployee.map((employee) => (
                   <tr key={employee.empNo} className="table-info">

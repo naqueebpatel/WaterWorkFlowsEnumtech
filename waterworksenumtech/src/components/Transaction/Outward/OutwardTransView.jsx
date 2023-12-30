@@ -315,8 +315,8 @@ const OutwardTransView = ({ setCollapsed }) => {
                 </select>
               </label>
               <div className="date">
-                <input type="date" name="" id="" />
-                <input type="date" name="" id="" />
+                <input type="date" name="" id="" onChange={handleDateEvent} />
+                <input type="date" name="" id="" onChange={handleDateEvent} />
               </div>
             </div>
             <table className="datatable">

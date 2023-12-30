@@ -10,7 +10,7 @@ const SideBar = ({ collapsed, toggle }) => {
         token: { colorBgContainer },
     } = theme.useToken();
     return (
-        <Layout style={{ position: "fixed", zIndex: "1" }}>
+        <Layout style={{ position: "absolute", zIndex: "1" }}>
             <Sider collapsed={collapsed}
                 collapsible
                 trigger={null}

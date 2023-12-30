@@ -22,6 +22,9 @@ import OutwardTransaction from "./components/Transaction/Outward/OutwardTransact
 import OutwardTransView from "./components/Transaction/Outward/OutwardTransView.jsx";
 import Bill from "./components/Bill.jsx";
 import Topup from "./components/TopUp/Topup.jsx";
+import SubscriberReports from "./components/Reports/SubscriberReports.jsx";
+import InwardReports from "./components/Reports/InwardReports.jsx";
+import ExpenseReports from "./components/Reports/ExpenseReports.jsx";
 
 const App = () => {
   const [collapsed,setCollapsed] = useState(true);
@@ -159,8 +162,30 @@ const App = () => {
             </div>
           } />
 
-
-
+          <Route path='/subscriberreports'
+          element={
+            <div>
+              <SideBar/>
+              <SubscriberReports setCollapsed={setCollapsed}/>
+              </div>
+          }
+          />
+          <Route path='/inwardsreports'
+          element={
+            <div>
+              <SideBar/>
+              <InwardReports setCollapsed={setCollapsed}/>
+              </div>
+          }
+          />
+          <Route path='/exportsreports'
+          element={
+            <div>
+              <SideBar/>
+              <ExpenseReports setCollapsed={setCollapsed}/>
+              </div>
+          }
+          />
           <Route path="/insert  " element={<Insert />} />
           <Route path="/delete" element={<Delete />} />
           <Route path='/update' element={<Update />} />

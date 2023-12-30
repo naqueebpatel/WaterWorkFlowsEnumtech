@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import axios from "axios";
-import LoaderComp from "../../LoaderComp";
-import './inwardTransactionView.css';
+import React, { useEffect, useState } from 'react';
+import { Swal } from 'sweetalert2';
+import LoaderComp from '../LoaderComp';
+import { FaSearch } from 'react-icons/fa';
 import { MDBBadge } from 'mdb-react-ui-kit';
-import { FaSearch } from "react-icons/fa";
+import axios from 'axios';
+import { data } from './Mock_data';
+import Button from 'react-bootstrap/Button';
+import signature from './signature.png';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
+
 
 function formatDateWithoutTime(dateString) {
     const dateObject = new Date(dateString);
@@ -16,11 +21,12 @@ function formatDateWithoutTime(dateString) {
     return `${year}-${month}-${day}`;
 }
 
-const InwardTransactionView = ({ setCollapsed }) => {
+const ExpenseReports = ({ setCollapsed }) => {
     const [ inwardTrans, setInwardTrans ] = useState([]);
     const [ filterInward, setFilterInward ] = useState([]);
     const [ selectedFilter, setSelectedFilter ] = useState();
     const [ searchTerm, setSearchTerm ] = useState("");
+
     const [ date, setDate ] = useState({
         startDate: "",
         endDate: "",
@@ -33,21 +39,21 @@ const InwardTransactionView = ({ setCollapsed }) => {
     }, []);
 
     const fetchInwardTrans = async () => {
-        try {
-            setLoading(true);
-            Swal.isLoading();
-            const response = await axios.get(
-                "http://localhost:8090/waterwork/get/getAllInwardTrans"
-            );
-            console.log(response.data);
-            setInwardTrans(response.data);
-            setFilterInward(response.data); // Set filteredoutwardTranss initially with all data
-            Swal.hideLoading();
-        } catch (error) {
-            console.error("Error fetching inwardTrans data:", error);
-        } finally {
-            setLoading(false);
-        }
+        // try {
+        //     setLoading(true);
+        //     Swal.isLoading();
+        //     const response = await axios.get(
+        //         "http://localhost:8090/waterwork/get/getAllInwardTrans"
+        //     );
+        //     console.log(response.data);
+        //     setInwardTrans(response.data);
+        //     setFilterInward(response.data); // Set filteredoutwardTranss initially with all data
+        //     Swal.hideLoading();
+        // } catch (error) {
+        //     console.error("Error fetching inwardTrans data:", error);
+        // } finally {
+        //     setLoading(false);
+        // }
     };
 
     const handleSearch = (event) => {
@@ -152,9 +158,6 @@ const InwardTransactionView = ({ setCollapsed }) => {
         );
         setFilterInward(sortedData);
     };
-
-
-
     if (loading) {
         return (
             <div>
@@ -165,6 +168,22 @@ const InwardTransactionView = ({ setCollapsed }) => {
         );
     }
 
+
+
+    const handleDownload = async () => {
+        const doc = new jsPDF({ orientation: 'landscape' });
+        doc.addImage('https://png.pngtree.com/png-clipart/20220125/ourmid/pngtree-liquid-water-drop-splash-three-dimensional-decoration-png-image_4361854.png', 'PNG', 80, 0, 150, 50);
+        doc.setFontSize(50);
+        doc.text("Invoice", 150, 60, { align: "center" });
+        doc.autoTable({
+            margin: { top: 70, left: 20 },
+            html: '#employee-table',
+        });
+        doc.setFontSize(20);
+        doc.text("Authorized Signature", 50, 150);
+        doc.addImage(signature, 50, 160, 50, 50);
+        doc.save(`bill`);
+    };
     return (
         <>
             <div>
@@ -176,23 +195,6 @@ const InwardTransactionView = ({ setCollapsed }) => {
                                     value={searchTerm}
                                     onChange={handleSearch} />
                             </div>
-                            <button className="btn btn-black" onClick={handleFilterDate}>Submit</button>
-
-                            <label className="label">
-                                <select>
-                                    <option value="" selected disabled>Select Filter</option>
-                                    {filterOptions.map((option) => (
-                                        <option
-                                            key={option}
-                                            onClick={() => handleFilterChange(option)}
-                                        >
-                                            {option}
-                                        </option>
-                                    ))}
-                                    <option onClick={() => handleFilterChange("LOW to HIGH")}>LOW to HIGH</option>
-                                    <option onClick={() => handleFilterChange("HIGH to LOW")}>HIGH to LOW</option>
-                                </select>
-                            </label>
                             <div className="date">
                                 <label htmlFor="from">From</label>
                                 <input type="date" name="startDate" id="from" onChange={handleDateEvent} />
@@ -200,8 +202,13 @@ const InwardTransactionView = ({ setCollapsed }) => {
                                 <input type="date" name="endDate" id="to" onChange={handleDateEvent} />
                                 <span className="h4"><FaSearch onClick={handleFilterDate} /></span>
                             </div>
+                            <div>
+                                <Button variant="black" className='btn btn-black' onClick={handleDownload}>
+                                    Download Bill
+                                </Button>
+                            </div>
                         </div>
-                        <table className="datatable">
+                        <table className="datatable" id='employee-table'>
                             <thead>
                                 <tr>
                                     <th>Inward Tid</th>
@@ -212,7 +219,7 @@ const InwardTransactionView = ({ setCollapsed }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filterInward.map((inward) => (
+                                {data.map((inward) => (
                                     <tr key={inward.inwardTid}>
                                         <td>{inward.inwardTid}</td>
                                         <td><img
@@ -250,4 +257,4 @@ const InwardTransactionView = ({ setCollapsed }) => {
     );
 };
 
-export default InwardTransactionView;
+export default ExpenseReports;

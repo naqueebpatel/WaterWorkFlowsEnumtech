@@ -17,13 +17,12 @@ export default function InwardTransaction() {
 
   const [ inwardSource, setInwardSource ] = useState([]);
   const [ loading, setLoading ] = useState(false);
+  const [ qunatityInputToggle, setQunatityInputToggle ] = useState(true);
   const [ incorrectAmountError, setIncorrectAmountError ] = useState({
     icon: "",
     text: "",
   });
   const [ toggleButton, setToggleButton ] = useState(true);
-  const [ itemAmount, setItemAmount ] = useState(2);
-
   useEffect(() => {
     fetchInwardSourceData();
   }, []);
@@ -66,86 +65,118 @@ export default function InwardTransaction() {
     confirmAmount: "",
     receiptno: generateRandomReceiptNumber(5),
     inwardSid: "",
-    qty: 0,
+    qty: 1,
     total: 0,
   });
 
+  useEffect(() => {
+    handleButtonToggle();
+  }, [ formValue, qunatityInputToggle ]);
+
   const onChange = (e) => {
-    setFormValue({ ...formValue, [ e.target.name ]: e.target.value });
+    setFormValue((prevFormValue) => ({ ...prevFormValue, [ e.target.name ]: e.target.value }));
+
     if (e.target.name === "inwardSid") {
-      if (e.target.value === '1') {
-        setToggleButton(false);
-        setItemAmount(50);
-      } else if (e.target.value === '2') {
-        setToggleButton(false);
-        setItemAmount(10);
-      }
-      else {
-        setFormValue({ ...formValue, qty: 0, total: 0 });
-        setToggleButton(true);
+      if (e.target.value === "1" || e.target.value === "2") {
+        // console.log("1");
+        setQunatityInputToggle(false);
+      } else {
+        setFormValue({ ...formValue, qty: 1, total: 0 });
+        setQunatityInputToggle(true);
       }
     }
   };
 
-  const hanldeQuantity = (val) => {
-    if (val === 1) {
-      console.log({ ...formValue, qty: +formValue.qty + val, total: formValue.total + itemAmount });
-      setFormValue({ ...formValue, qty: +formValue.qty + val, total: formValue.total + itemAmount });
+
+
+  const handleButtonToggle = () => {
+    const amountsMatch = formValue.tamount === formValue.confirmAmount;
+    const validInwardSid = !isNaN(formValue.inwardSid);
+    const validQty = qunatityInputToggle || !isNaN(formValue.qty);
+    const validIncorrectPrice = !incorrectAmountError.text;
+
+    if (amountsMatch && validInwardSid && validQty && validIncorrectPrice) {
+      setToggleButton(false);
     } else {
-      setFormValue({ ...formValue, qty: +formValue.qty + val, total: formValue.total - itemAmount });
+      setToggleButton(true);
     }
   };
 
-  const handleChanges = (event) => {
-    event.preventDefault();
-
+  const handleAmount = () => {
     if (formValue.tamount !== formValue.confirmAmount) {
       setIncorrectAmountError({
         icon: <IoWarning />,
-        text: "Incorrect Amount",
+        text: "Incorrect Price"
       });
     } else {
       setIncorrectAmountError({
         icon: "",
         text: "",
       });
-
-      const payload = {
-        tdate: formValue.tdate,
-        tamount: parseInt(formValue.tamount),
-        receiptno: parseInt(formValue.receiptno),
-        inwardSid: parseInt(formValue.inwardSid),
-        qty: parseInt(formValue.qty),
-        total: parseInt(formValue.total),
-      };
-
-      console.log(payload);
-
-      // axios
-      //   .post(`http://localhost:8090/waterwork/add/addInwardTrans`, payload)
-      //   .then((response) => {
-      //     console.log("Response data:", response.data);
-      //     if (response.status === 200) {
-      //       Swal.fire('Success', 'Updated successfully', 'success');
-      //     } else {
-      //       Swal.fire('Error', 'Failed to update record', 'error');
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     Swal.fire('Error', 'Failed to pay!', 'error');
-      //     console.error("Error:", error.message);
-      //   });
-
-      setFormValue({
-        tdate: formatDate(Date.now()),
-        tamount: "",
-        confirmAmount: "",
-        receiptno: generateRandomReceiptNumber(5),
-        inwardSid: "",
-        qty: 0,
-        total: 0,
-      });
     }
+    handleButtonToggle();
+  };
+
+  const handleQuantity = (val) => {
+    if (formValue.confirmAmount !== "" && formValue.tamount !== "") {
+      if (val === 1) {
+        setFormValue((prevFormValue) => ({ ...prevFormValue, total: +formValue.qty * parseInt(formValue.confirmAmount), qty: +formValue.qty + val }));
+      } else if (val === -1) {
+        setFormValue((prevFormValue) => ({ ...prevFormValue, total: +formValue.total - parseInt(formValue.confirmAmount), qty: formValue.qty + val }));
+      }
+    } else {
+      alert(`Please Fill the Amount`);
+    }
+  };
+
+  const handleChanges = (event) => {
+    event.preventDefault();
+    if (formValue.tamount !== formValue.confirmAmount) {
+      setIncorrectAmountError({
+        icon: <IoWarning />,
+        text: "Incorrect Amount",
+      });
+      handleButtonToggle();
+      return;
+    }
+
+    const payload = {
+      tdate: formValue.tdate,
+      tamount: parseInt(formValue.total),
+      receiptno: parseInt(formValue.receiptno),
+      inwardSid: parseInt(formValue.inwardSid),
+      qty: parseInt(formValue.qty) - 1,
+    };
+
+
+    console.log(payload);
+
+    // axios
+    //   .post(`http://localhost:8090/waterwork/add/addInwardTrans`, payload)
+    //   .then((response) => {
+    //     console.log("Response data:", response.data);
+    //     if (response.status === 200) {
+    //       Swal.fire('Success', 'Updated successfully', 'success');
+    //     } else {
+    //       Swal.fire('Error', 'Failed to update record', 'error');
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     Swal.fire('Error', 'Failed to pay!', 'error');
+    //     console.error("Error:", error.message);
+    //   });
+
+    setFormValue({
+      tdate: formatDate(Date.now()),
+      tamount: "",
+      confirmAmount: "",
+      receiptno: generateRandomReceiptNumber(5),
+      inwardSid: "",
+      qty: 1,
+      total: 0,
+    });
+    setToggleButton(true);
+    setQunatityInputToggle(true);
   };
 
 
@@ -188,14 +219,12 @@ export default function InwardTransaction() {
                           label="Receipt No"
                         />
                       </MDBValidationItem>
-
-
-
                       <MDBValidationItem className="col-md-3">
                         <MDBInput
                           value={formValue.tamount}
                           name="tamount"
                           onChange={onChange}
+                          onBlur={handleAmount} // Check amount onBlur
                           required
                           label="₹ XX-XX"
                         />
@@ -205,6 +234,7 @@ export default function InwardTransaction() {
                           value={formValue.confirmAmount}
                           name="confirmAmount"
                           onChange={onChange}
+                          onBlur={handleAmount} // Check amount onBlur
                           required
                           label="₹ XX-XX"
                         />
@@ -218,7 +248,7 @@ export default function InwardTransaction() {
                           className="form-select custom-select" // Added custom-select class
                           required
                         >
-                          <option value="" disabled>
+                          <option>
                             Select Inward Source
                           </option>
                           {/* {inwardSource.map((source) => (
@@ -232,16 +262,16 @@ export default function InwardTransaction() {
                         </select>
                       </MDBValidationItem>
                       <MDBValidationItem className="col-md-3 d-flex">
-                        <input disabled={toggleButton} className="btn btn-primary" type="button" value="+" onClick={() => hanldeQuantity(1)} />
+                        <input disabled={qunatityInputToggle} className="btn btn-primary" type="button" value="+" onClick={() => handleQuantity(1)} />
                         <MDBInput
-                          value={formValue.qty}
+                          value={formValue.qty - 1}
                           name="qty"
                           onChange={onChange}
                           required
                           label="Quantity"
-                          disabled={toggleButton}
+                          disabled={qunatityInputToggle}
                         />
-                        <input disabled={toggleButton} className="btn btn-primary" type="button" value="-" onClick={() => hanldeQuantity(-1)} />
+                        <input disabled={qunatityInputToggle} className="btn btn-primary" type="button" value="-" onClick={() => handleQuantity(-1)} />
                       </MDBValidationItem>
                       <MDBValidationItem className="col-md-3">
                         <MDBInput
@@ -257,6 +287,7 @@ export default function InwardTransaction() {
 
                     <div className="d-flex justify-content-end pt-3">
                       <button
+                        disabled={toggleButton}
                         type="submit"
                         className="btn btn-lg ms-2"
                         style={{ backgroundColor: "#00ffff9e" }}

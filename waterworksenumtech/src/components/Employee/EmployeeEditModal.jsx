@@ -16,16 +16,15 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 export default function EmployeeEditModal({ employee, closeEditModal }) {
-  const [centredModal, setCentredModal] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [ centredModal, setCentredModal ] = useState(true);
 
 
-  const [formValue, setFormValue] = useState({
+  const [ formValue, setFormValue ] = useState({
     ...employee,
   });
 
   const onChange = (e) => {
-    setFormValue({ ...formValue, [e.target.name]: e.target.value });
+    setFormValue({ ...formValue, [ e.target.name ]: e.target.value });
   };
 
   const handleClose = () => closeEditModal();
@@ -35,26 +34,26 @@ export default function EmployeeEditModal({ employee, closeEditModal }) {
     setCentredModal(true);
   }, []);
 
-  const handleChanges=(id)=>{
-    console.log(id)
-    console.log(formValue)
+  const handleChanges = (id) => {
+    console.log(id);
+    console.log(formValue);
 
     axios
-    .post(`http://localhost:8090/waterwork/update/updateEmployeeById?empNo=${id}`, formValue)
-    .then((response) => {
-      console.log("Response data:", response.data);
-      handleClose()
-      if (response.status === 200) {
-        Swal.fire('Success', 'Record updated successfully', 'success');
-      } else {
+      .post(`http://localhost:8090/waterwork/update/updateEmployeeById?empNo=${id}`, formValue)
+      .then((response) => {
+        console.log("Response data:", response.data);
+        handleClose();
+        if (response.status === 200) {
+          Swal.fire('Success', 'Record updated successfully', 'success');
+        } else {
+          Swal.fire('Error', 'Failed to update record', 'error');
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error.message);
         Swal.fire('Error', 'Failed to update record', 'error');
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error.message);
-      Swal.fire('Error','Failed to update record','error')
-    });
-  }
+      });
+  };
 
 
   return (
@@ -78,7 +77,7 @@ export default function EmployeeEditModal({ employee, closeEditModal }) {
                     name="empNo"
                     disabled
                     label="Employee No"
-                      />
+                  />
                 </MDBValidationItem>
                 <MDBValidationItem className="col-md-4">
                   <MDBInput
@@ -99,8 +98,8 @@ export default function EmployeeEditModal({ employee, closeEditModal }) {
                     label="AADHAR NUMBER"
                   />
                 </MDBValidationItem>
-                
-                
+
+
                 <MDBValidationItem className="col-md-12">
                   <MDBInput
                     value={formValue.empAddress}
@@ -129,7 +128,7 @@ export default function EmployeeEditModal({ employee, closeEditModal }) {
                     label="Employee Salary"
                   />
                 </MDBValidationItem>
-                
+
               </MDBValidation>
             </MDBModalBody>
             <MDBModalFooter>
