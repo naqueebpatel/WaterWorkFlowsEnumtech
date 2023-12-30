@@ -5,6 +5,7 @@ import { IoIosPeople } from "react-icons/io";
 import { BiSolidDashboard } from "react-icons/bi";
 import { SiVectorlogozone } from "react-icons/si";
 import { TbPhysotherapist } from "react-icons/tb";
+import { TbReportSearch } from "react-icons/tb";
 import { GiCash } from "react-icons/gi";
 import { FaUserAlt } from "react-icons/fa";
 import { Link } from 'react-router-dom';
@@ -69,6 +70,15 @@ const MenuList = () => {
             <Menu.Item key="topup" icon={<GiCash />} >
                 <Link to="/topup">Topup</Link>
             </Menu.Item>
+            <Menu.SubMenu
+                key="reports"
+                icon={<TbReportSearch />}
+                title="Reports"
+            >
+                <Menu.Item key="reports-insert"><Link to="/subscriberreports">Transaction</Link></Menu.Item>
+                <Menu.Item key="inward-insert"><Link to="/inwardsreports">Inward Reports</Link></Menu.Item>
+                <Menu.Item key="expense-insert"><Link to="/exportsreports">Export Reports</Link></Menu.Item>
+            </Menu.SubMenu>
         </Menu>
     );
 };

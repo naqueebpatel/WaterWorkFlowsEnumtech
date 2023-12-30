@@ -125,7 +125,11 @@ export default function InwardTransaction() {
         setFormValue((prevFormValue) => ({ ...prevFormValue, total: +formValue.total - parseInt(formValue.confirmAmount), qty: formValue.qty + val }));
       }
     } else {
+<<<<<<< Faizan
+      alert(`Please Fill the Amount`);
+=======
       alert("Please Fill the Amount");
+>>>>>>> main
     }
   };
 
@@ -152,7 +156,11 @@ export default function InwardTransaction() {
     console.log(payload);
 
     // axios
+<<<<<<< Faizan
+    //   .post(`http://localhost:8090/waterwork/add/addInwardTrans`, payload)
+=======
     //   .post(http://localhost:8090/waterwork/add/addInwardTrans, payload)
+>>>>>>> main
     //   .then((response) => {
     //     console.log("Response data:", response.data);
     //     if (response.status === 200) {

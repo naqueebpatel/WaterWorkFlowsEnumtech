@@ -220,17 +220,37 @@ const OutwardTransView = ({ setCollapsed }) => {
   return (
     <>
       <div>
-        <div className="datatable-container">
-          <div className="header-tools">
-            <div className="search">
-              <input
-                type="search"
-                className="search-input"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={handleSearch}
-              />
-            </div>
+
+        <form>
+          <div className="datatable-container">
+            <div className="header-tools">
+              <div className="search">
+                <input type="search" className="search-input" placeholder="Search..."
+                  value={searchTerm}
+                  onChange={handleSearch} />
+              </div>
+
+              <button className="btn btn-black" onClick={handleFilterDate}>Submit</button>
+
+              <label className="label">
+                <select>
+                  <option value="" selected disabled>Select Filter</option>
+                  {filterOptions.map((option) => (
+                    <option
+                      key={option}
+                      onClick={() => handleFilterChange(option)}
+                    >
+                      {option}
+                    </option>
+                  ))}
+                  <option onClick={() => handleFilterChange("LOW to HIGHT")}>LOW to HIGH</option>
+                  <option onClick={() => handleFilterChange("HIGH to LOW")}>HIGH to LOW</option>
+                </select>
+              </label>
+              <div className="date">
+                <input type="date" name="" id="" onChange={handleDateEvent} />
+                <input type="date" name="" id="" onChange={handleDateEvent} />
+              </div>
 
             <label className="label">
               <select
