@@ -17,15 +17,15 @@ function formatDateWithoutTime(dateString) {
 }
 
 const InwardTransactionView = ({ setCollapsed }) => {
-    const [ inwardTrans, setInwardTrans ] = useState([]);
-    const [ filterInward, setFilterInward ] = useState([]);
-    const [ selectedFilter, setSelectedFilter ] = useState();
-    const [ searchTerm, setSearchTerm ] = useState("");
-    const [ date, setDate ] = useState({
+    const [inwardTrans, setInwardTrans] = useState([]);
+    const [filterInward, setFilterInward] = useState([]);
+    const [selectedFilter, setSelectedFilter] = useState();
+    const [searchTerm, setSearchTerm] = useState("");
+    const [date, setDate] = useState({
         startDate: "",
         endDate: "",
     });
-    const [ loading, setLoading ] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setCollapsed(true);
@@ -90,13 +90,13 @@ const InwardTransactionView = ({ setCollapsed }) => {
         }
     };
 
-    const filterOptions = [ "By Tid", "By Sid", "By Receipt No." ];
+    const filterOptions = ["By Tid", "By Sid", "By Receipt No."];
 
 
     const handleDateEvent = (event) => {
         setDate({
             ...date,
-            [ event.target.name ]: event.target.value,
+            [event.target.name]: event.target.value,
         });
     };
     // console.log(typeof (new Date(date.startDate)));
@@ -140,14 +140,14 @@ const InwardTransactionView = ({ setCollapsed }) => {
     };
 
     const handleSortHighToLow = () => {
-        const sortedData = [ ...filterInward ].sort(
+        const sortedData = [...filterInward].sort(
             (a, b) => b.tamount - a.tamount
         );
         setFilterInward(sortedData);
     };
 
     const handleSortLowToHigh = () => {
-        const sortedData = [ ...filterInward ].sort(
+        const sortedData = [...filterInward].sort(
             (a, b) => a.tamount - b.tamount
         );
         setFilterInward(sortedData);
@@ -168,7 +168,7 @@ const InwardTransactionView = ({ setCollapsed }) => {
     return (
         <>
             <div>
-                <form>
+                {/* <form> */}
                     <div className="datatable-container">
                         <div className="header-tools">
                             <div className="search">
@@ -176,16 +176,13 @@ const InwardTransactionView = ({ setCollapsed }) => {
                                     value={searchTerm}
                                     onChange={handleSearch} />
                             </div>
-                            <button className="btn btn-black" onClick={handleFilterDate}>Submit</button>
+                            
 
                             <label className="label">
-                                <select>
-                                    <option value="" selected disabled>Select Filter</option>
+                                <select value={selectedFilter || ""} onChange={(e) => handleFilterChange(e.target.value)}>
+                                    <option value="" disabled>Select Filter</option>
                                     {filterOptions.map((option) => (
-                                        <option
-                                            key={option}
-                                            onClick={() => handleFilterChange(option)}
-                                        >
+                                        <option key={option} value={option}>
                                             {option}
                                         </option>
                                     ))}
@@ -199,6 +196,7 @@ const InwardTransactionView = ({ setCollapsed }) => {
                                 <label htmlFor="to">To</label>
                                 <input type="date" name="endDate" id="to" onChange={handleDateEvent} />
                                 <span className="h4"><FaSearch onClick={handleFilterDate} /></span>
+
                             </div>
                         </div>
                         <table className="datatable">
@@ -244,7 +242,7 @@ const InwardTransactionView = ({ setCollapsed }) => {
                             </tbody>
                         </table>
                     </div>
-                </form>
+                {/* </form> */}
             </div>
         </>
     );

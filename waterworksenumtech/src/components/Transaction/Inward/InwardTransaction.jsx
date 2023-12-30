@@ -125,7 +125,11 @@ export default function InwardTransaction() {
         setFormValue((prevFormValue) => ({ ...prevFormValue, total: +formValue.total - parseInt(formValue.confirmAmount), qty: formValue.qty + val }));
       }
     } else {
+<<<<<<< Faizan
       alert(`Please Fill the Amount`);
+=======
+      alert("Please Fill the Amount");
+>>>>>>> main
     }
   };
 
@@ -152,7 +156,11 @@ export default function InwardTransaction() {
     console.log(payload);
 
     // axios
+<<<<<<< Faizan
     //   .post(`http://localhost:8090/waterwork/add/addInwardTrans`, payload)
+=======
+    //   .post(http://localhost:8090/waterwork/add/addInwardTrans, payload)
+>>>>>>> main
     //   .then((response) => {
     //     console.log("Response data:", response.data);
     //     if (response.status === 200) {
@@ -251,14 +259,14 @@ export default function InwardTransaction() {
                           <option>
                             Select Inward Source
                           </option>
-                          {/* {inwardSource.map((source) => (
+                          {inwardSource.map((source) => (
                             <option key={source.inwardSid} value={source.inwardSid}>
                               {source.inwardSname}
                             </option>
-                          ))} */}
-                          <option value="1">Water Bottle</option>
+                          ))}
+                          {/* <option value="1">Water Bottle</option>
                           <option value="2">Water Bottle Cap</option>
-                          <option value="3">Extras</option>
+                          <option value="3">Extras</option> */}
                         </select>
                       </MDBValidationItem>
                       <MDBValidationItem className="col-md-3 d-flex">
@@ -307,4 +315,3 @@ export default function InwardTransaction() {
     </>
   );
 }
-

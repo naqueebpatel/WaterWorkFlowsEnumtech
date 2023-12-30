@@ -1,19 +1,39 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import product from '../Images/Product.jpg';
+import axios from 'axios';
 
 
-const data = [
-    { id: 1, name: "Filter Water", quantity: 1 },
-    { id: 2, name: "Bottle Cap", quantity: 3 },
-    { id: 3, name: "Water Bottle", quantity: 2 },
-    { id: 4, name: "Charity", quantity: 5 },
-];
+
 
 
 const Product = ({ setCollapsed }) => {
     useEffect(() => {
         setCollapsed(true);
     }, []);
+
+    const[productData,setProductData]=useState([]);
+    const[loading,setLoading]=useState(false)
+
+    useEffect(() => {
+        fetchProductId();
+      }, []);
+    
+      const fetchProductId = async () => {
+        try {
+          setLoading(true);
+          const response = await axios.get(
+            "http://localhost:8090/waterwork/get/getAllProduct"
+          );
+          setProductData(response.data); // Assuming data is an array of objects with zonename and zoneno attributes
+          console.log(response)
+        } catch (error) {
+          console.error("Error fetching product data:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+
     return (
         <>
             {/* <MDBContainer style={{
@@ -90,7 +110,7 @@ const Product = ({ setCollapsed }) => {
                             </thead>
 
                             <tbody>
-                                {data.map((value, index) => {
+                                {productData.map((value, index) => {
                                     return (
                                         <tr key={index}>
                                             <td>
@@ -101,9 +121,9 @@ const Product = ({ setCollapsed }) => {
                                                     className="rounded-circle "
                                                 />
                                             </td>
-                                            <td className="fw-bold fs-4">{value.id}</td>
-                                            <td className="fw-bold fs-4">{value.name}</td>
-                                            <td className="fw-bold fs-4"> {value.quantity}</td>
+                                            <td className="fw-bold fs-4">{value.productId}</td>
+                                            <td className="fw-bold fs-4">{value.productName}</td>
+                                            <td className="fw-bold fs-4"> {value.productQty}</td>
                                         </tr>
                                     );
                                 })}
