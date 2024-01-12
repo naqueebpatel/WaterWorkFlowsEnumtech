@@ -26,14 +26,7 @@ const Bill = ({ setCollapsed }) => {
     return (
         <div style={{ display: "grid", placeItems: "center" }}>
             Bill
-<<<<<<< Faizan
             <button className='btn btn-profile-section' disabled={state} onClick={handleMonth}>1 Month</button>
-=======
-            <button className='btn btn-black m-lg-5' disabled={toggleButton} onClick={handleOneMonth}>{!state ? "Generate Bill" : "Wait Till Next Month"}</button>
-            <PDFDownloadLink document={<PDFFile />} fileName='1 Month Bill'>
-                {({ loading }) => (loading ? <button className='btn btn-black'>Loading Document...</button> : <button className='btn btn-black' onClick={handleDownload}>DownLoad Document</button>)}
-            </PDFDownloadLink>
->>>>>>> main
         </div>
     );
 };

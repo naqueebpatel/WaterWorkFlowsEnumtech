@@ -4,7 +4,10 @@ import axios from "axios";
 import LoaderComp from "../../LoaderComp";
 import './inwardTransactionView.css';
 import { MDBBadge } from 'mdb-react-ui-kit';
-import { FaSearch } from "react-icons/fa";
+import { FaSearch} from "react-icons/fa";
+import signature from './signature.png';
+import Button from "react-bootstrap/esm/Button";
+import jsPDF from "jspdf";
 
 function formatDateWithoutTime(dateString) {
     const dateObject = new Date(dateString);
@@ -21,6 +24,7 @@ const InwardTransactionView = ({ setCollapsed }) => {
     const [filterInward, setFilterInward] = useState([]);
     const [selectedFilter, setSelectedFilter] = useState();
     const [searchTerm, setSearchTerm] = useState("");
+    const [inwardData,setInwardData]=useState()
     const [date, setDate] = useState({
         startDate: "",
         endDate: "",
@@ -30,7 +34,22 @@ const InwardTransactionView = ({ setCollapsed }) => {
     useEffect(() => {
         setCollapsed(true);
         fetchInwardTrans();
+        fetchInwardData();
     }, []);
+
+    const fetchInwardData = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get(
+                "http://localhost:8090/waterwork/get/getAllInwardSource"
+            );
+            setInwardData(response.data); // Assuming data is an array of objects with zonename and zoneno attributes
+        } catch (error) {
+            console.error("Error fetching zone data:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const fetchInwardTrans = async () => {
         try {
@@ -60,8 +79,8 @@ const InwardTransactionView = ({ setCollapsed }) => {
             case "By Tid":
                 handleFilterTid(value);
                 break;
-            case "By Sid":
-                handleFilterSid(value);
+            case "By Source":
+                handleFilterSname(value);
                 break;
             case "By Receipt No.":
                 handleFilterReceipt(value);
@@ -90,7 +109,7 @@ const InwardTransactionView = ({ setCollapsed }) => {
         }
     };
 
-    const filterOptions = ["By Tid", "By Sid", "By Receipt No."];
+    const filterOptions = ["By Tid", "By Source", "By Receipt No."];
 
 
     const handleDateEvent = (event) => {
@@ -110,13 +129,15 @@ const InwardTransactionView = ({ setCollapsed }) => {
         setFilterInward(filteredData);
     };
 
-    const handleFilterSid = (value) => {
-        const filteredData = inwardTrans.filter((inwardTrans) => {
-            const sid = String(inwardTrans.inwardSid);
-            return sid.includes(value);
-        });
-        setFilterInward(filteredData);
-    };
+    const handleFilterSname = (value) => {
+            const filteredData = inwardTrans.filter((inward) => {
+                const sourceName = inwardData?.find(
+                    (data) => data.inwardSid === inward.inwardSid
+                )?.inwardSname;
+                return sourceName.toLowerCase().includes(value.toLowerCase());
+            });
+            setFilterInward(filteredData);
+        }
 
 
     const handleFilterReceipt = (value) => {
@@ -165,6 +186,7 @@ const InwardTransactionView = ({ setCollapsed }) => {
         );
     }
 
+
     return (
         <>
             <div>
@@ -198,12 +220,13 @@ const InwardTransactionView = ({ setCollapsed }) => {
                                 <span className="h4"><FaSearch onClick={handleFilterDate} /></span>
 
                             </div>
+        
                         </div>
                         <table className="datatable">
                             <thead>
                                 <tr>
                                     <th>Inward Tid</th>
-                                    <th>Inward Sid</th>
+                                    <th>Inward Source</th>
                                     <th>Receipt No.</th>
                                     <th>Amount</th>
                                     <th>Transaction Date</th>
@@ -213,12 +236,7 @@ const InwardTransactionView = ({ setCollapsed }) => {
                                 {filterInward.map((inward) => (
                                     <tr key={inward.inwardTid}>
                                         <td>{inward.inwardTid}</td>
-                                        <td><img
-                                            src="https://mdbootstrap.com/img/new/avatars/8.jpg"
-                                            alt={`Avatar`}
-                                            style={{ width: "45px", height: "45px" }}
-                                            className="rounded-circle"
-                                        /></td>
+                                        <td>{inwardData?.find(data => data.inwardSid === inward.inwardSid)?.inwardSname}</td>
                                         <td>{inward.receiptno}</td>
                                         <td>
                                             <MDBBadge

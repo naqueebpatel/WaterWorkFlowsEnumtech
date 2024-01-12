@@ -173,12 +173,8 @@ export default function EmployeeView({ setCollapsed }) {
   return (
     <>
       <div>
-<<<<<<< Faizan
-        <form>
-====
-
->>>>>>> main
-          <div className="datatable-container">
+        {/* <form> */}
+                    <div className="datatable-container">
             <div className="header-tools">
               <div className="search">
                 <input type="search" className="search-input" placeholder="Search..."

@@ -15,14 +15,14 @@ import Swal from "sweetalert2";
 import { IoWarning } from "react-icons/io5";
 export default function InwardTransaction() {
 
-  const [ inwardSource, setInwardSource ] = useState([]);
-  const [ loading, setLoading ] = useState(false);
-  const [ qunatityInputToggle, setQunatityInputToggle ] = useState(true);
-  const [ incorrectAmountError, setIncorrectAmountError ] = useState({
+  const [inwardSource, setInwardSource] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [qunatityInputToggle, setQunatityInputToggle] = useState(true);
+  const [incorrectAmountError, setIncorrectAmountError] = useState({
     icon: "",
     text: "",
   });
-  const [ toggleButton, setToggleButton ] = useState(true);
+  const [toggleButton, setToggleButton] = useState(true);
   useEffect(() => {
     fetchInwardSourceData();
   }, []);
@@ -55,11 +55,11 @@ export default function InwardTransaction() {
 
   function formatDate(tdate) {
     const dateObject = new Date(tdate);
-    const formattedDate = dateObject.toISOString().split('T')[ 0 ];
+    const formattedDate = dateObject.toISOString().split('T')[0];
     return formattedDate;
   }
 
-  const [ formValue, setFormValue ] = useState({
+  const [formValue, setFormValue] = useState({
     tdate: formatDate(Date.now()),
     tamount: "",
     confirmAmount: "",
@@ -71,17 +71,18 @@ export default function InwardTransaction() {
 
   useEffect(() => {
     handleButtonToggle();
-  }, [ formValue, qunatityInputToggle ]);
+  }, [formValue, qunatityInputToggle]);
 
   const onChange = (e) => {
-    setFormValue((prevFormValue) => ({ ...prevFormValue, [ e.target.name ]: e.target.value }));
+    console.log(e.target.value)
+    setFormValue({ ...formValue, [e.target.name]: e.target.value });
 
     if (e.target.name === "inwardSid") {
       if (e.target.value === "1" || e.target.value === "2") {
         // console.log("1");
         setQunatityInputToggle(false);
       } else {
-        setFormValue({ ...formValue, qty: 1, total: 0 });
+        // setFormValue({ ...formValue, qty: 0, total: 0 });
         setQunatityInputToggle(true);
       }
     }
@@ -91,10 +92,10 @@ export default function InwardTransaction() {
 
   const handleButtonToggle = () => {
     const amountsMatch = formValue.tamount === formValue.confirmAmount;
-    const validInwardSid = !isNaN(formValue.inwardSid);
+    const validInwardSid = !isNaN(formValue.inwardSid) && formValue.inwardSid !== "";
     const validQty = qunatityInputToggle || !isNaN(formValue.qty);
     const validIncorrectPrice = !incorrectAmountError.text;
-
+  
     if (amountsMatch && validInwardSid && validQty && validIncorrectPrice) {
       setToggleButton(false);
     } else {
@@ -125,11 +126,7 @@ export default function InwardTransaction() {
         setFormValue((prevFormValue) => ({ ...prevFormValue, total: +formValue.total - parseInt(formValue.confirmAmount), qty: formValue.qty + val }));
       }
     } else {
-<<<<<<< Faizan
       alert(`Please Fill the Amount`);
-=======
-      alert("Please Fill the Amount");
->>>>>>> main
     }
   };
 
@@ -146,7 +143,7 @@ export default function InwardTransaction() {
 
     const payload = {
       tdate: formValue.tdate,
-      tamount: parseInt(formValue.total),
+      tamount: parseInt(formValue.tamount),
       receiptno: parseInt(formValue.receiptno),
       inwardSid: parseInt(formValue.inwardSid),
       qty: parseInt(formValue.qty) - 1,
@@ -155,24 +152,20 @@ export default function InwardTransaction() {
 
     console.log(payload);
 
-    // axios
-<<<<<<< Faizan
-    //   .post(`http://localhost:8090/waterwork/add/addInwardTrans`, payload)
-=======
-    //   .post(http://localhost:8090/waterwork/add/addInwardTrans, payload)
->>>>>>> main
-    //   .then((response) => {
-    //     console.log("Response data:", response.data);
-    //     if (response.status === 200) {
-    //       Swal.fire('Success', 'Updated successfully', 'success');
-    //     } else {
-    //       Swal.fire('Error', 'Failed to update record', 'error');
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     Swal.fire('Error', 'Failed to pay!', 'error');
-    //     console.error("Error:", error.message);
-    //   });
+    axios
+      .post(`http://localhost:8090/waterwork/add/addInwardTrans`, payload)
+      .then((response) => {
+        console.log("Response data:", response.data);
+        if (response.status === 200) {
+          Swal.fire('Success', 'Updated successfully', 'success');
+        } else {
+          Swal.fire('Error', 'Failed to update record', 'error');
+        }
+      })
+      .catch((error) => {
+        Swal.fire('Error', 'Failed to pay!', 'error');
+        console.error("Error:", error.message);
+      });
 
     setFormValue({
       tdate: formatDate(Date.now()),
@@ -256,17 +249,12 @@ export default function InwardTransaction() {
                           className="form-select custom-select" // Added custom-select class
                           required
                         >
-                          <option>
-                            Select Inward Source
-                          </option>
+                          <option>Select Inward Source</option>
                           {inwardSource.map((source) => (
                             <option key={source.inwardSid} value={source.inwardSid}>
                               {source.inwardSname}
                             </option>
                           ))}
-                          {/* <option value="1">Water Bottle</option>
-                          <option value="2">Water Bottle Cap</option>
-                          <option value="3">Extras</option> */}
                         </select>
                       </MDBValidationItem>
                       <MDBValidationItem className="col-md-3 d-flex">

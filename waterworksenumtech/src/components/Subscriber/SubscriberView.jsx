@@ -89,7 +89,7 @@ export default function SubscriberView({ setCollapsed }) {
 
       if (result.isConfirmed) {
         // User confirmed, proceed with the delete request
-        await axios.delete(`http://localhost:8090/waterwork/delete/deleteSubscriberById?subscriberNo=${subscriberNo}`);
+        await axios.post(`http://localhost:8090/waterwork/delete/deleteSubscriberById?subscriberNo=${subscriberNo}`);
         fetchSubscriberData();
 
         // Show success message
