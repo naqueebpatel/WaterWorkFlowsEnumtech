@@ -20,11 +20,7 @@ const AboutUs = () => {
                     <h4>Employees</h4>
                     <div className="email">
                         <ul>
-                            <li><a href='#'>faizankhan@gmail.com</a></li>
-                            <li><a href='#'>farhanmaniyar@gmail.com</a></li>
                             <li><a href='#'>naqueebpatel@gmail.com</a></li>
-                            <li><a href='#'>faisalshailk@gmail.com</a></li>
-                            <li><a href='#'>umershaikh@gmail.com</a></li>
                         </ul>
                     </div>
                 </div>
