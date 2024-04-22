@@ -6,6 +6,21 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 
 function MyVerticallyCenteredModal(props) {
+  console.log(props)
+  const singleSubscriber = [...props.singlesubscriber]
+  const transData = [...singleSubscriber.slice(1)];
+  const subInfo = singleSubscriber[0]
+  console.log(transData)
+  console.log(subInfo)
+
+  const openingBalance=transData.length>0?transData[0]?.totalbalance - transData[0]?.credit || 0 : 0;
+
+  const totalDebit = transData.reduce((total, elem) => total + (elem.debit || 0), 0);
+  const totalCredit = transData.reduce((total, elem) => total + (elem.credit || 0), 0);
+  const currentBalance = transData.length > 0 ? transData[transData.length - 1]?.totalbalance-totalDebit || 0 : 0;
+  //here calculating all the data whitout hitting the api as it may cause network firewall request and hamper the app performance 
+
+
   const handleDownload = async () => {
     const doc = new jsPDF({ orientation: 'landscape' });
     doc.addImage('https://png.pngtree.com/png-clipart/20220125/ourmid/pngtree-liquid-water-drop-splash-three-dimensional-decoration-png-image_4361854.png', 'PNG', 80, 0, 150, 50);
@@ -19,8 +34,9 @@ function MyVerticallyCenteredModal(props) {
     doc.setFontSize(20);
     doc.text("Authorized Signature", 50, 150);
     doc.addImage(signature, 50, 160, 50, 50);
-    doc.save(`${props?.singleEmployee?.name}`);
+    doc.save(`${subInfo.firstName}_${subInfo.lastName}`);
   };
+
   return (
     <Modal
       {...props}
@@ -30,16 +46,16 @@ function MyVerticallyCenteredModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          {props?.singleEmployee?.name}
+          {subInfo?.firstName}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Table striped bordered hover id='employee-table' >
           <thead>
             <tr >
-              <td>Customer No.101</td>
-              <td colSpan={4}>Subscriber name :{props?.singleEmployee?.name}</td>
-              <td>Opening Bal : 5000</td>
+              <td>Customer No.{subInfo?.subscriberNo}</td>
+              <td colSpan={4}>Subscriber name :{subInfo?.firstName} {subInfo?.lastName}</td>
+              <td>Opening Bal : {openingBalance}</td>
             </tr>
             <tr>
               <th>Date</th>
@@ -51,37 +67,24 @@ function MyVerticallyCenteredModal(props) {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td style={{ whiteSpace: "nowrap" }}>{props?.singleEmployee?.address?.zipcode}</td>
-              <td>{props?.singleEmployee?.address?.suite}</td>
-              <td>{" "}</td>
-              <td>100</td>
-              <td>{" "}</td>
-              <td>4900</td>
-            </tr>
-            <tr>
-              <td style={{ whiteSpace: "nowrap" }}>{props?.singleEmployee?.address?.zipcode}</td>
-              <td>{props?.singleEmployee?.address?.suite}</td>
-              <td>{" "}</td>
-              <td>100</td>
-              <td>{" "}</td>
-              <td>4800</td>
-            </tr>
-            <tr>
-              <td style={{ whiteSpace: "nowrap" }}>{props?.singleEmployee?.address?.zipcode}</td>
-              <td>{props?.singleEmployee?.address?.suite}</td>
-              <td>1298</td>
-              <td>{" "}</td>
-              <td>1200</td>
-              <td>6000</td>
-            </tr>
+            {transData.map(( elem) => (
+              <tr key={elem?.tid}>
+                <td>{elem?.tdate}</td>
+                <td>{elem?.particular}</td>
+                <td>{elem?.tid}</td>
+                <td>{elem?.debit}</td>
+                <td>{elem?.credit}</td>
+                <td>{elem?.totalbalance}</td>
+              </tr>
+            ))}
             <tr>
               <td>{" "}</td>
               <td>{" "}</td>
               <td>{" "}</td>
-              <td>Total Debit :- 200</td>
-              <td>Total Credit :- 1200</td>
-              <td>Current Balance :- 6000</td>
+              <td>Total Debit :  {totalDebit}</td>
+              <td>Total Credit :  {totalCredit}</td>
+              <td>Current Balance : {currentBalance}</td>
+              {/* total balance is incorrect as i need the balance while the user registered */}
             </tr>
           </tbody>
         </Table>

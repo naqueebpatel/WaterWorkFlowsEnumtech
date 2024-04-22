@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import MyVerticallyCenteredModal from './MyVerticallyCenteredModal';
 import Button from 'react-bootstrap/Button';
 const SubscriberReports = (props) => {
-    const [ employee, setEmployee ] = useState([]);
+    const [ subscriber, setsubscriber ] = useState([]);
     const [ modalShow, setModalShow ] = useState(false);
-    const [ singleEmployee, setSingleEmployee ] = useState([]);
+    const [ singlesubscriber, setSinglesubscriber ] = useState([]);
     const fetchData = async () => {
         try {
-            const response = await fetch('https://jsonplaceholder.typicode.com/users');
+            const response = await fetch('http://localhost:8090/waterwork/get/getAllSubscriber');
             const result = await response.json();
             console.log(result);
-            setEmployee(result);
+            setsubscriber(result);
         } catch (error) {
             console.log(error);
         }
@@ -18,19 +18,22 @@ const SubscriberReports = (props) => {
 
     const fetchSingleUser = async (id) => {
         try {
-            const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+            const response = await fetch(`http://localhost:8090/waterwork/get/getBySubsNo?subscriberNo=${id}`);
             const result = await response.json();
             console.log(result);
-            setSingleEmployee(result);
+            return result;
         } catch (error) {
             console.log(error);
         }
     };
 
-    const handleShowBillModal = (id) => {
-        fetchSingleUser(id);
+    const handleShowBillModal = ({subscriberNo,firstName,lastName}) => {
+        fetchSingleUser(subscriberNo).then((res)=>{
+          setSinglesubscriber([{subscriberNo,firstName,lastName},...res]);    
+        }).catch(err=>console.log(err))
         setModalShow(true);
     };
+    console.log(singlesubscriber)
 
 
     useEffect(() => {
@@ -51,15 +54,16 @@ const SubscriberReports = (props) => {
                             <thead>
                                 <tr>
                                     <th>Profile</th>
+                                    <th>Subscriber No</th>
                                     <th>Name</th>
-                                    <th>Address</th>
+                                    <th>Aadhar No</th>
                                     <th>Mobile Number</th>
                                     <th>Download Bill</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {employee.map((employee) => (
-                                    <tr key={employee.id} className="table-info">
+                                {subscriber.map((subscriber) => (
+                                    <tr key={subscriber.subscriberNo} className="table-info">
                                         <td>
                                             <img
                                                 src="https://mdbootstrap.com/img/new/avatars/8.jpg"
@@ -68,26 +72,25 @@ const SubscriberReports = (props) => {
                                                 className="rounded-circle"
                                             />
                                         </td>
+                                        <td>{subscriber.subscriberNo}</td>
                                         <td>
-                                            <p className="fw-bold mb-1">{employee.name}</p>
+                                            <p className="fw-bold mb-1">{subscriber.firstName} {subscriber.lastName}</p>
                                         </td>
+                                        <td>{subscriber.subscriberAdharNo}</td>
+                                        <td>{subscriber.subscriberMobileNo}</td>
                                         <td>
-                                            <p>{employee.address.street}</p>
-                                        </td>
-                                        <td>{employee.phone}</td>
-                                        <td>
-                                            {/* <FaDownload className='h3 ms-3' onClick={() => handleDownload(employee.id)} /> */}
+                                            {/* <FaDownload className='h3 ms-3' onClick={() => handleDownload(subscriber.id)} /> */}
 
 
 
-                                            <Button variant="primary" onClick={() => handleShowBillModal(employee.id)}>
+                                            <Button variant="primary" onClick={() => handleShowBillModal(subscriber)}>
                                                 Show Bill
                                             </Button>
 
                                             <MyVerticallyCenteredModal
                                                 show={modalShow}
                                                 onHide={() => setModalShow(false)}
-                                                singleEmployee={singleEmployee}
+                                                singlesubscriber={singlesubscriber}
                                             />
 
 

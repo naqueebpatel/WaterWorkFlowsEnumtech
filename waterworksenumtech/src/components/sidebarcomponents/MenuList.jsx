@@ -61,12 +61,6 @@ const MenuList = () => {
                     <Menu.Item key="transaction_outward_view"><Link to="/outwardwardTransview">View</Link></Menu.Item>
                 </Menu.SubMenu>
             </Menu.SubMenu>
-            <Menu.Item
-                key="third-party"
-                icon={<TbPhysotherapist />}
-            >
-                <Link to="/3rdpartydetails">Third Party</Link>
-            </Menu.Item>
             <Menu.Item key="topup" icon={<GiCash />} >
                 <Link to="/topup">Topup</Link>
             </Menu.Item>
@@ -76,9 +70,15 @@ const MenuList = () => {
                 title="Reports"
             >
                 <Menu.Item key="reports-insert"><Link to="/subscriberreports">Transaction</Link></Menu.Item>
-                <Menu.Item key="inward-insert"><Link to="/inwardsreports">Inward Reports</Link></Menu.Item>
-                <Menu.Item key="expense-insert"><Link to="/exportsreports">Export Reports</Link></Menu.Item>
+                <Menu.Item key="inward-insert"><Link to="/inwardsreports">Income</Link></Menu.Item>
+                <Menu.Item key="expense-insert"><Link to="/exportsreports">Expense</Link></Menu.Item>
             </Menu.SubMenu>
+            <Menu.Item
+                key="third-party"
+                icon={<TbPhysotherapist />}
+            >
+                <Link to="/3rdpartydetails">Third Party</Link>
+            </Menu.Item>
         </Menu>
     );
 };
