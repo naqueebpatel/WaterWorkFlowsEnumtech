@@ -116,7 +116,8 @@ const SubscriberAdd = ({ setCollapsed }) => {
       maxWidth: "1100px", position: "relative",
       left: "75px",
       padding: "105px",
-      overflow: "hidden"
+      overflow: "hidden",
+      // backgroundImage: URL('https://png.pngtree.com/png-clipart/20220125/ourmid/pngtree-liquid-water-drop-splash-three-dimensional-decoration-png-image_4361854.png')
     }}>
       <MDBRow className="justify-content-center align-items-center">
         <MDBCol>

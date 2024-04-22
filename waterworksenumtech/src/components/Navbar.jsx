@@ -28,11 +28,12 @@ const links = [
     }
 ];
 
-const Navbar = () => {
-    const [ isNavShowing, setIsNavShowing ] = useState(false);
+const Navbar = () =>
+{
+    const [ isNavShowing, setIsNavShowing ] = useState( false );
     return (
         <header className='header'>
-            <img src={logo} alt="logo" />
+            <img src={ logo } alt="logo" />
             <nav>
                 <ul className='nav_links'>
                     <li>
@@ -54,20 +55,21 @@ const Navbar = () => {
             </nav>
             <div className="nav__links">
                 <ul
-                    className={`nav__links ${isNavShowing ? "show__nav" : "hide__nav"
-                        }`}>
-                    {links.map(({ name, path }, index) => {
+                    className={ `nav__links ${ isNavShowing ? "show__nav" : "hide__nav"
+                        }` }>
+                    { links.map( ( { name, path }, index ) =>
+                    {
                         return (
-                            <li key={index}>
+                            <li key={ index }>
                                 <NavLink
-                                    to={path}
-                                    className={({ isActive }) => (isActive ? "active-nav" : "")}
-                                    onClick={() => setIsNavShowing((prev) => !prev)}>
-                                    {name}
+                                    to={ path }
+                                    className={ ( { isActive } ) => ( isActive ? "active-nav" : "" ) }
+                                    onClick={ () => setIsNavShowing( ( prev ) => !prev ) }>
+                                    { name }
                                 </NavLink>
                             </li>
                         );
-                    })}
+                    } ) }
                 </ul>
             </div>
             <a href="#">
@@ -77,8 +79,8 @@ const Navbar = () => {
             </a>
             <button
                 className="nav__toggle-btn"
-                onClick={() => setIsNavShowing((prev) => !prev)}>
-                {isNavShowing ? <MdOutlineClose /> : <FaBars />}
+                onClick={ () => setIsNavShowing( ( prev ) => !prev ) }>
+                { isNavShowing ? <MdOutlineClose /> : <FaBars /> }
             </button>
         </header>
     );

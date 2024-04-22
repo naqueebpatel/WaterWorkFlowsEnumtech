@@ -1,10 +1,11 @@
 import React from 'react';
 
-const Footer = () => {
+const Footer = () =>
+{
     return (
         <div>
-            <footer className="text-center text-lg-start text-white" style={{ backgroundColor: '#1c2331' }}>
-                <section className="d-flex justify-content-between p-4" style={{ backgroundColor: '#6351ce' }}>
+            <footer className="text-center text-lg-start text-white" style={ { backgroundColor: '#1c2331' } }>
+                <section className="d-flex justify-content-between p-4" style={ { backgroundColor: '#6351ce' } }>
                     <div className="me-5">
                         <span>Get connected with us on social networks:</span>
                     </div>
@@ -27,6 +28,7 @@ const Footer = () => {
                         <a href="" className="text-white me-4">
                             <i className="fab fa-github"></i>
                         </a>
+
                     </div>
                 </section>
 
@@ -35,7 +37,7 @@ const Footer = () => {
                         <div className="row mt-3">
                             <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                                 <h6 className="text-uppercase fw-bold">Water Works</h6>
-                                <hr className="mb-4 mt-0 d-inline-block mx-auto" style={{ width: '60px', backgroundColor: '#7c4dff', height: '2px' }} />
+                                <hr className="mb-4 mt-0 d-inline-block mx-auto" style={ { width: '60px', backgroundColor: '#7c4dff', height: '2px' } } />
                                 <p>
                                     Here you can use rows and columns to organize your footer content. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                                 </p>
@@ -43,7 +45,7 @@ const Footer = () => {
 
                             <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                                 <h6 className="text-uppercase fw-bold">Products</h6>
-                                <hr className="mb-4 mt-0 d-inline-block mx-auto" style={{ width: '60px', backgroundColor: '#7c4dff', height: '2px' }} />
+                                <hr className="mb-4 mt-0 d-inline-block mx-auto" style={ { width: '60px', backgroundColor: '#7c4dff', height: '2px' } } />
                                 <p>
                                     <a href="#!" className="text-white">MDBootstrap</a>
                                 </p>
@@ -60,7 +62,7 @@ const Footer = () => {
 
                             <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                                 <h6 className="text-uppercase fw-bold">Useful links</h6>
-                                <hr className="mb-4 mt-0 d-inline-block mx-auto" style={{ width: '60px', backgroundColor: '#7c4dff', height: '2px' }} />
+                                <hr className="mb-4 mt-0 d-inline-block mx-auto" style={ { width: '60px', backgroundColor: '#7c4dff', height: '2px' } } />
                                 <p>
                                     <a href="#!" className="text-white">Your Account</a>
                                 </p>
@@ -77,7 +79,7 @@ const Footer = () => {
 
                             <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                                 <h6 className="text-uppercase fw-bold">Contact</h6>
-                                <hr className="mb-4 mt-0 d-inline-block mx-auto" style={{ width: '60px', backgroundColor: '#7c4dff', height: '2px' }} />
+                                <hr className="mb-4 mt-0 d-inline-block mx-auto" style={ { width: '60px', backgroundColor: '#7c4dff', height: '2px' } } />
                                 <p><i className="fas fa-home mr-3"></i>MG Road,Pune 48, IN</p>
                                 <p><i className="fas fa-envelope mr-3"></i> info@example.com</p>
                                 <p><i className="fas fa-phone mr-3"></i> + 91 9665228837</p>
@@ -87,7 +89,7 @@ const Footer = () => {
                     </div>
                 </section>
 
-                <div className="text-center p-3" style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
+                <div className="text-center p-3" style={ { backgroundColor: 'rgba(0, 0, 0, 0.2)' } }>
                     © 2023 Copyright: <a className="text-white" href="#">WaterWorks.com</a>
                 </div>
             </footer>

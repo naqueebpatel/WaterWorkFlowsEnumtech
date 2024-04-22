@@ -1,115 +1,131 @@
 import React, { useState, useEffect } from "react";
-import {
-    MDBValidation,
-    MDBValidationItem,
-    MDBInput,
-    MDBContainer,
-    MDBRow,
-    MDBCol,
-    MDBCard,
-    MDBCardBody,
-    MDBTypography
-} from "mdb-react-ui-kit";
+import
+    {
+        MDBValidation,
+        MDBValidationItem,
+        MDBInput,
+        MDBContainer,
+        MDBRow,
+        MDBCol,
+        MDBCard,
+        MDBCardBody,
+        MDBTypography
+    } from "mdb-react-ui-kit";
 import axios from "axios";
 import Swal from "sweetalert2";
-function formatDate(tdate) {
-    const dateObject = new Date(tdate);
-    const formattedDate = dateObject.toISOString().split('T')[ 0 ];
+function formatDate ( tdate )
+{
+    const dateObject = new Date( tdate );
+    const formattedDate = dateObject.toISOString().split( 'T' )[ 0 ];
     return formattedDate;
 }
 
-export default function TransactionInward() {
+export default function TransactionInward ()
+{
 
-    const [ subscriberData, setSubscriberData ] = useState([]);
-    const [ subscriberName, setSubscriberName ] = useState([]);
-    const [ loading, setLoading ] = useState(false);
-    const [ payBtnState, setPayBtnState ] = useState(true);
+    const [ subscriberData, setSubscriberData ] = useState( [] );
+    const [ subscriberName, setSubscriberName ] = useState( [] );
+    const [ loading, setLoading ] = useState( false );
+    const [ payBtnState, setPayBtnState ] = useState( true );
 
-    useEffect(() => {
+    useEffect( () =>
+    {
         fetchSubscriberData();
-    }, []);
+    }, [] );
 
-    const fetchSubscriberData = async () => {
-        try {
-            setLoading(true);
+    const fetchSubscriberData = async () =>
+    {
+        try
+        {
+            setLoading( true );
             const response = await axios.get(
                 'http://localhost:8090/waterwork/get/getAllSubscriber'
             );
             // if(!response.data) setPayBtnState(false)
             // else setPayBtnState(true)
-            setSubscriberData(response.data);
-            console.log(response.data);
-        } catch (error) {
-            console.error('Error fetching subscriber data:', error);
-        } finally {
-            setLoading(false);
+            setSubscriberData( response.data );
+            console.log( response.data );
+        } catch ( error )
+        {
+            console.error( 'Error fetching subscriber data:', error );
+        } finally
+        {
+            setLoading( false );
         }
     };
 
-    const [ formValue, setFormValue ] = useState({
-        tdate: formatDate(Date.now()),
+    const [ formValue, setFormValue ] = useState( {
+        tdate: formatDate( Date.now() ),
         amount: "",
         particular: "",
         subscriberNo: ""
-    });
+    } );
 
-    const handleSubscriber = (id) => {
-        const filterSub = subscriberData.filter((sub) => (sub.subscriberNo === +id));
-        setPayBtnState(filterSub && filterSub.length > 0 ? false : true);
-        console.log(filterSub);
-        setSubscriberName(filterSub);
+    const handleSubscriber = ( id ) =>
+    {
+        const filterSub = subscriberData.filter( ( sub ) => ( sub.subscriberNo === +id ) );
+        setPayBtnState( filterSub && filterSub.length > 0 ? false : true );
+        console.log( filterSub );
+        setSubscriberName( filterSub );
     };
 
-    const onChange = (e) => {
+    const onChange = ( e ) =>
+    {
         const { name, value } = e.target;
-        if (name === "subscriberNo") {
-            setFormValue({ ...formValue, [ e.target.name ]: e.target.value });
-            handleSubscriber(value);
+        if ( name === "subscriberNo" )
+        {
+            setFormValue( { ...formValue, [ e.target.name ]: e.target.value } );
+            handleSubscriber( value );
         }
-        setFormValue({ ...formValue, [ e.target.name ]: e.target.value });
+        setFormValue( { ...formValue, [ e.target.name ]: e.target.value } );
     };
 
-    const handleChanges = (event) => {
+    const handleChanges = ( event ) =>
+    {
         event.preventDefault();
 
         const payload = {
             tdate: formValue.tdate,
-            amount: parseInt(formValue.amount),
+            amount: parseInt( formValue.amount ),
             particular: formValue.particular,
-            subscriberNo: parseInt(formValue.subscriberNo)
+            subscriberNo: parseInt( formValue.subscriberNo )
         };
 
-        console.log(payload);
+        console.log( payload );
 
         axios
-            .post(`http://localhost:8090/waterwork/add/topup`, payload)
-            .then((response) => {
-                console.log("Response data:", response.data);
-                if (response.status === 200) {
-                    Swal.fire('Success', 'Updated successfully', 'success');
-                } else {
-                    Swal.fire('Error', 'Failed to update record', 'error');
+            .post( `http://localhost:8090/waterwork/add/topup`, payload )
+            .then( ( response ) =>
+            {
+                console.log( "Response data:", response.data );
+                if ( response.status === 200 )
+                {
+                    Swal.fire( 'Success', 'Updated successfully', 'success' );
+                } else
+                {
+                    Swal.fire( 'Error', 'Failed to update record', 'error' );
                 }
-            })
-            .catch((error) => {
-                Swal.fire('Error', 'Failed to pay!', 'error');
-                console.error("Error:", error.message);
-            });
+            } )
+            .catch( ( error ) =>
+            {
+                Swal.fire( 'Error', 'Failed to Add', 'error' );
+                console.error( "Error:", error.message );
+            } );
 
-        setFormValue({
-            tdate: formatDate(Date.now()),
+        setFormValue( {
+            tdate: formatDate( Date.now() ),
             amount: "",
             particular: "",
             subscriberNo: "",
-        });
-        setSubscriberName([]);
+        } );
+        setSubscriberName( [] );
     };
 
-    console.log("PAY BTN", payBtnState);
+    console.log( "PAY BTN", payBtnState );
 
     return (
         <>
-            <MDBContainer className="py-5" style={{ maxWidth: "1100px" }}>
+            <MDBContainer className="py-5" style={ { maxWidth: "1100px" } }>
                 <MDBRow className="justify-content-center align-items-center">
                     <MDBCol>
                         <MDBCard className="my-4 shadow-5 justify-content-center align-items-center">
@@ -121,11 +137,11 @@ export default function TransactionInward() {
                                     >
                                         TOPUP
                                     </MDBTypography>
-                                    <form onSubmit={handleChanges}>
+                                    <form onSubmit={ handleChanges }>
                                         <MDBValidation className="row g-3">
                                             <MDBValidationItem className="col-md-3">
                                                 <MDBInput
-                                                    value={formValue.tdate}
+                                                    value={ formValue.tdate }
                                                     name="tdate"
                                                     type="date"
                                                     disabled
@@ -134,10 +150,10 @@ export default function TransactionInward() {
                                             </MDBValidationItem>
                                             <MDBValidationItem className="col-md-3">
                                                 <MDBInput
-                                                    value={formValue.particular}
+                                                    value={ formValue.particular }
                                                     type="text"
                                                     name="particular"
-                                                    onChange={onChange}
+                                                    onChange={ onChange }
                                                     label="DETAILS"
                                                 />
                                             </MDBValidationItem>
@@ -146,9 +162,9 @@ export default function TransactionInward() {
 
                                             <MDBValidationItem className="col-md-3">
                                                 <MDBInput
-                                                    value={formValue.amount}
+                                                    value={ formValue.amount }
                                                     name="amount"
-                                                    onChange={onChange}
+                                                    onChange={ onChange }
                                                     required
                                                     label="₹ XX-XX"
                                                 />
@@ -156,9 +172,9 @@ export default function TransactionInward() {
 
                                             <MDBValidationItem className="col-md-3">
                                                 <MDBInput
-                                                    value={formValue.amount}
+                                                    value={ formValue.amount }
                                                     name="amount"
-                                                    onChange={onChange}
+                                                    onChange={ onChange }
                                                     required
                                                     label="₹ XX-XX"
                                                 />
@@ -168,9 +184,9 @@ export default function TransactionInward() {
                                         <MDBValidation className="row g-3 py-5">
                                             <MDBValidationItem className="col-md-3">
                                                 <MDBInput
-                                                    value={formValue.subscriberNo}
+                                                    value={ formValue.subscriberNo }
                                                     name="subscriberNo"
-                                                    onChange={onChange}
+                                                    onChange={ onChange }
                                                     required
                                                     label="Subscriber No"
                                                 />
@@ -179,7 +195,7 @@ export default function TransactionInward() {
                                                 <MDBInput
                                                     value={
                                                         subscriberName.length > 0
-                                                            ? `${subscriberName[ 0 ].firstName} ${subscriberName[ 0 ].lastName}` : 'NOT FOUND'}
+                                                            ? `${ subscriberName[ 0 ].firstName } ${ subscriberName[ 0 ].lastName }` : 'NOT FOUND' }
                                                     name="Name"
                                                     disabled
                                                     label="SUBSCRIBER NAME"
@@ -191,16 +207,16 @@ export default function TransactionInward() {
                                             <button
                                                 type="submit"
                                                 className="btn btn-lg ms-2"
-                                                style={{ backgroundColor: "#00ffff9e" }}
-                                                disabled={payBtnState}
+                                                style={ { backgroundColor: "#00ffff9e" } }
+                                                disabled={ payBtnState }
                                             >
-                                                PAY!
+                                                Add
                                             </button>
                                         </div>
                                     </form>
                                 </MDBCardBody>
                             </MDBCol>
-                            {/* </MDBRow> */}
+                            {/* </MDBRow> */ }
                         </MDBCard>
                     </MDBCol>
                 </MDBRow>
