@@ -4,7 +4,8 @@ import ContactUs from './ContactUs';
 import Footer from '../components/Footer';
 import Blog from './Blog';
 
-const Home = () => {
+const Home = () =>
+{
     return (
         <>
             <AboutUs />

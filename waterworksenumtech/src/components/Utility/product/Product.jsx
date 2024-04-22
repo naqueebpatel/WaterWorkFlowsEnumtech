@@ -10,10 +10,12 @@ const data = [
 ];
 
 
-const Product = ({ setCollapsed }) => {
-    useEffect(() => {
-        setCollapsed(true);
-    }, []);
+const Product = ( { setCollapsed } ) =>
+{
+    useEffect( () =>
+    {
+        setCollapsed( true );
+    }, [] );
     return (
         <>
             {/* <MDBContainer style={{
@@ -86,27 +88,32 @@ const Product = ({ setCollapsed }) => {
                                     <th>Id Number</th>
                                     <th>Product Name</th>
                                     <th>Quantity</th>
+                                    <th></th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                {data.map((value, index) => {
+                                { data.map( ( value, index ) =>
+                                {
                                     return (
-                                        <tr key={index}>
+                                        <tr key={ index }>
                                             <td>
                                                 <img
-                                                    src={product}
-                                                    alt={`Avatar`}
-                                                    style={{ width: "55px", height: "55px" }}
+                                                    src={ product }
+                                                    alt={ `Avatar` }
+                                                    style={ { width: "55px", height: "55px" } }
                                                     className="rounded-circle "
                                                 />
                                             </td>
-                                            <td className="fw-bold fs-4">{value.id}</td>
-                                            <td className="fw-bold fs-4">{value.name}</td>
-                                            <td className="fw-bold fs-4"> {value.quantity}</td>
+                                            <td className="fw-bold fs-4">{ value.id }</td>
+                                            <td className="fw-bold fs-4">{ value.name }</td>
+                                            <td className="fw-bold fs-4"> { value.quantity }</td>
+                                            <td className="fw-bold fs-4">
+                                                <button className='btn btn-primary'>Add</button>
+                                            </td>
                                         </tr>
                                     );
-                                })}
+                                } ) }
                             </tbody>
                         </table>
                     </div>

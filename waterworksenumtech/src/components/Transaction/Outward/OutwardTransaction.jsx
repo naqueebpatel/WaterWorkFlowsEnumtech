@@ -131,7 +131,7 @@
 //       //     }
 //       //   })
 //       //   .catch((error) => {
-//       //     Swal.fire('Error', 'Failed to pay!', 'error');
+//       //     Swal.fire('Error', 'Failed to Add', 'error');
 //       //     console.error("Error:", error.message);
 //       //   });
 
@@ -268,7 +268,7 @@
 //                         className="btn btn-lg ms-2"
 //                         style={{ backgroundColor: "#00ffff9e" }}
 //                       >
-//                         PAY!
+//                         Add
 //                       </button>
 //                     </div>
 //                   </form>
@@ -286,7 +286,8 @@
 
 
 import React, { useState, useEffect } from "react";
-import {
+import
+{
   MDBValidation,
   MDBValidationItem,
   MDBInput,
@@ -301,159 +302,186 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { IoWarning } from "react-icons/io5";
 
-function generateRandomReceiptNumber(length) {
+function generateRandomReceiptNumber ( length )
+{
   const characters = '0123456789';
   let result = '';
 
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    result += characters.charAt(randomIndex);
+  for ( let i = 0; i < length; i++ )
+  {
+    const randomIndex = Math.floor( Math.random() * characters.length );
+    result += characters.charAt( randomIndex );
   }
 
   return result;
 }
 
-function formatOuttDate(outtdate) {
-  const dateObject = new Date(outtdate);
-  const formattedDate = dateObject.toISOString().split('T')[ 0 ];
+function formatOuttDate ( outtdate )
+{
+  const dateObject = new Date( outtdate );
+  const formattedDate = dateObject.toISOString().split( 'T' )[ 0 ];
   return formattedDate;
 }
 
-export default function OutwardTransaction() {
-  const [ outwardSource, setOutwardSource ] = useState([]);
-  const [ loading, setLoading ] = useState(false);
-  const [ qunatityInputToggle, setQunatityInputToggle ] = useState(true);
-  const [ toggleButton, setToggleButton ] = useState(true);
-  const [ formValue, setFormValue ] = useState({
-    outtdate: formatOuttDate(Date.now()),
+export default function OutwardTransaction ()
+{
+  const [ outwardSource, setOutwardSource ] = useState( [] );
+  const [ loading, setLoading ] = useState( false );
+  const [ qunatityInputToggle, setQunatityInputToggle ] = useState( true );
+  const [ toggleButton, setToggleButton ] = useState( true );
+  const [ formValue, setFormValue ] = useState( {
+    outtdate: formatOuttDate( Date.now() ),
     outamount: "",
     confirmamount: "",
-    voucherno: generateRandomReceiptNumber(6),
+    voucherno: generateRandomReceiptNumber( 6 ),
     outwardSid: "",
     paidto: "",
     qty: 0,
-  });
-  const [ incorrectPrice, setIncorrectPrice ] = useState({
+  } );
+  const [ incorrectPrice, setIncorrectPrice ] = useState( {
     icon: "",
     text: "",
-  });
+  } );
 
-  useEffect(() => {
+  useEffect( () =>
+  {
     fetchOutwardSourceData();
-  }, []);
+  }, [] );
 
-  useEffect(() => {
+  useEffect( () =>
+  {
     handleButtonToggle();
-  }, [ formValue, qunatityInputToggle ]);
+  }, [ formValue, qunatityInputToggle ] );
 
-  const fetchOutwardSourceData = async () => {
-    try {
-      setLoading(true);
+  const fetchOutwardSourceData = async () =>
+  {
+    try
+    {
+      setLoading( true );
       const response = await axios.get(
         "http://localhost:8090/waterwork/get/getAllOutwardSource"
       );
-      setOutwardSource(response.data);
-    } catch (error) {
-      console.error("Error fetching outward source data:", error);
-    } finally {
-      setLoading(false);
+      setOutwardSource( response.data );
+    } catch ( error )
+    {
+      console.error( "Error fetching outward source data:", error );
+    } finally
+    {
+      setLoading( false );
     }
   };
 
-  const onChange = (e) => {
-    setFormValue((prevFormValue) => ({ ...prevFormValue, [ e.target.name ]: e.target.value }));
+  const onChange = ( e ) =>
+  {
+    setFormValue( ( prevFormValue ) => ( { ...prevFormValue, [ e.target.name ]: e.target.value } ) );
 
-    if (e.target.name === "outwardSid") {
-      if (e.target.value === "1" || e.target.value === "2") {
-        setQunatityInputToggle(false);
-      } else {
-        setQunatityInputToggle(true);
+    if ( e.target.name === "outwardSid" )
+    {
+      if ( e.target.value === "1" || e.target.value === "2" )
+      {
+        setQunatityInputToggle( false );
+      } else
+      {
+        setQunatityInputToggle( true );
       }
     }
     // handleButtonToggle();
   };
 
-  const handleButtonToggle = () => {
+  const handleButtonToggle = () =>
+  {
     const amountsMatch = formValue.outamount === formValue.confirmamount;
-    const validOutwardSid = !isNaN(formValue.outwardSid);
-    const validQty = qunatityInputToggle || !isNaN(formValue.qty);
+    const validOutwardSid = !isNaN( formValue.outwardSid );
+    const validQty = qunatityInputToggle || !isNaN( formValue.qty );
     const validPaidTo = formValue.paidto !== "";
     const validIncorrectPrice = !incorrectPrice.text;
 
-    if (amountsMatch && validOutwardSid && validQty && validPaidTo && validIncorrectPrice) {
-      setToggleButton(false);
-    } else {
-      setToggleButton(true);
+    if ( amountsMatch && validOutwardSid && validQty && validPaidTo && validIncorrectPrice )
+    {
+      setToggleButton( false );
+    } else
+    {
+      setToggleButton( true );
     }
   };
 
-  const handleQuantity = (val) => {
-    setFormValue({ ...formValue, qty: +formValue.qty + val });
+  const handleQuantity = ( val ) =>
+  {
+    setFormValue( { ...formValue, qty: +formValue.qty + val } );
   };
 
-  const handleAmount = () => {
-    if (formValue.outamount !== formValue.confirmamount) {
-      setIncorrectPrice({
+  const handleAmount = () =>
+  {
+    if ( formValue.outamount !== formValue.confirmamount )
+    {
+      setIncorrectPrice( {
         icon: <IoWarning />,
         text: "Incorrect Price"
-      });
-    } else {
-      setIncorrectPrice({
+      } );
+    } else
+    {
+      setIncorrectPrice( {
         icon: "",
         text: "",
-      });
+      } );
     }
     handleButtonToggle();
   };
 
-  const handleChanges = (event) => {
+  const handleChanges = ( event ) =>
+  {
     event.preventDefault();
 
-    if (formValue.outamount !== formValue.confirmamount) {
-      setIncorrectPrice({
+    if ( formValue.outamount !== formValue.confirmamount )
+    {
+      setIncorrectPrice( {
         icon: <IoWarning />,
         text: "Incorrect Price"
-      });
+      } );
       handleButtonToggle();
       return; // Don't proceed if amounts don't match
     }
 
     const payload = {
       outtdate: formValue.outtdate,
-      outamount: parseInt(formValue.outamount),
-      voucherno: parseInt(formValue.voucherno),
-      outwardSid: parseInt(formValue.outwardSid),
+      outamount: parseInt( formValue.outamount ),
+      voucherno: parseInt( formValue.voucherno ),
+      outwardSid: parseInt( formValue.outwardSid ),
       paidto: formValue.paidto
     };
 
-    console.log(payload);
+    console.log( payload );
 
     // Uncomment this block when you want to make the API call
     axios
-      .post(`http://localhost:8090/waterwork/add/addOutwardTrans?receivedQty=${parseInt(formValue.qty)}`, payload)
-      .then((response) => {
-        console.log("Response data:", response.data);
-        if (response.status === 200) {
-          Swal.fire('Success', 'Added successfully', 'success');
-        } else {
-          Swal.fire('Error', 'Failed to Add record', 'error');
+      .post( `http://localhost:8090/waterwork/add/addOutwardTrans?receivedQty=${ parseInt( formValue.qty ) }`, payload )
+      .then( ( response ) =>
+      {
+        console.log( "Response data:", response.data );
+        if ( response.status === 200 )
+        {
+          Swal.fire( 'Success', 'Added successfully', 'success' );
+        } else
+        {
+          Swal.fire( 'Error', 'Failed to Add record', 'error' );
         }
-      })
-      .catch((error) => {
-        Swal.fire('Error', 'Failed to pay!', 'error');
-        console.error("Error:", error.message);
-      });
+      } )
+      .catch( ( error ) =>
+      {
+        Swal.fire( 'Error', 'Failed to Add', 'error' );
+        console.error( "Error:", error.message );
+      } );
 
-    setFormValue({
-      outtdate: formatOuttDate(Date.now()),
+    setFormValue( {
+      outtdate: formatOuttDate( Date.now() ),
       outamount: "",
       confirmamount: "",
-      voucherno: generateRandomReceiptNumber(6),
+      voucherno: generateRandomReceiptNumber( 6 ),
       outwardSid: "",
       paidto: "",
       qty: 0,
-    });
-    setToggleButton(true);
+    } );
+    setToggleButton( true );
   };
 
 
@@ -461,12 +489,12 @@ export default function OutwardTransaction() {
     <>
       <MDBContainer
         className="py-5"
-        style={{
+        style={ {
           width: "83vw",
           position: "relative",
           top: "8vh",
           left: "8vw",
-        }}
+        } }
       >
         <MDBRow className="justify-content-center align-items-center">
           <MDBCol>
@@ -479,11 +507,11 @@ export default function OutwardTransaction() {
                   >
                     Outward Transaction
                   </MDBTypography>
-                  <form onSubmit={handleChanges}>
+                  <form onSubmit={ handleChanges }>
                     <MDBValidation className="row g-3">
                       <MDBValidationItem className="col-md-4">
                         <MDBInput
-                          value={formValue.outtdate}
+                          value={ formValue.outtdate }
                           name="outtdate"
                           disabled
                           type="date"
@@ -492,7 +520,7 @@ export default function OutwardTransaction() {
                       </MDBValidationItem>
                       <MDBValidationItem className="col-md-4">
                         <MDBInput
-                          value={formValue.voucherno}
+                          value={ formValue.voucherno }
                           type="number"
                           name="voucherno"
                           disabled
@@ -503,44 +531,44 @@ export default function OutwardTransaction() {
                       <MDBValidationItem className="col-md-4">
                         <select
                           name="outwardSid"
-                          value={formValue.outwardSid}
-                          onChange={onChange}
+                          value={ formValue.outwardSid }
+                          onChange={ onChange }
                           className="form-select custom-select" // Added custom-select class
                           required
                         >
                           <option>Select Outward Source</option>
-                          {outwardSource.map((source) => (
+                          { outwardSource.map( ( source ) => (
                             <option
-                              key={source.outwardSid}
-                              value={source.outwardSid}
+                              key={ source.outwardSid }
+                              value={ source.outwardSid }
                             >
-                              {source.outwardSname}
+                              { source.outwardSname }
                             </option>
-                          ))}
+                          ) ) }
                         </select>
                       </MDBValidationItem>
 
                       <MDBValidationItem className="col-md-4">
                         <MDBInput
-                          value={formValue.outamount}
+                          value={ formValue.outamount }
                           name="outamount"
-                          onChange={onChange}
-                          onBlur={handleAmount} // Check amount onBlur
+                          onChange={ onChange }
+                          onBlur={ handleAmount } // Check amount onBlur
                           required
                           label="₹ XX-XX"
                         />
                       </MDBValidationItem>
                       <MDBValidation className="col-md-4">
                         <MDBInput
-                          value={formValue.confirmamount}
+                          value={ formValue.confirmamount }
                           name="confirmamount"
-                          onChange={onChange}
-                          onBlur={handleAmount} // Check amount onBlur
+                          onChange={ onChange }
+                          onBlur={ handleAmount } // Check amount onBlur
                           required
                           label="Confirm ₹ XX-XX"
                         />
                         <span className=" fs-4 text-danger">
-                          {incorrectPrice.icon} {incorrectPrice.text}
+                          { incorrectPrice.icon } { incorrectPrice.text }
                         </span>
                       </MDBValidation>
 
@@ -548,27 +576,29 @@ export default function OutwardTransaction() {
                         <input
                           type="button"
                           className="btn btn-primary"
-                          disabled={qunatityInputToggle}
-                          onClick={() => {
-                            handleQuantity(1);
-                          }}
+                          disabled={ qunatityInputToggle }
+                          onClick={ () =>
+                          {
+                            handleQuantity( 1 );
+                          } }
                           value="+"
                         />
                         <MDBInput
-                          value={formValue.qty}
+                          value={ formValue.qty }
                           name="qty"
-                          onChange={onChange}
+                          onChange={ onChange }
                           required
                           label="Quantity"
-                          disabled={qunatityInputToggle}
+                          disabled={ qunatityInputToggle }
                         />
                         <input
                           type="button"
                           className="btn btn-primary"
-                          disabled={qunatityInputToggle}
-                          onClick={() => {
-                            handleQuantity(-1);
-                          }}
+                          disabled={ qunatityInputToggle }
+                          onClick={ () =>
+                          {
+                            handleQuantity( -1 );
+                          } }
                           value="-"
                         />
                       </MDBValidationItem>
@@ -577,9 +607,9 @@ export default function OutwardTransaction() {
                     <div className="row mt-3">
                       <MDBValidationItem className="col-md-12">
                         <MDBInput
-                          value={formValue.paidto}
+                          value={ formValue.paidto }
                           name="paidto"
-                          onChange={onChange}
+                          onChange={ onChange }
                           label="Details"
                         />
                       </MDBValidationItem>
@@ -587,12 +617,12 @@ export default function OutwardTransaction() {
                     </div>
                     <div className="d-flex justify-content-end pt-3">
                       <button
-                        disabled={toggleButton}
+                        disabled={ toggleButton }
                         type="submit"
                         className="btn btn-lg ms-2"
-                        style={{ backgroundColor: "#00ffff9e" }}
+                        style={ { backgroundColor: "#00ffff9e" } }
                       >
-                        PAY!
+                        Add
                       </button>
                     </div>
                   </form>

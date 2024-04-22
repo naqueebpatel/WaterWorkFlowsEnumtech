@@ -209,7 +209,7 @@ const InwardReports = ({ setCollapsed }) => {
                                 </Button>
                             </div>
                         </div>
-                        <table className="datatable">
+                        <table className="datatable" id='employee-table'>
                             <thead>
                                 <tr>
                                     <th>Inward Tid</th>
